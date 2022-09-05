@@ -1,7 +1,11 @@
 package com.gamedesign.notouching;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -11,6 +15,7 @@ import androidx.annotation.Nullable;
 public class MainActivity extends Activity {
 
     public static String TAG;
+    private AndroidFastRenderView renderView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,5 +30,35 @@ public class MainActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        GameWorld gw = new GameWorld(this);
+
+        renderView = new AndroidFastRenderView(this, gw);
+        setContentView(renderView);
+
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i("Main thread", "pause");
+        renderView.pause(); // stops the main loop
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i("Main thread", "stop");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i("Main thread", "resume");
+
+        renderView.resume(); // starts game loop in a separate thread
     }
 }
