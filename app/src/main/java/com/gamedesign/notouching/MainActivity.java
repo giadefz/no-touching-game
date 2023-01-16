@@ -12,10 +12,14 @@ import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 
+import com.gamedesign.notouching.util.Box;
+
 public class MainActivity extends Activity {
 
     public static String TAG;
     private AndroidFastRenderView renderView;
+
+    private static final float XMIN = -4, XMAX = 16, YMIN = -22, YMAX = 22;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,7 +37,10 @@ public class MainActivity extends Activity {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-        GameWorld gw = new GameWorld(this);
+        Box physicalSize = new Box(XMIN, YMIN, XMAX, YMAX),
+                screenSize   = new Box(0, 0, metrics.widthPixels, metrics.heightPixels);
+
+        GameWorld gw = new GameWorld(physicalSize, screenSize, this);
 
         renderView = new AndroidFastRenderView(this, gw);
         setContentView(renderView);

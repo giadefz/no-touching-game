@@ -1,0 +1,30 @@
+{
+	"gameObjects":[
+		{
+			"gameObjectName":"TERRORIST",
+			"components":[
+				{
+					"component":"Position",
+					"args":[
+						"15",
+						"10",
+						"0"
+					]
+				}
+			]
+		},
+		{
+			"gameObjectName":"SFACIOM",
+			"components":[
+				{
+					"component":"Position",
+					"args":[
+						"30",
+						"20",
+						"0"
+					]
+				}
+			]
+		}
+	]
+}

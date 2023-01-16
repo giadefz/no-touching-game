@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.badlogic.androidgames.framework.Input;
+import com.gamedesign.notouching.util.Box;
+import com.gamedesign.notouching.util.ScreenInfo;
 import com.google.fpl.liquidfun.World;
 
 public class GameWorld {
@@ -16,6 +18,7 @@ public class GameWorld {
     private Paint particlePaint;
 
     World world;
+    Box physicalSize, screenSize, currentView;
     private static final int MAXPARTICLECOUNT = 1000;
     private static final float PARTICLE_RADIUS = 0.3f;
 
@@ -27,9 +30,12 @@ public class GameWorld {
 
     final Activity activity; // just for loading bitmaps in game objects
 
-    public GameWorld(Activity activity) {
+    public GameWorld(Box physicalSize, Box screenSize, Activity activity) {
         this.activity = activity;
         this.buffer = Bitmap.createBitmap(bufferWidth, bufferHeight, Bitmap.Config.ARGB_8888);
+        this.world = new World(0, 0);  // gravity vector
+        this.canvas = new Canvas(buffer);
+        ScreenInfo.injectInfo(physicalSize, bufferHeight, bufferWidth);
     }
 
     public synchronized void update(float elapsedTime)
@@ -43,7 +49,7 @@ public class GameWorld {
     public synchronized void render()
     {
         // clear the screen (with black)
-        canvas.drawARGB(255, 0, 0, 0);
+        canvas.drawARGB(0, 0, 255, 0);
 
     }
 

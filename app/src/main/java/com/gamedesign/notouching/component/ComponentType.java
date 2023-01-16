@@ -1,5 +1,12 @@
 package com.gamedesign.notouching.component;
 
 public enum ComponentType {
-    DRAWABLE, PHYSICS, CONTROLLABLE, AI
+
+
+    Drawable,
+    Physics,
+    Controllable,
+    Position,
+    AI;
+
 }
