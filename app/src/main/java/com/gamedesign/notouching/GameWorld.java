@@ -6,9 +6,16 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.badlogic.androidgames.framework.Input;
+import com.gamedesign.notouching.component.ComponentType;
+import com.gamedesign.notouching.component.Drawable;
+import com.gamedesign.notouching.component.GameObject;
+import com.gamedesign.notouching.component.Position;
 import com.gamedesign.notouching.util.Box;
 import com.gamedesign.notouching.util.ScreenInfo;
 import com.google.fpl.liquidfun.World;
+
+import java.util.List;
+import java.util.Objects;
 
 public class GameWorld {
 
@@ -16,6 +23,7 @@ public class GameWorld {
     Bitmap buffer;
     private Canvas canvas;
     private Paint particlePaint;
+    private List<GameObject> gameObjects;
 
     World world;
     Box physicalSize, screenSize, currentView;
@@ -38,19 +46,35 @@ public class GameWorld {
         ScreenInfo.injectInfo(physicalSize, bufferHeight, bufferWidth);
     }
 
+    public synchronized GameObject addGameObject(GameObject obj) {
+        gameObjects.add(obj);
+        return obj;
+    }
+
     public synchronized void update(float elapsedTime)
     {
         // advance the physics simulation
         world.step(elapsedTime, VELOCITY_ITERATIONS, POSITION_ITERATIONS, PARTICLE_ITERATIONS);
-
-
     }
 
     public synchronized void render()
     {
         // clear the screen (with black)
         canvas.drawARGB(0, 0, 255, 0);
+        drawGameObjects();
+    }
 
+    private void drawGameObjects() {
+        gameObjects.stream()
+                .map(gameObject -> gameObject.<Drawable>getComponent(ComponentType.Drawable))
+                .filter(Objects::nonNull)
+                .forEach(drawable -> drawable.draw(canvas));
+    }
+
+    @Override
+    protected void finalize()
+    {
+        world.delete();
     }
 
 }

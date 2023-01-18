@@ -1,7 +1,8 @@
 package com.gamedesign.notouching.component;
 
-public class GameObject extends Entity {
+import com.gamedesign.notouching.GameWorld;
 
+public class GameObject extends Entity {
 
 
 }

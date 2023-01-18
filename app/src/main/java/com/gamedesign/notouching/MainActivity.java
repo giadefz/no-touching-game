@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import androidx.annotation.Nullable;
 
 import com.gamedesign.notouching.util.Box;
+import com.gamedesign.notouching.util.GameObjectBuilder;
 
 public class MainActivity extends Activity {
 
@@ -34,6 +35,7 @@ public class MainActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        // Game world
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
@@ -41,6 +43,8 @@ public class MainActivity extends Activity {
                 screenSize   = new Box(0, 0, metrics.widthPixels, metrics.heightPixels);
 
         GameWorld gw = new GameWorld(physicalSize, screenSize, this);
+
+        gw.addGameObject(GameObjectBuilder.getGameObject("Terrorist"));
 
         renderView = new AndroidFastRenderView(this, gw);
         setContentView(renderView);

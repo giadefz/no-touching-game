@@ -8,15 +8,15 @@
           "args": [
             {
               "name": "x",
-              "value": "10"
+              "value": "0"
             },
             {
               "name": "y",
-              "value": "10"
+              "value": "-2"
             },
             {
               "name": "angle",
-              "value": "10"
+              "value": "0"
             }
           ]
         }
