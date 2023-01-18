@@ -2,11 +2,12 @@ package com.gamedesign.notouching.util;
 
 import com.gamedesign.notouching.component.Component;
 import com.gamedesign.notouching.component.GameObject;
+import com.gamedesign.notouching.parse.GameObjectsJSON;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class GameObjectBuilders {
+public class GameObjectBuilder {
 
 
     public static GameObject getGameObject(String gameObjectName) {

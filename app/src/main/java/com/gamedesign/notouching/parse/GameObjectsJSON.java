@@ -1,14 +1,11 @@
-package com.gamedesign.notouching.util;
+package com.gamedesign.notouching.parse;
 
-import com.gamedesign.notouching.component.Component;
 import com.gamedesign.notouching.component.ComponentType;
 import com.google.gson.Gson;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class GameObjectsJSON {
@@ -26,8 +23,13 @@ public class GameObjectsJSON {
     }
 
     public static class ComponentJSON {
-        public ComponentType component;
-        public List<String> args;
+        public String component;
+        public List<Argument> args;
+    }
+
+    public static class Argument {
+        public String name;
+        public String value;
     }
 
 

@@ -3,17 +3,17 @@ package com.gamedesign.notouching;
 import com.gamedesign.notouching.component.Component;
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.GameObject;
-import com.gamedesign.notouching.util.GameObjectBuilders;
-import com.gamedesign.notouching.util.GameObjectsJSON;
+import com.gamedesign.notouching.component.Position;
+import com.gamedesign.notouching.util.GameObjectBuilder;
+import com.gamedesign.notouching.parse.GameObjectsJSON;
 
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 /**
- * Example local unit test, which will execute on the development machine (host).
+ *
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
@@ -26,8 +26,8 @@ public class GameObjectsJSONTest {
     }
 
     @Test
-    public void getComponentsForGameObject() {
-        GameObject terrorist = GameObjectBuilders.getGameObject("TERRORIST");
-        Component component = terrorist.getComponent(ComponentType.Position);
+    public void getGameObject() {
+        GameObject terrorist = GameObjectBuilder.getGameObject("PESCIO");
+        Position component = terrorist.<Position>getComponent(ComponentType.Position);
     }
 }

@@ -42,9 +42,4 @@ public class BoxDrawable extends Drawable {
         canvas.drawRect(pos.x - screen_semi_width, pos.y - screen_semi_height,
                 pos.x + screen_semi_width, pos.y + screen_semi_height, paint);
     }
-
-    @Override
-    public void fillFieldsFromArgs(List<String> args) {
-
-    }
 }

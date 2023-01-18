@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -23,7 +24,9 @@ public class AndroidFastRenderView extends SurfaceView implements Runnable {
         this.holder = getHolder();
     }
 
-    /** Starts the game loop in a separate thread.
+
+    /**
+     * Starts the game loop in a separate thread.
      */
     public void resume() {
         running = true;
@@ -31,11 +34,12 @@ public class AndroidFastRenderView extends SurfaceView implements Runnable {
         renderThread.start();
     }
 
-    /** Stops the game loop and waits for it to finish
+    /**
+     * Stops the game loop and waits for it to finish
      */
     public void pause() {
         running = false;
-        while(true) {
+        while (true) {
             try {
                 renderThread.join();
                 break;
@@ -52,15 +56,15 @@ public class AndroidFastRenderView extends SurfaceView implements Runnable {
 
         /*** The Game Main Loop ***/
         while (running) {
-            if(!holder.getSurface().isValid()) {
+            if (!holder.getSurface().isValid()) {
                 // too soon (busy waiting), this only happens on startup and resume
                 continue;
             }
 
             long currentTime = System.nanoTime();
             // deltaTime is in seconds
-            float deltaTime = (currentTime-startTime) / 1000000000f,
-                    fpsDeltaTime = (currentTime-fpsTime) / 1000000000f;
+            float deltaTime = (currentTime - startTime) / 1000000000f,
+                    fpsDeltaTime = (currentTime - fpsTime) / 1000000000f;
             startTime = currentTime;
 
             gameworld.update(deltaTime);
@@ -82,7 +86,6 @@ public class AndroidFastRenderView extends SurfaceView implements Runnable {
             }
         }
     }
-
 
 
 }

@@ -17,17 +17,4 @@ public class Position extends Component {
         return ComponentType.Position;
     }
 
-    @Override
-    public void fillFieldsFromArgs(List<String> args) {
-        Field[] fields = this.getClass().getDeclaredFields();
-        for(int i = 0; i < fields.length; i++){
-            Field field = fields[i];
-            try {
-                field.setInt(this, Integer.parseInt(args.get(i)));
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
 }
