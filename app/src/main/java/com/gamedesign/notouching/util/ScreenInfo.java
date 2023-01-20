@@ -29,4 +29,7 @@ public class ScreenInfo {
         return y / currentView.height * bufferHeight;
     }
 
+    public float toPixelsX(float x) { return (x-currentView.xmin)/currentView.width*bufferWidth; }
+    public float toPixelsY(float y) { return (y-currentView.ymin)/currentView.height*bufferHeight; }
+
 }

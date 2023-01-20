@@ -1,5 +1,9 @@
 package com.gamedesign.notouching.component;
 
+import com.google.fpl.liquidfun.Body;
+import com.google.fpl.liquidfun.BodyDef;
+import com.google.fpl.liquidfun.BodyType;
+
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -17,4 +21,11 @@ public class Position extends Component {
         return ComponentType.Position;
     }
 
+    @Override
+    public void postConstructOperations() {
+        BodyDef bdef = new BodyDef();
+        bdef.setPosition(x, y);
+        bdef.setType(BodyType.dynamicBody);
+        owner.setBody(bdef);
+    }
 }

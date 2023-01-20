@@ -27,8 +27,10 @@ public class GameWorld {
     private Paint particlePaint;
     private List<GameObject> gameObjects;
 
-    World world;
-    Box physicalSize, screenSize, currentView;
+    public World world;
+    Box physicalSize;
+    Box screenSize;
+    public Box currentView;
     private static final int MAXPARTICLECOUNT = 1000;
     private static final float PARTICLE_RADIUS = 0.3f;
 
@@ -46,6 +48,7 @@ public class GameWorld {
         this.world = new World(0, 0);  // gravity vector
         this.canvas = new Canvas(buffer);
         this.gameObjects = new LinkedList<>();
+        this.currentView = physicalSize;
         ScreenInfo.injectInfo(physicalSize, bufferHeight, bufferWidth);
     }
 
@@ -63,7 +66,7 @@ public class GameWorld {
     public synchronized void render()
     {
         // clear the screen (with black)
-        canvas.drawARGB(0, 0, 255, 0);
+        canvas.drawARGB(255, 0, 0, 0);
         drawGameObjects();
     }
 
@@ -71,7 +74,7 @@ public class GameWorld {
         gameObjects.stream()
                 .map(gameObject -> gameObject.<Drawable>getComponent(ComponentType.Drawable))
                 .filter(Objects::nonNull)
-                .forEach(drawable -> drawable.draw(canvas));
+                .forEach(drawable -> drawable.drawThis(canvas));
     }
 
     @Override

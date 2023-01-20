@@ -1,6 +1,7 @@
 package com.gamedesign.notouching.component;
 
 import com.gamedesign.notouching.parse.FieldSetter;
+import com.gamedesign.notouching.parse.FieldSetters;
 import com.gamedesign.notouching.parse.GameObjectsJSON;
 import com.gamedesign.notouching.parse.ParseGameObjectJSONException;
 
@@ -20,26 +21,12 @@ public abstract class Component {
 
     protected Entity owner;
 
-    public abstract ComponentType type();
-
     public static Map<Class<?>, FieldSetter> fieldSetterMap = new HashMap<>();
 
 
     static {
-        fieldSetterMap.put(int.class, (f, v, c) -> {
-            try {
-                f.setInt(c, Integer.parseInt(v));
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        fieldSetterMap.put(float.class, (f, v, c) -> {
-            try {
-                f.setFloat(c, Float.parseFloat(v));
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        fieldSetterMap.put(int.class, FieldSetters.INT.getSetter());
+        fieldSetterMap.put(float.class, FieldSetters.FLOAT.getSetter());
     }
 
     public static Class<?> classForComponentType(String componentName) throws ClassNotFoundException {
@@ -54,6 +41,7 @@ public abstract class Component {
             Component component = (Component) constructor.newInstance();
             component.owner = owner;
             component.fillFieldsFromArgs(componentJSON.args, componentClass);
+            component.postConstructOperations();
             return component;
         } catch (ClassNotFoundException e) {
             throw new ParseGameObjectJSONException("No class found for component type: " + componentJSON.component);
@@ -76,6 +64,12 @@ public abstract class Component {
             if(fieldSetter == null) throw new ParseGameObjectJSONException("No field setter for type: " + field.getType());
             fieldSetter.setField(field, arg.value, this);
         });
+    }
+
+    public abstract ComponentType type();
+
+    public void postConstructOperations(){
+
     }
 
 }

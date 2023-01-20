@@ -8,15 +8,48 @@
           "args": [
             {
               "name": "x",
-              "value": "0"
+              "value": "5"
             },
             {
               "name": "y",
-              "value": "-2"
+              "value": "0"
             },
             {
               "name": "angle",
               "value": "0"
+            }
+          ]
+        },
+        {
+          "component": "BoxDrawable",
+          "args": [
+            {
+              "name": "alpha",
+              "value": "200"
+            },
+            {
+              "name": "red",
+              "value": "255"
+            },
+            {
+              "name": "green",
+              "value": "50"
+            },
+            {
+              "name": "blue",
+              "value": "0"
+            },
+            {
+              "name": "width",
+              "value": "2.5"
+            },
+            {
+              "name": "height",
+              "value": "2.5"
+            },
+            {
+              "name": "density",
+              "value": "0.5"
             }
           ]
         }
