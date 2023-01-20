@@ -7,6 +7,6 @@ public enum ComponentType {
     Physics,
     Controllable,
     Position,
-    AI;
+    AI
 
 }

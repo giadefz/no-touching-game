@@ -14,10 +14,10 @@ public abstract class Drawable extends Component {
         return ComponentType.Drawable;
     }
 
-    public boolean drawThis(Canvas canvas){
+    public void drawThis(Canvas canvas) {
         Body body = owner.getBody();
         GameWorld gw = owner.gw;
-        if (body!=null) {
+        if (body != null) {
             // Physical position of the center
             float x = body.getPositionX(), y = body.getPositionY(), angle = body.getAngle();
             // Cropping
@@ -26,12 +26,9 @@ public abstract class Drawable extends Component {
                     y > view.ymin && y < view.ymax) {
                 float screen_x = ScreenInfo.getInstance().toPixelsX(x), screen_y = ScreenInfo.getInstance().toPixelsY(y);
                 this.draw(canvas, screen_x, screen_y, angle);
-                return true;
-            } else
-                return false;
+            }
         } else {
             this.draw(canvas, 0, 0, 0);
-            return true;
         }
     }
 

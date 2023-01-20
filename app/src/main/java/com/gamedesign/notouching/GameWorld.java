@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import com.badlogic.androidgames.framework.Input;
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Drawable;
 import com.gamedesign.notouching.component.GameObject;
@@ -23,9 +22,9 @@ public class GameWorld {
 
     final static int bufferWidth = 1080, bufferHeight = 1920;    // actual pixels
     Bitmap buffer;
-    private Canvas canvas;
+    private final Canvas canvas;
     private Paint particlePaint;
-    private List<GameObject> gameObjects;
+    private final List<GameObject> gameObjects;
 
     public World world;
     Box physicalSize;

@@ -85,18 +85,18 @@ public class Shape {
     }
 
     @SuppressWarnings("unused")
-    private Type() {
+    Type() {
       this.swigValue = SwigNext.next++;
     }
 
     @SuppressWarnings("unused")
-    private Type(int swigValue) {
+    Type(int swigValue) {
       this.swigValue = swigValue;
       SwigNext.next = swigValue+1;
     }
 
     @SuppressWarnings("unused")
-    private Type(Type swigEnum) {
+    Type(Type swigEnum) {
       this.swigValue = swigEnum.swigValue;
       SwigNext.next = this.swigValue+1;
     }

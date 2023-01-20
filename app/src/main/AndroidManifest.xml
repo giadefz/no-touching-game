@@ -13,7 +13,7 @@
         android:theme="@style/Theme.NoTouching"
         tools:targetApi="31">
         <activity
-            android:name="com.gamedesign.notouching.MainActivity"
+            android:name="com.gamedesign.notouching.BridgeGame"
             android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>

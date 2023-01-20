@@ -28,18 +28,18 @@ public enum BodyType {
   }
 
   @SuppressWarnings("unused")
-  private BodyType() {
+  BodyType() {
     this.swigValue = SwigNext.next++;
   }
 
   @SuppressWarnings("unused")
-  private BodyType(int swigValue) {
+  BodyType(int swigValue) {
     this.swigValue = swigValue;
     SwigNext.next = swigValue+1;
   }
 
   @SuppressWarnings("unused")
-  private BodyType(BodyType swigEnum) {
+  BodyType(BodyType swigEnum) {
     this.swigValue = swigEnum.swigValue;
     SwigNext.next = this.swigValue+1;
   }

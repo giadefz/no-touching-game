@@ -9,7 +9,7 @@
 package com.google.fpl.liquidfun;
 
 public class SWIGTYPE_p_b2Contact {
-  private transient long swigCPtr;
+  private final transient long swigCPtr;
 
   protected SWIGTYPE_p_b2Contact(long cPtr, @SuppressWarnings("unused") boolean futureUse) {
     swigCPtr = cPtr;

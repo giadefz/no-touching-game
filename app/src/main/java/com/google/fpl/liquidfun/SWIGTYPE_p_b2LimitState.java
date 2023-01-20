@@ -9,7 +9,7 @@
 package com.google.fpl.liquidfun;
 
 public class SWIGTYPE_p_b2LimitState {
-  private transient long swigCPtr;
+  private final transient long swigCPtr;
 
   protected SWIGTYPE_p_b2LimitState(long cPtr, @SuppressWarnings("unused") boolean futureUse) {
     swigCPtr = cPtr;

@@ -37,18 +37,18 @@ public enum JointType {
   }
 
   @SuppressWarnings("unused")
-  private JointType() {
+  JointType() {
     this.swigValue = SwigNext.next++;
   }
 
   @SuppressWarnings("unused")
-  private JointType(int swigValue) {
+  JointType(int swigValue) {
     this.swigValue = swigValue;
     SwigNext.next = swigValue+1;
   }
 
   @SuppressWarnings("unused")
-  private JointType(JointType swigEnum) {
+  JointType(JointType swigEnum) {
     this.swigValue = swigEnum.swigValue;
     SwigNext.next = this.swigValue+1;
   }

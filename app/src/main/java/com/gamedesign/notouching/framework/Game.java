@@ -1,17 +1,17 @@
 package com.gamedesign.notouching.framework;
 
 public interface Game {
-    public Input getInput();
+    Input getInput();
 
-    public FileIO getFileIO();
+    FileIO getFileIO();
 
-    public Graphics getGraphics();
+    Graphics getGraphics();
 
-    public Audio getAudio();
+    Audio getAudio();
 
-    public void setScreen(Screen screen);
+    void setScreen(Screen screen);
 
-    public Screen getCurrentScreen();
+    Screen getCurrentScreen();
 
-    public Screen getStartScreen();
+    Screen getStartScreen();
 }
