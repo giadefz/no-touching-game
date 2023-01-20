@@ -18,6 +18,7 @@ import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.framework.Graphics;
 import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.framework.Screen;
+import com.google.fpl.liquidfun.World;
 
 public abstract class AndroidGame extends Activity implements Game {
     AndroidFastRenderView renderView;
@@ -27,6 +28,7 @@ public abstract class AndroidGame extends Activity implements Game {
     FileIO fileIO;
     Screen screen;
     WakeLock wakeLock;
+    World world;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,9 @@ public abstract class AndroidGame extends Activity implements Game {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        System.loadLibrary("liquidfun");
+        System.loadLibrary("liquidfun_jni");
+        world = new World(0, 0);
         boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
         int frameBufferWidth = isLandscape ? 1920 : 1080;
         int frameBufferHeight = isLandscape ? 1080 : 1920;
@@ -99,6 +104,11 @@ public abstract class AndroidGame extends Activity implements Game {
     @Override
     public Audio getAudio() {
         return audio;
+    }
+
+    @Override
+    public World getWorld() {
+        return world;
     }
 
     @Override

@@ -21,14 +21,8 @@ import java.util.Objects;
 public class GameWorld {
 
     final static int bufferWidth = 1080, bufferHeight = 1920;    // actual pixels
-    Bitmap buffer;
-    private final Canvas canvas;
-    private Paint particlePaint;
     private final List<GameObject> gameObjects;
-
-    public World world;
     Box physicalSize;
-    Box screenSize;
     public Box currentView;
     private static final int MAXPARTICLECOUNT = 1000;
     private static final float PARTICLE_RADIUS = 0.3f;
@@ -39,13 +33,7 @@ public class GameWorld {
     private static final int POSITION_ITERATIONS = 3;
     private static final int PARTICLE_ITERATIONS = 3;
 
-    final Activity activity; // just for loading bitmaps in game objects
-
-    public GameWorld(Box physicalSize, Box screenSize, Activity activity) {
-        this.activity = activity;
-        this.buffer = Bitmap.createBitmap(bufferWidth, bufferHeight, Bitmap.Config.ARGB_8888);
-        this.world = new World(0, 0);  // gravity vector
-        this.canvas = new Canvas(buffer);
+    public GameWorld(Box physicalSize) {
         this.gameObjects = new LinkedList<>();
         this.currentView = physicalSize;
         ScreenInfo.injectInfo(physicalSize, bufferHeight, bufferWidth);
@@ -56,16 +44,10 @@ public class GameWorld {
         return obj;
     }
 
-    public synchronized void update(float elapsedTime)
-    {
-        // advance the physics simulation
-        world.step(elapsedTime, VELOCITY_ITERATIONS, POSITION_ITERATIONS, PARTICLE_ITERATIONS);
-    }
-
     public synchronized void render()
     {
         // clear the screen (with black)
-        canvas.drawARGB(255, 0, 0, 0);
+
         drawGameObjects();
     }
 
@@ -73,13 +55,7 @@ public class GameWorld {
         gameObjects.stream()
                 .map(gameObject -> gameObject.<Drawable>getComponent(ComponentType.Drawable))
                 .filter(Objects::nonNull)
-                .forEach(drawable -> drawable.drawThis(canvas));
-    }
-
-    @Override
-    protected void finalize()
-    {
-        world.delete();
+                .forEach(Drawable::drawThis);
     }
 
 }

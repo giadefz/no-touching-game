@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.gamedesign.notouching.framework.Screen;
 import com.gamedesign.notouching.framework.impl.AndroidGame;
+import com.gamedesign.notouching.screen.LoadingScreen;
 
 
 public class BridgeGame extends AndroidGame {
@@ -11,6 +12,6 @@ public class BridgeGame extends AndroidGame {
 
     @Override
     public Screen getStartScreen() {
-        return null;
+        return new LoadingScreen(this);
     }
 }

@@ -19,7 +19,7 @@ import com.gamedesign.notouching.framework.Pixmap;
 public class AndroidGraphics implements Graphics {
     AssetManager assets;
     Bitmap frameBuffer;
-    Canvas canvas;
+    public Canvas canvas;
     Paint paint;
     Rect srcRect = new Rect();
     Rect dstRect = new Rect();
@@ -97,6 +97,20 @@ public class AndroidGraphics implements Graphics {
         paint.setColor(color);
         paint.setStyle(Style.FILL);
         canvas.drawRect(x, y, x + width - 1, y + width - 1, paint);
+    }
+
+    @Override
+    public void drawRect(int x, int y, int width, int height, int color, float angle) {
+        canvas.rotate(angle, x, y);
+        drawRect(x, y, width, height, color);
+    }
+
+    @Override
+    public void drawRect(float x, float y, float width, float height, int color, float angle) {
+        canvas.rotate(angle, x, y);
+        paint.setColor(color);
+        paint.setStyle(Style.FILL);
+        canvas.drawRect(x, y, x + width, y + height, paint);
     }
 
     @Override

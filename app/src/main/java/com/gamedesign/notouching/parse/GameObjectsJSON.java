@@ -2,7 +2,10 @@ package com.gamedesign.notouching.parse;
 
 import android.content.Context;
 
+import com.gamedesign.notouching.component.Component;
 import com.gamedesign.notouching.component.ComponentType;
+import com.gamedesign.notouching.component.GameObject;
+import com.gamedesign.notouching.framework.Game;
 import com.google.gson.Gson;
 
 import java.io.FileReader;
@@ -10,14 +13,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class GameObjectsJSON {
 
-    private static GameObjectsJSON instance;
     public List<GameObjectJSON> gameObjects;
 
-    private GameObjectsJSON() {
-
+    public GameObjectsJSON() {
     }
 
     public static class GameObjectJSON {
@@ -35,18 +38,18 @@ public class GameObjectsJSON {
         public String value;
     }
 
-
-    public static GameObjectsJSON readGameObjectsJSON(Context context)  {
-        if(instance == null){
-            Gson gson = new Gson();
-            try (Reader reader = new InputStreamReader(context.getAssets().open("gameobjects.json"))) {
-                return gson.fromJson(reader, GameObjectsJSON.class);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return instance;
+    public GameObject getGameObject(String gameObjectName, Game game) {
+        GameObject gameObject = new GameObject(game);
+        Set<Component> components = this.gameObjects.stream()
+                .filter(g -> g.gameObjectName.equals(gameObjectName))
+                .findFirst()
+                .map(g -> g.components)
+                .orElseThrow(() -> new IllegalArgumentException("No game object found for name: " + gameObjectName))
+                .stream()
+                .map(c -> Component.fromComponentJSON(c, gameObject))
+                .collect(Collectors.toSet());
+        gameObject.addComponents(components);
+        return gameObject;
     }
-
 
 }

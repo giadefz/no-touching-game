@@ -1,6 +1,8 @@
 package com.gamedesign.notouching.component;
 
 import com.gamedesign.notouching.GameWorld;
+import com.gamedesign.notouching.framework.Game;
+import com.gamedesign.notouching.framework.impl.AndroidGame;
 import com.google.fpl.liquidfun.Body;
 import com.google.fpl.liquidfun.BodyDef;
 import com.google.fpl.liquidfun.PolygonShape;
@@ -14,7 +16,11 @@ public abstract class Entity {
 
     private final Map<ComponentType, Component> components = new HashMap<>();
     private Body body;
-    public GameWorld gw;
+    public Game game;
+
+    public Entity(Game game) {
+        this.game = game;
+    }
 
     public void addComponent(Component component){
         component.owner = this;
@@ -30,7 +36,7 @@ public abstract class Entity {
     }
 
     public void setBody(BodyDef bodyDef) {
-        Body body = gw.world.createBody(bodyDef);
+        Body body = game.getWorld().createBody(bodyDef);
         this.body = body;
         body.setUserData(this);
     }

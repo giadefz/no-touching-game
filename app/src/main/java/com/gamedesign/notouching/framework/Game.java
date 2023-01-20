@@ -1,5 +1,7 @@
 package com.gamedesign.notouching.framework;
 
+import com.google.fpl.liquidfun.World;
+
 public interface Game {
     Input getInput();
 
@@ -14,4 +16,6 @@ public interface Game {
     Screen getCurrentScreen();
 
     Screen getStartScreen();
+
+    World getWorld();
 }
