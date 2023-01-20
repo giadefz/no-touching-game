@@ -14,6 +14,8 @@ import com.gamedesign.notouching.util.Box;
 import com.gamedesign.notouching.util.ScreenInfo;
 import com.google.fpl.liquidfun.World;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,6 +45,7 @@ public class GameWorld {
         this.buffer = Bitmap.createBitmap(bufferWidth, bufferHeight, Bitmap.Config.ARGB_8888);
         this.world = new World(0, 0);  // gravity vector
         this.canvas = new Canvas(buffer);
+        this.gameObjects = new LinkedList<>();
         ScreenInfo.injectInfo(physicalSize, bufferHeight, bufferWidth);
     }
 

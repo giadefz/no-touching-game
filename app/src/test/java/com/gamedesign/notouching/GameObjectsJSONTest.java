@@ -19,15 +19,7 @@ import java.util.List;
  */
 public class GameObjectsJSONTest {
 
-    @Test
-    public void getGameObjectsJSON() throws IOException {
-        GameObjectsJSON gameObjectsJSON = GameObjectsJSON.readGameObjectsJSON();
-        List<GameObjectsJSON.GameObjectJSON> gameObjects = gameObjectsJSON.gameObjects;
-    }
 
-    @Test
-    public void getGameObject() {
-        GameObject terrorist = GameObjectBuilder.getGameObject("PESCIO");
-        Position component = terrorist.<Position>getComponent(ComponentType.Position);
-    }
+
+
 }

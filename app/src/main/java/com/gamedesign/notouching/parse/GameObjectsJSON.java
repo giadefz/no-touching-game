@@ -5,7 +5,6 @@ import android.content.Context;
 import com.gamedesign.notouching.component.ComponentType;
 import com.google.gson.Gson;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

@@ -20,6 +20,8 @@ public class BoxDrawable extends Drawable {
     private float screen_semi_height;
     private float screen_semi_width;
 
+    public BoxDrawable() {}
+
     public BoxDrawable(int alpha, int red, int green, int blue, float width, float height, float density) {
         this.alpha = alpha;
         this.red = red;
