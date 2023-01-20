@@ -43,8 +43,8 @@ public class MainActivity extends Activity {
                 screenSize   = new Box(0, 0, metrics.widthPixels, metrics.heightPixels);
 
         GameWorld gw = new GameWorld(physicalSize, screenSize, this);
-
-        gw.addGameObject(GameObjectBuilder.getGameObject("Terrorist"));
+        Context applicationContext = this.getApplicationContext();
+        gw.addGameObject(GameObjectBuilder.getGameObject("TERRORIST", applicationContext));
 
         renderView = new AndroidFastRenderView(this, gw);
         setContentView(renderView);
