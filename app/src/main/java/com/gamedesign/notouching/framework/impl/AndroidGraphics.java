@@ -12,6 +12,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
+import android.graphics.RectF;
 
 import com.gamedesign.notouching.framework.Graphics;
 import com.gamedesign.notouching.framework.Pixmap;
@@ -23,6 +24,7 @@ public class AndroidGraphics implements Graphics {
     Paint paint;
     Rect srcRect = new Rect();
     Rect dstRect = new Rect();
+    RectF dstRectF = new RectF();
 
     public AndroidGraphics(AssetManager assets, Bitmap frameBuffer) {
         this.assets = assets;
@@ -129,7 +131,23 @@ public class AndroidGraphics implements Graphics {
         canvas.drawBitmap(((AndroidPixmap) pixmap).bitmap, srcRect, dstRect,
                 null);
     }
-    
+
+    @Override
+    public void drawPixmap(Pixmap pixmap, float x, float y, int srcX, int srcY, int srcWidth, int srcHeight) {
+        srcRect.left = srcX;
+        srcRect.top = srcY;
+        srcRect.right = srcX + srcWidth - 1;
+        srcRect.bottom = srcY + srcHeight - 1;
+
+        dstRectF.left = x;
+        dstRectF.top = y;
+        dstRectF.right = x + srcWidth - 1;
+        dstRectF.bottom = y + srcHeight - 1;
+
+        canvas.drawBitmap(((AndroidPixmap) pixmap).bitmap, srcRect, dstRectF,
+                null);
+    }
+
     @Override
     public void drawPixmap(Pixmap pixmap, int x, int y) {
         canvas.drawBitmap(((AndroidPixmap)pixmap).bitmap, x, y, null);

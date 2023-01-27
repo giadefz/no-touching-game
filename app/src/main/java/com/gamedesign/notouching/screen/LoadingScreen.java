@@ -2,6 +2,7 @@ package com.gamedesign.notouching.screen;
 
 
 import com.gamedesign.notouching.framework.Game;
+import com.gamedesign.notouching.framework.Graphics;
 import com.gamedesign.notouching.framework.Screen;
 import com.gamedesign.notouching.parse.GameObjectsJSON;
 import com.gamedesign.notouching.util.Assets;
@@ -20,12 +21,14 @@ public class LoadingScreen extends Screen {
     @Override
     public void update(float deltaTime) {
         Gson gson = new Gson();
-
+        Graphics graphics = game.getGraphics();
         try (Reader reader = new InputStreamReader(game.getFileIO().readAsset("gameobjects.json"))) {
             Assets.gameObjectsJSON = gson.fromJson(reader, GameObjectsJSON.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Assets.icon = graphics.newPixmap("icona.png", Graphics.PixmapFormat.ARGB4444);
 
         game.setScreen(new MainMenuScreen(game));
     }

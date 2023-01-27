@@ -27,6 +27,7 @@ public abstract class Component {
     static {
         fieldSetterMap.put(int.class, FieldSetters.INT.getSetter());
         fieldSetterMap.put(float.class, FieldSetters.FLOAT.getSetter());
+        fieldSetterMap.put(boolean.class, FieldSetters.BOOLEAN.getSetter());
     }
 
     public static Class<?> classForComponentType(String componentName) throws ClassNotFoundException {

@@ -21,6 +21,9 @@ public interface Graphics {
     void drawPixmap(Pixmap pixmap, int x, int y, int srcX, int srcY,
             int srcWidth, int srcHeight);
 
+    void drawPixmap(Pixmap pixmap, float x, float y, int srcX, int srcY,
+            int srcWidth, int srcHeight);
+
     void drawPixmap(Pixmap pixmap, int x, int y);
 
     int getWidth();

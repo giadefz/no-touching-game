@@ -1,41 +1,34 @@
 package com.gamedesign.notouching.component;
 
-import android.graphics.Color;
+import android.graphics.Rect;
 
 import com.gamedesign.notouching.framework.Graphics;
-import com.gamedesign.notouching.util.ScreenInfo;
+import com.gamedesign.notouching.framework.Pixmap;
+import com.gamedesign.notouching.util.Assets;
 import com.google.fpl.liquidfun.Body;
 import com.google.fpl.liquidfun.FixtureDef;
 import com.google.fpl.liquidfun.PolygonShape;
 
-public class BoxDrawable extends Drawable {
-
-    public int alpha;
-    public int red;
-    public int green;
-    public int blue;
+public class PixmapDrawable extends Drawable {
     public float width;
     public float height;
     public float density;
-    private float screen_semi_height;
-    private float screen_semi_width;
-    private int color;
+    private final Rect src = new Rect();
+    private Pixmap pixmap;
 
-    public BoxDrawable() {
+    public PixmapDrawable() {
     }
 
     @Override
     public void draw(float x, float y, float angle) {
         Graphics graphics = owner.game.getGraphics();
-        graphics.drawRect(x , y, screen_semi_width, screen_semi_height, color, angle);
+
+        graphics.drawPixmap(pixmap, x, y, src.left, src.top, src.right, src.bottom);
     }
 
     @Override
     public void postConstructOperations() {
         Body body = owner.getBody();
-        this.screen_semi_width = ScreenInfo.getInstance().toPixelsXLength(width) / 2;
-        this.screen_semi_height = ScreenInfo.getInstance().toPixelsYLength(height) / 2;
-        this.color = Color.argb(alpha, red, green, blue);
 
         PolygonShape box = new PolygonShape();
         box.setAsBox(width / 2, height / 2);
@@ -45,5 +38,7 @@ public class BoxDrawable extends Drawable {
         fixturedef.setRestitution(0.4f);    // default 0
         fixturedef.setDensity(density);     // default 0
         body.createFixture(fixturedef);
+        src.set(0, 0, 76, 76);
+        pixmap = Assets.icon;
     }
 }

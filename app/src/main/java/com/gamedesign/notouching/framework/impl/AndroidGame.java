@@ -40,7 +40,7 @@ public abstract class AndroidGame extends Activity implements Game {
 
         System.loadLibrary("liquidfun");
         System.loadLibrary("liquidfun_jni");
-        world = new World(0, 0);
+        world = new World(-5, 0);
         boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
         int frameBufferWidth = isLandscape ? 1920 : 1080;
         int frameBufferHeight = isLandscape ? 1080 : 1920;

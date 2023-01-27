@@ -22,6 +22,7 @@ public enum FieldSetters {
 
     BOOLEAN((f, v, c) -> {
         try {
+            f.setAccessible(true);
             f.setBoolean(c, Boolean.parseBoolean(v));
         } catch (IllegalAccessException e) {
             throw new ParseGameObjectJSONException("Field " + f.getName() + "is either inaccessible or final");
