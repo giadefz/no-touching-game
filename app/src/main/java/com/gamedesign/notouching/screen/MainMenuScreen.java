@@ -24,7 +24,6 @@ public class MainMenuScreen extends Screen {
     @Override
     public void update(float deltaTime) {
 
-        game.setScreen(new GameScreen(game));
 
         Graphics g = game.getGraphics();
         List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
@@ -40,7 +39,7 @@ public class MainMenuScreen extends Screen {
                         Assets.click.play(1);
                 }
                 if(inBounds(event, 64, 220, 192, 42) ) {
-                    //game.setScreen(new GameScreen(game));
+                    game.setScreen(new GameScreen(game));
                     Assets.click.play(1);
                     /*if(Settings.soundEnabled)
                         Assets.click.play(1);

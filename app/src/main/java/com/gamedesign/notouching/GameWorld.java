@@ -22,8 +22,6 @@ public class GameWorld {
 
     final static int bufferWidth = 1080, bufferHeight = 1920;    // actual pixels
     private final List<GameObject> gameObjects;
-    Box physicalSize;
-    public Box currentView;
     private static final int MAXPARTICLECOUNT = 1000;
     private static final float PARTICLE_RADIUS = 0.3f;
 
@@ -33,10 +31,8 @@ public class GameWorld {
     private static final int POSITION_ITERATIONS = 3;
     private static final int PARTICLE_ITERATIONS = 3;
 
-    public GameWorld(Box physicalSize) {
+    public GameWorld() {
         this.gameObjects = new LinkedList<>();
-        this.currentView = physicalSize;
-        ScreenInfo.injectInfo(physicalSize, bufferHeight, bufferWidth);
     }
 
     public synchronized GameObject addGameObject(GameObject obj) {

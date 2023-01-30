@@ -18,6 +18,8 @@ import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.framework.Graphics;
 import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.framework.Screen;
+import com.gamedesign.notouching.util.Box;
+import com.gamedesign.notouching.util.ScreenInfo;
 import com.google.fpl.liquidfun.World;
 
 public abstract class AndroidGame extends Activity implements Game {
@@ -29,6 +31,7 @@ public abstract class AndroidGame extends Activity implements Game {
     Screen screen;
     WakeLock wakeLock;
     World world;
+    private static final float XMIN = -4, XMAX = 16, YMIN = -22, YMAX = 22;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,8 +45,12 @@ public abstract class AndroidGame extends Activity implements Game {
         System.loadLibrary("liquidfun_jni");
         world = new World(-5, 0);
         boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-        int frameBufferWidth = isLandscape ? 1920 : 1080;
-        int frameBufferHeight = isLandscape ? 1080 : 1920;
+//        int frameBufferWidth = isLandscape ? 1920 : 1080;
+//        int frameBufferHeight = isLandscape ? 1080 : 1920;
+        int frameBufferWidth = isLandscape ? 480 : 320;
+        int frameBufferHeight = isLandscape ? 320 : 480;
+        Box physicalSize = new Box(XMIN, YMIN, XMAX, YMAX);
+        ScreenInfo.injectInfo(physicalSize, frameBufferHeight, frameBufferWidth);
         Bitmap frameBuffer = Bitmap.createBitmap(frameBufferWidth,
                 frameBufferHeight, Config.RGB_565);
 
