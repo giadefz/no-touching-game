@@ -33,27 +33,8 @@ public class MainMenuScreen extends Screen {
         for(int i = 0; i < len; i++) {
             Input.TouchEvent event = touchEvents.get(i);
             if(event.type == Input.TouchEvent.TOUCH_UP) {
-                if(inBounds(event, 0, g.getHeight() - 64, 64, 64)) {
-                    /*Settings.soundEnabled = !Settings.soundEnabled;
-                    if(Settings.soundEnabled)*/
-                        Assets.click.play(1);
-                }
-                if(inBounds(event, 64, 220, 192, 42) ) {
+                if(inBounds(event, 804, 630, 320, 160) ) {
                     game.setScreen(new GameScreen(game));
-                    Assets.click.play(1);
-                    /*if(Settings.soundEnabled)
-                        Assets.click.play(1);
-                    return;*/
-                }
-                if(inBounds(event, 64, 220 + 42, 192, 42) ) {
-                    //game.setScreen(new HighscoreScreen(game));
-                    Assets.click.play(1);
-                    /*if(Settings.soundEnabled)
-                        Assets.click.play(1);
-                    return;*/
-                }
-                if(inBounds(event, 64, 220 + 84, 192, 42) ) {
-                    //game.setScreen(new HelpScreen(game));
                     Assets.click.play(1);
                     /*if(Settings.soundEnabled)
                         Assets.click.play(1);
@@ -76,7 +57,7 @@ public class MainMenuScreen extends Screen {
         Graphics g = game.getGraphics();
 
         g.drawPixmap(Assets.background, 0, 0);
-        g.drawPixmap(Assets.mainMenu, 64, 220);
+        g.drawPixmap(Assets.mainMenu, 800, 620);
         g.drawPixmap(Assets.buttons, 0, 416, 0, 0, 64, 64);
     }
 
