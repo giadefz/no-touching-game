@@ -1,14 +1,12 @@
 package com.gamedesign.notouching.component;
 
-import com.gamedesign.notouching.GameWorld;
 import com.gamedesign.notouching.framework.Game;
-import com.gamedesign.notouching.framework.impl.AndroidGame;
 import com.google.fpl.liquidfun.Body;
 import com.google.fpl.liquidfun.BodyDef;
 import com.google.fpl.liquidfun.PolygonShape;
+import com.google.fpl.liquidfun.Vec2;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -39,6 +37,13 @@ public abstract class Entity {
         Body body = game.getWorld().createBody(bodyDef);
         this.body = body;
         body.setUserData(this);
+    }
+
+    public void setPosition(float x, float y){
+        Vec2 position = body.getPosition();
+        position.setX(x);
+        position.setY(y);
+        body.setTransform(position, body.getAngle());
     }
 
     public Body getBody() {

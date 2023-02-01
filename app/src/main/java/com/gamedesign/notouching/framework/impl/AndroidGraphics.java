@@ -23,6 +23,7 @@ public class AndroidGraphics implements Graphics {
     public Canvas canvas;
     Paint paint;
     Rect srcRect = new Rect();
+    RectF srcRectF = new RectF();
     Rect dstRect = new Rect();
     RectF dstRectF = new RectF();
 
@@ -103,16 +104,20 @@ public class AndroidGraphics implements Graphics {
 
     @Override
     public void drawRect(int x, int y, int width, int height, int color, float angle) {
-        canvas.rotate(angle, x, y);
+        canvas.save();
+        canvas.rotate((float) Math.toDegrees(angle), x, y);
         drawRect(x, y, width, height, color);
+        canvas.restore();
     }
 
     @Override
     public void drawRect(float x, float y, float width, float height, int color, float angle) {
-        canvas.rotate(angle, x, y);
+        canvas.save();
+        canvas.rotate((float) Math.toDegrees(angle), x + (width/2), y + (height/2));
         paint.setColor(color);
         paint.setStyle(Style.FILL);
         canvas.drawRect(x, y, x + width, y + height, paint);
+        canvas.restore();
     }
 
     @Override
@@ -146,6 +151,18 @@ public class AndroidGraphics implements Graphics {
 
         canvas.drawBitmap(((AndroidPixmap) pixmap).bitmap, srcRect, dstRectF,
                 null);
+    }
+
+    @Override
+    public void drawPixmap(Pixmap pixmap, float x, float y, float widthScaled, float heightScaled, Rect src, float angle) {
+        canvas.save();
+        canvas.rotate((float) Math.toDegrees(angle), x, y);
+        dstRectF.left = x - (widthScaled / 2);
+        dstRectF.bottom = y + (heightScaled / 2);
+        dstRectF.right = x + (widthScaled / 2);
+        dstRectF.top = y - (heightScaled / 2);
+        canvas.drawBitmap(((AndroidPixmap) pixmap).bitmap, src, dstRectF, null);
+        canvas.restore();
     }
 
     @Override

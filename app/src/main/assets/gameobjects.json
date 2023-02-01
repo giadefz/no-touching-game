@@ -1,18 +1,73 @@
 {
   "gameObjects": [
     {
-      "gameObjectName": "TERRORIST",
+      "gameObjectName": "TILE",
       "components": [
         {
           "component": "Position",
           "args": [
             {
               "name": "x",
-              "value": "0"
+              "value": "7"
             },
             {
               "name": "y",
               "value": "0"
+            },
+            {
+              "name": "angle",
+              "value": "0"
+            },
+            {
+              "name": "dynamic",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "component": "PixmapDrawable",
+          "args": [
+            {
+              "name": "width",
+              "value": "6"
+            },
+            {
+              "name": "height",
+              "value": "3"
+            },
+            {
+              "name": "density",
+              "value": "0.5"
+            },
+            {
+              "name": "srcRight",
+              "value": "288"
+            },
+            {
+              "name": "srcBottom",
+              "value": "59"
+            },
+            {
+              "name": "pixmapName",
+              "value": "tile"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "gameObjectName": "BOTTOM",
+      "components": [
+        {
+          "component": "Position",
+          "args": [
+            {
+              "name": "x",
+              "value": "5"
+            },
+            {
+              "name": "y",
+              "value": "32"
             },
             {
               "name": "angle",
@@ -41,11 +96,11 @@
             },
             {
               "name": "width",
-              "value": "2.5"
+              "value": "55"
             },
             {
               "name": "height",
-              "value": "25.5"
+              "value": "2"
             },
             {
               "name": "density",

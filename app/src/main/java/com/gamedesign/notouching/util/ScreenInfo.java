@@ -3,6 +3,7 @@ package com.gamedesign.notouching.util;
 public class ScreenInfo {
 
     private static final ScreenInfo instance = new ScreenInfo();
+    public static final float SCALING_FACTOR = 32;
     private Box currentView;
     private int bufferWidth, bufferHeight;
 

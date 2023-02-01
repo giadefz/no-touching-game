@@ -29,6 +29,15 @@ public enum FieldSetters {
         }
     }),
 
+    STRING((f ,v ,c) -> {
+        try {
+            f.setAccessible(true);
+            f.set(c, v);
+        } catch (IllegalAccessException e) {
+            throw new ParseGameObjectJSONException("Field " + f.getName() + "is either inaccessible or final");
+        }
+    })
+
     ;
 
     private final FieldSetter fieldSetter;

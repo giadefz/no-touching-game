@@ -1,6 +1,9 @@
 package com.gamedesign.notouching.framework;
 
+import android.graphics.Rect;
+
 public interface Graphics {
+
     enum PixmapFormat {
         ARGB8888, ARGB4444, RGB565
     }
@@ -23,6 +26,8 @@ public interface Graphics {
 
     void drawPixmap(Pixmap pixmap, float x, float y, int srcX, int srcY,
             int srcWidth, int srcHeight);
+
+    void drawPixmap(Pixmap pixmap, float x, float y, float widthScaled, float heightScaled, Rect src, float angle);
 
     void drawPixmap(Pixmap pixmap, int x, int y);
 

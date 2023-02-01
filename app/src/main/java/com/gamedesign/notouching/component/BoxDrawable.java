@@ -10,6 +10,7 @@ import com.google.fpl.liquidfun.PolygonShape;
 
 public class BoxDrawable extends Drawable {
 
+    public static final int SCALING_FACTOR = 32;
     public int alpha;
     public int red;
     public int green;
@@ -17,8 +18,6 @@ public class BoxDrawable extends Drawable {
     public float width;
     public float height;
     public float density;
-    private float screen_semi_height;
-    private float screen_semi_width;
     private int color;
 
     public BoxDrawable() {
@@ -27,14 +26,16 @@ public class BoxDrawable extends Drawable {
     @Override
     public void draw(float x, float y, float angle) {
         Graphics graphics = owner.game.getGraphics();
-        graphics.drawRect(x , y, screen_semi_width, screen_semi_height, color, angle);
+        float widthScaled = width * SCALING_FACTOR;
+        float heightScaled = height * SCALING_FACTOR;
+        float xScaled = x * SCALING_FACTOR;
+        float yScaled = y * SCALING_FACTOR;
+        graphics.drawRect(xScaled - (widthScaled / 2), yScaled - (heightScaled / 2), widthScaled, heightScaled, color, angle);
     }
 
     @Override
     public void postConstructOperations() {
         Body body = owner.getBody();
-        this.screen_semi_width = ScreenInfo.getInstance().toPixelsXLength(width) / 2;
-        this.screen_semi_height = ScreenInfo.getInstance().toPixelsYLength(height) / 2;
         this.color = Color.argb(alpha, red, green, blue);
 
         PolygonShape box = new PolygonShape();

@@ -12,9 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Position extends Component {
 
-    protected int x;
-    protected int y;
+    protected float x;
+    protected float y;
     protected int angle;
+    protected boolean dynamic;
 
     @Override
     public ComponentType type() {
@@ -25,7 +26,11 @@ public class Position extends Component {
     public void postConstructOperations() {
         BodyDef bdef = new BodyDef();
         bdef.setPosition(x, y);
-        bdef.setType(BodyType.dynamicBody);
+        if(dynamic){
+            bdef.setType(BodyType.dynamicBody);
+        }else{
+            bdef.setType(BodyType.staticBody);
+        }
         owner.setBody(bdef);
     }
 }
