@@ -8,11 +8,11 @@
           "args": [
             {
               "name": "x",
-              "value": "7"
+              "value": "8"
             },
             {
               "name": "y",
-              "value": "0"
+              "value": "17"
             },
             {
               "name": "angle",
@@ -101,6 +101,61 @@
             {
               "name": "height",
               "value": "2"
+            },
+            {
+              "name": "density",
+              "value": "0.5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "gameObjectName": "PIER",
+      "components": [
+        {
+          "component": "Position",
+          "args": [
+            {
+              "name": "x",
+              "value": "2"
+            },
+            {
+              "name": "y",
+              "value": "18"
+            },
+            {
+              "name": "angle",
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "component": "BoxDrawable",
+          "args": [
+            {
+              "name": "alpha",
+              "value": "200"
+            },
+            {
+              "name": "red",
+              "value": "255"
+            },
+            {
+              "name": "green",
+              "value": "50"
+            },
+            {
+              "name": "blue",
+              "value": "0"
+            },
+            {
+              "name": "width",
+              "value": "2"
+            },
+            {
+              "name": "height",
+              "value": "25.55"
             },
             {
               "name": "density",

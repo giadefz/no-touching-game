@@ -15,6 +15,7 @@ public interface Graphics {
     void drawPixel(int x, int y, int color);
 
     void drawLine(int x, int y, int x2, int y2, int color);
+    void drawLine(float x, float y, float x2, float y2, int color);
 
     void drawRect(int x, int y, int width, int height, int color);
     void drawRect(int x, int y, int width, int height, int color, float angle);

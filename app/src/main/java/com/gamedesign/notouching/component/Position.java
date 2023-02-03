@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Position extends Component {
 
-    protected float x;
-    protected float y;
-    protected int angle;
-    protected boolean dynamic;
+    public float x;
+    public float y;
+    public int angle;
+    public boolean dynamic;
 
     @Override
     public ComponentType type() {
