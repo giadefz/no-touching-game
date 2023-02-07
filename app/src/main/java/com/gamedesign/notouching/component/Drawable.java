@@ -23,6 +23,10 @@ public abstract class Drawable extends Component {
         }
     }
 
+    public void isBodyWithinBounds(float x, float y){
+
+    }
+
     public abstract void draw(float x, float y, float angle);
 
 }

@@ -32,6 +32,8 @@ public interface Graphics {
 
     void drawPixmap(Pixmap pixmap, int x, int y);
 
+    void drawCircle(float radius, float x, float y, int color);
+
     int getWidth();
 
     int getHeight();

@@ -33,11 +33,11 @@
             },
             {
               "name": "height",
-              "value": "3"
+              "value": "2"
             },
             {
               "name": "density",
-              "value": "0.5"
+              "value": "5"
             },
             {
               "name": "srcRight",
@@ -160,6 +160,128 @@
             {
               "name": "density",
               "value": "0.5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "gameObjectName": "CHASSIS",
+      "components": [
+        {
+          "component": "Position",
+          "args": [
+            {
+              "name": "x",
+              "value": "8"
+            },
+            {
+              "name": "y",
+              "value": "12"
+            },
+            {
+              "name": "angle",
+              "value": "0"
+            },
+            {
+              "name": "dynamic",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "component": "BoxDrawable",
+          "args": [
+            {
+              "name": "alpha",
+              "value": "200"
+            },
+            {
+              "name": "red",
+              "value": "225"
+            },
+            {
+              "name": "green",
+              "value": "140"
+            },
+            {
+              "name": "blue",
+              "value": "30"
+            },
+            {
+              "name": "width",
+              "value": "7.5"
+            },
+            {
+              "name": "height",
+              "value": "2.75"
+            },
+            {
+              "name": "density",
+              "value": "1.6"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "gameObjectName": "WHEEL",
+      "components": [
+        {
+          "component": "Position",
+          "args": [
+            {
+              "name": "x",
+              "value": "8"
+            },
+            {
+              "name": "y",
+              "value": "12"
+            },
+            {
+              "name": "angle",
+              "value": "0"
+            },
+            {
+              "name": "dynamic",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "component": "CircleDrawable",
+          "args": [
+            {
+              "name": "alpha",
+              "value": "200"
+            },
+            {
+              "name": "red",
+              "value": "225"
+            },
+            {
+              "name": "green",
+              "value": "140"
+            },
+            {
+              "name": "blue",
+              "value": "30"
+            },
+            {
+              "name": "radius",
+              "value": "1.25"
+            },
+            {
+              "name": "friction",
+              "value": "0.8"
+            },
+            {
+              "name": "restitution",
+              "value": "0.0"
+            },
+            {
+              "name": "density",
+              "value": "0.8"
             }
           ]
         }

@@ -179,6 +179,12 @@ public class AndroidGraphics implements Graphics {
     }
 
     @Override
+    public void drawCircle(float radius, float x, float y, int color) {
+        paint.setColor(color);
+        canvas.drawCircle(x, y, radius, paint);
+    }
+
+    @Override
     public int getWidth() {
         return frameBuffer.getWidth();
     }

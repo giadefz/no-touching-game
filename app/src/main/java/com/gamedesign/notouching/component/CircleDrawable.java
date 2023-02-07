@@ -5,31 +5,29 @@ import android.graphics.Color;
 import com.gamedesign.notouching.framework.Graphics;
 import com.gamedesign.notouching.util.ScreenInfo;
 import com.google.fpl.liquidfun.Body;
+import com.google.fpl.liquidfun.CircleShape;
 import com.google.fpl.liquidfun.FixtureDef;
 import com.google.fpl.liquidfun.PolygonShape;
 
-public class BoxDrawable extends Drawable {
+public class CircleDrawable extends Drawable {
 
     public int alpha;
     public int red;
     public int green;
     public int blue;
-    public float width;
-    public float height;
+    public float radius;
     public float density;
+    public float restitution;
+    public float friction;
     private int color;
-
-    public BoxDrawable() {
-    }
 
     @Override
     public void draw(float x, float y, float angle) {
         Graphics graphics = owner.game.getGraphics();
-        float widthScaled = width * ScreenInfo.SCALING_FACTOR;
-        float heightScaled = height * ScreenInfo.SCALING_FACTOR;
-        float xScaled = x * ScreenInfo.SCALING_FACTOR;
-        float yScaled = y * ScreenInfo.SCALING_FACTOR;
-        graphics.drawRect(xScaled - (widthScaled / 2), yScaled - (heightScaled / 2), widthScaled, heightScaled, color, angle);
+        Body body = owner.getBody();
+        float posY = body.getPositionY() * ScreenInfo.SCALING_FACTOR;
+        float posX = body.getPositionX() * ScreenInfo.SCALING_FACTOR;
+        graphics.drawCircle(radius * ScreenInfo.SCALING_FACTOR, posX, posY, color);
     }
 
     @Override
@@ -37,13 +35,14 @@ public class BoxDrawable extends Drawable {
         Body body = owner.getBody();
         this.color = Color.argb(alpha, red, green, blue);
 
-        PolygonShape box = new PolygonShape();
-        box.setAsBox(width / 2, height / 2);
+        CircleShape circle = new CircleShape();
+        circle.setRadius(radius);
         FixtureDef fixturedef = new FixtureDef();
-        fixturedef.setShape(box);
-        fixturedef.setFriction(0.8f);       // default 0.2
-        fixturedef.setRestitution(0f);    // default 0
-        fixturedef.setDensity(density);     // default 0
+        fixturedef.setShape(circle);
+        fixturedef.setFriction(friction);
+        fixturedef.setRestitution(restitution);
+        fixturedef.setDensity(density);
         body.createFixture(fixturedef);
     }
+
 }

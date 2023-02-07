@@ -2,6 +2,7 @@ package com.gamedesign.notouching.screen;
 
 import android.graphics.Color;
 
+import com.gamedesign.notouching.Car;
 import com.gamedesign.notouching.Level;
 import com.gamedesign.notouching.component.BoxDrawable;
 import com.gamedesign.notouching.component.ComponentType;
@@ -10,12 +11,15 @@ import com.gamedesign.notouching.component.PixmapDrawable;
 import com.gamedesign.notouching.component.Position;
 import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.framework.Graphics;
+import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.framework.Screen;
 import com.gamedesign.notouching.util.Assets;
 import com.gamedesign.notouching.util.GameObjects;
 import com.google.fpl.liquidfun.DistanceJointDef;
 import com.google.fpl.liquidfun.Joint;
 import com.google.fpl.liquidfun.RopeJointDef;
+
+import java.util.List;
 
 public class GameScreen extends Screen {
 
@@ -34,7 +38,7 @@ public class GameScreen extends Screen {
         super(game);
         this.level = new Level(game.getGraphics());
         GameObject firstTile = level.addGameObject(Assets.gameObjectsJSON.getGameObject(GameObjects.TILE, game));
-        for(int i = 1; i < TILES_NUMBER; i++){
+        for (int i = 1; i < TILES_NUMBER; i++) {
             GameObject tile = Assets.gameObjectsJSON.getGameObject(GameObjects.TILE, game);
             PixmapDrawable component = tile.<PixmapDrawable>getComponent(ComponentType.Drawable);
             tile.setPosition(starting_tile_positionX + i * (component.width + 1), starting_tile_positionY);
@@ -44,6 +48,7 @@ public class GameScreen extends Screen {
         }
         setPiers(game);
         level.addGameObject(Assets.gameObjectsJSON.getGameObject(GameObjects.BOTTOM, game));
+//        level.addCar(new Car(game));
     }
 
     private void setPiers(Game game) {
@@ -66,7 +71,7 @@ public class GameScreen extends Screen {
         pierRope.setBodyA(pier.getBody());
         pierRope.setBodyB(tile.getBody());
         pierRope.setLocalAnchorA(0, 0);
-        pierRope.setLocalAnchorB( - tileDrawable.width / 2, tileDrawable.height / 2);
+        pierRope.setLocalAnchorB(-tileDrawable.width / 2, tileDrawable.height / 2);
         pierRope.setCollideConnected(true);
         pierRope.setMaxLength(3f);
         level.setFirstRopeFromPier(game.getWorld().createJoint(pierRope));
@@ -99,6 +104,23 @@ public class GameScreen extends Screen {
     @Override
     public void update(float deltaTime) {
         if (RUNNING) {
+            List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
+            if (touchEvents.size() > 0) {
+                touchEvents.forEach(te -> {
+                    if(te.type == Input.TouchEvent.TOUCH_DOWN){
+                        level.startingPointCoordinates.setX(te.x);
+                        level.startingPointCoordinates.setY(te.y);
+                    }else if(te.type == Input.TouchEvent.TOUCH_DRAGGED){
+                        level.newRopeCoordinates.setX(te.x);
+                        level.newRopeCoordinates.setY(te.y);
+                    }
+                    else if(te.type == Input.TouchEvent.TOUCH_UP){
+                        level.newRopeCoordinates.setX(0);
+                        level.newRopeCoordinates.setY(0);
+                    }
+                });
+
+            }
             Graphics g = this.game.getGraphics();
             g.clear(Color.argb(255, 0, 0, 0));
             game.getWorld().step(deltaTime, VELOCITY_ITERATIONS, POSITION_ITERATIONS, PARTICLE_ITERATIONS);
