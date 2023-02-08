@@ -4,12 +4,14 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 
 import com.gamedesign.notouching.framework.Graphics;
+import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.framework.Pixmap;
 import com.gamedesign.notouching.util.Assets;
 import com.gamedesign.notouching.util.ScreenInfo;
 import com.google.fpl.liquidfun.Body;
 import com.google.fpl.liquidfun.FixtureDef;
 import com.google.fpl.liquidfun.PolygonShape;
+import com.google.fpl.liquidfun.Vec2;
 
 public class PixmapDrawable extends Drawable {
     public float width;
@@ -20,8 +22,17 @@ public class PixmapDrawable extends Drawable {
     public String pixmapName;
     private final Rect src = new Rect();
     private Pixmap pixmap;
+    protected Vec2 upperLeftCorner;
+
 
     public PixmapDrawable() {
+    }
+
+    @Override
+    public boolean isBodyWithinBounds(Input.TouchEvent event) {
+        Body body = owner.getBody();
+        Vec2 worldPoint = body.getWorldPoint(upperLeftCorner);
+        return inBounds(event, worldPoint.getX() * ScreenInfo.SCALING_FACTOR, worldPoint.getY() * ScreenInfo.SCALING_FACTOR, width * ScreenInfo.SCALING_FACTOR, height * ScreenInfo.SCALING_FACTOR);
     }
 
     @Override
@@ -35,7 +46,7 @@ public class PixmapDrawable extends Drawable {
     @Override
     public void postConstructOperations() {
         Body body = owner.getBody();
-
+        this.upperLeftCorner = new Vec2(- width / 2, - height / 2);
         PolygonShape box = new PolygonShape();
         box.setAsBox(width / 2, height / 2);
         FixtureDef fixturedef = new FixtureDef();
@@ -45,4 +56,5 @@ public class PixmapDrawable extends Drawable {
         src.set(0, 0, srcRight, srcBottom);
         pixmap = Assets.getPixmapByName(pixmapName);
     }
+
 }

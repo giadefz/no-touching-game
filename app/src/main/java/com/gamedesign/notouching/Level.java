@@ -6,9 +6,11 @@ import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Drawable;
 import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.framework.Graphics;
+import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.util.ScreenInfo;
 import com.google.fpl.liquidfun.Body;
 import com.google.fpl.liquidfun.Joint;
+import com.google.fpl.liquidfun.RopeJoint;
 import com.google.fpl.liquidfun.Vec2;
 
 import java.util.ArrayList;
@@ -22,8 +24,9 @@ public class Level {
     public static final int ROPE_COLOR = Color.argb(200, 255, 248, 220);
     private final List<GameObject> gameObjects;
     private final List<Joint> ropesBetweenTiles;
-    private Joint firstRopeFromPier;
-    private Joint secondRopeFromPier;
+    private final List<Rope> addedRopes;
+    public Joint firstRopeFromPier;
+    public Joint secondRopeFromPier;
     private final Graphics graphics;
     private Car car;
     public Vec2 newRopeCoordinates;
@@ -32,9 +35,10 @@ public class Level {
     public Level(Graphics graphics) {
         this.gameObjects = new ArrayList<>();
         this.ropesBetweenTiles = new ArrayList<>();
+        this.addedRopes = new ArrayList<>();
         this.graphics = graphics;
         this.newRopeCoordinates = new Vec2(0, 0);
-        this.startingPointCoordinates = new Vec2(0, 0); //64, 169
+        this.startingPointCoordinates = new Vec2(0, 0); //64, 169 -- 1823,169
     }
 
     public synchronized GameObject addGameObject(GameObject obj) {
@@ -67,6 +71,14 @@ public class Level {
         this.secondRopeFromPier = secondRopeFromPier;
     }
 
+    public synchronized GameObject getGameObjectWithinBound(Input.TouchEvent event){
+        return this.gameObjects.stream()
+                .filter(gameObject  -> gameObject.<Drawable>getComponent(ComponentType.Drawable)
+                        .isBodyWithinBounds(event))
+                .findFirst()
+                .orElse(null);
+    }
+
     public synchronized void render() {
         drawGameObjects();
         drawRopes();
@@ -83,23 +95,37 @@ public class Level {
     }
 
     private void drawRopes() {
-        ropesBetweenTiles.forEach(j -> {
-            Body bodyA = j.getBodyA();
-            Body bodyB = j.getBodyB();
-            float angleA = bodyA.getAngle();
-            float aposY = bodyA.getPositionY();
-            float aposX = bodyA.getPositionX();
-            float angleB = bodyB.getAngle();
-            float bposY = bodyB.getPositionY();
-            float bposX = bodyB.getPositionX();
+        ropesBetweenTiles.forEach(this::drawRope);
 
-            graphics.drawLine(((aposX + (DISTANCE * (float) Math.cos(angleA)))) * 32 , ((aposY + (DISTANCE * (float) Math.sin(angleA)))) * 32,
-                    ((bposX - (DISTANCE * (float) Math.cos(angleB)))) * 32, ((bposY - (DISTANCE * (float) Math.sin(angleB)))) * 32,
+        addedRopes.forEach( rope ->{
+            Joint joint = rope.joint;
+            Body bodyA = joint.getBodyA();
+            Body bodyB = joint.getBodyB();
+            float bodyBAngle = bodyB.getAngle();
+            graphics.drawLine((bodyA.getPositionX()) * ScreenInfo.SCALING_FACTOR, (bodyA.getPositionY() - PIER_HALF_HEIGHT) * ScreenInfo.SCALING_FACTOR,
+                    (bodyB.getPositionX() + (rope.localCoordinatesX * (float) Math.cos(bodyBAngle))) * ScreenInfo.SCALING_FACTOR,
+                    (bodyB.getPositionY() + (rope.localCoordinatesY * (float) Math.sin(bodyBAngle))) * ScreenInfo.SCALING_FACTOR,
                     ROPE_COLOR);
         });
+
     }
 
-    private void drawFirstRopeFromPier() {
+    private void drawRope(Joint j) {
+        Body bodyA = j.getBodyA();
+        Body bodyB = j.getBodyB();
+        float angleA = bodyA.getAngle();
+        float aposY = bodyA.getPositionY();
+        float aposX = bodyA.getPositionX();
+        float angleB = bodyB.getAngle();
+        float bposY = bodyB.getPositionY();
+        float bposX = bodyB.getPositionX();
+
+        graphics.drawLine(((aposX + (DISTANCE * (float) Math.cos(angleA)))) * 32 , ((aposY + (DISTANCE * (float) Math.sin(angleA)))) * 32,
+                ((bposX - (DISTANCE * (float) Math.cos(angleB)))) * 32, ((bposY - (DISTANCE * (float) Math.sin(angleB)))) * 32,
+                ROPE_COLOR);
+    }
+
+    private void drawFirstRopeFromPier() { //todo: refactor
         Body bodyA = firstRopeFromPier.getBodyA();
         Body bodyB = firstRopeFromPier.getBodyB();
         graphics.drawLine((bodyA.getPositionX()) * ScreenInfo.SCALING_FACTOR, (bodyA.getPositionY() - PIER_HALF_HEIGHT) * ScreenInfo.SCALING_FACTOR,
@@ -123,6 +149,10 @@ public class Level {
 
     public synchronized void moveCar(){
         car.move(50f);
+    }
+
+    public synchronized void addNewRope(Rope newRope) {
+        this.addedRopes.add(newRope);
     }
 
     public synchronized Joint removeRope(int index){
