@@ -12,6 +12,7 @@ import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.framework.Pixmap;
 import com.gamedesign.notouching.framework.Screen;
 import com.gamedesign.notouching.util.Assets;
+import com.gamedesign.notouching.util.Settings;
 
 import java.util.List;
 
@@ -36,9 +37,9 @@ public class MainMenuScreen extends Screen {
                 if(inBounds(event, 804, 630, 320, 160) ) {
                     game.setScreen(new GameScreen(game));
                     Assets.click.play(1);
-                    /*if(Settings.soundEnabled)
+                    if(Settings.soundEnabled)
                         Assets.click.play(1);
-                    return;*/
+                    return;
                 }
             }
         }

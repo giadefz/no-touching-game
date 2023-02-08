@@ -48,7 +48,7 @@ public class GameScreen extends Screen {
         }
         setPiers(game);
         level.addGameObject(Assets.gameObjectsJSON.getGameObject(GameObjects.BOTTOM, game));
-//        level.addCar(new Car(game));
+        level.addCar(new Car(game));
     }
 
     private void setPiers(Game game) {
@@ -123,7 +123,7 @@ public class GameScreen extends Screen {
             }
             Graphics g = this.game.getGraphics();
             g.clear(Color.argb(255, 0, 0, 0));
-            game.getWorld().step(deltaTime, VELOCITY_ITERATIONS, POSITION_ITERATIONS, PARTICLE_ITERATIONS);
+            game.getWorld().step(1/60f, VELOCITY_ITERATIONS, POSITION_ITERATIONS, PARTICLE_ITERATIONS);
             level.render();
         }
     }

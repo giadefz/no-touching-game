@@ -225,6 +225,65 @@
       ]
     },
     {
+      "gameObjectName": "AXLE",
+      "components": [
+        {
+          "component": "Position",
+          "args": [
+            {
+              "name": "x",
+              "value": "8"
+            },
+            {
+              "name": "y",
+              "value": "12"
+            },
+            {
+              "name": "angle",
+              "value": "0"
+            },
+            {
+              "name": "dynamic",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "component": "BoxDrawable",
+          "args": [
+            {
+              "name": "alpha",
+              "value": "255"
+            },
+            {
+              "name": "red",
+              "value": "255"
+            },
+            {
+              "name": "green",
+              "value": "0"
+            },
+            {
+              "name": "blue",
+              "value": "0"
+            },
+            {
+              "name": "width",
+              "value": "0.3"
+            },
+            {
+              "name": "height",
+              "value": "0.3"
+            },
+            {
+              "name": "density",
+              "value": "1.6"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "gameObjectName": "WHEEL",
       "components": [
         {

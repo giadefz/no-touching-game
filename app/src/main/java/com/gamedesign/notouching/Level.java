@@ -45,6 +45,8 @@ public class Level {
     public synchronized void addCar(Car car) {
         this.car = car;
         this.addGameObject(car.chassis);
+        this.addGameObject(car.frontAxle);
+        this.addGameObject(car.rearAxle);
         this.addGameObject(car.frontWheel);
         this.addGameObject(car.backWheel);
     }

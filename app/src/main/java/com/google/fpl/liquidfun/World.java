@@ -95,6 +95,11 @@ public class World {
     return (cPtr == 0) ? null : new RevoluteJoint(cPtr, false);
   }
 
+  public PrismaticJoint createJoint(PrismaticJointDef def) {
+    long cPtr = liquidfunJNI.World_createJoint(swigCPtr, this, JointDef.getCPtr(def), def);
+    return (cPtr == 0) ? null : new PrismaticJoint(cPtr, false);
+  }
+
   public DistanceJoint createDistanceJoint(JointDef def) {
     long cPtr = liquidfunJNI.World_createJoint(swigCPtr, this, JointDef.getCPtr(def), def);
     return (cPtr == 0) ? null : new DistanceJoint(cPtr, false);
