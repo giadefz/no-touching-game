@@ -39,7 +39,7 @@ public class GameObjectsJSON {
     }
 
     public GameObject getGameObject(String gameObjectName, Game game) {
-        GameObject gameObject = new GameObject(game);
+        GameObject gameObject = new GameObject(gameObjectName, game);
         Set<Component> components = this.gameObjects.stream()
                 .filter(g -> g.gameObjectName.equals(gameObjectName))
                 .findFirst()

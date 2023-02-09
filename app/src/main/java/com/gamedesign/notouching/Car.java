@@ -45,7 +45,7 @@ public class Car {
         RevoluteJointDef firstWheelJointDef = new RevoluteJointDef();
         firstWheelJointDef.setBodyA(chassis.getBody());
         firstWheelJointDef.setBodyB(frontWheel.getBody());
-        firstWheelJointDef.setLocalAnchorA(chassisDrawable.width / 4,  chassisDrawable.height + WHEEL_TO_CHASSIS_DISTANCE);
+        firstWheelJointDef.setLocalAnchorA((chassisDrawable.width / 4 + WHEEL_TO_CHASSIS_DISTANCE),  chassisDrawable.height + WHEEL_TO_CHASSIS_DISTANCE);
         firstWheelJointDef.setLocalAnchorB(0, 0);
         firstWheelJointDef.setCollideConnected(true);
         firstWheelJointDef.setEnableMotor(true);
@@ -55,7 +55,7 @@ public class Car {
         RevoluteJointDef backWheelJointDef = new RevoluteJointDef();
         backWheelJointDef.setBodyA(chassis.getBody());
         backWheelJointDef.setBodyB(backWheel.getBody());
-        backWheelJointDef.setLocalAnchorA(-chassisDrawable.width / 4,  chassisDrawable.height + WHEEL_TO_CHASSIS_DISTANCE);
+        backWheelJointDef.setLocalAnchorA(-(chassisDrawable.width / 4 + WHEEL_TO_CHASSIS_DISTANCE),  chassisDrawable.height + WHEEL_TO_CHASSIS_DISTANCE);
         backWheelJointDef.setLocalAnchorB(0, 0);
         backWheelJointDef.setCollideConnected(true);
         backWheelJointDef.setEnableMotor(true);
@@ -89,7 +89,7 @@ public class Car {
         level.addGameObject(bomb);
         this.targetCoordinate = 3000f;
         stopped = false;
-        this.motorSpeed = 30f;
+        this.motorSpeed = 10f;
     }
 
 }
