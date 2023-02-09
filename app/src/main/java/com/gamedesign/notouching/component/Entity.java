@@ -1,6 +1,7 @@
 package com.gamedesign.notouching.component;
 
 import com.gamedesign.notouching.framework.Game;
+import com.gamedesign.notouching.world.WorldHandler;
 import com.google.fpl.liquidfun.Body;
 import com.google.fpl.liquidfun.BodyDef;
 import com.google.fpl.liquidfun.PolygonShape;
@@ -34,7 +35,7 @@ public abstract class Entity {
     }
 
     public void setBody(BodyDef bodyDef) {
-        Body body = game.getWorld().createBody(bodyDef);
+        Body body = WorldHandler.createBody(bodyDef);
         this.body = body;
         body.setUserData(this);
     }

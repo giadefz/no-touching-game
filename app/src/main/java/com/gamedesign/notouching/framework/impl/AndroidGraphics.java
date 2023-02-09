@@ -92,14 +92,14 @@ public class AndroidGraphics implements Graphics {
     @Override
     public void drawLine(int x, int y, int x2, int y2, int color) {
         paint.setColor(color);
-        paint.setStrokeWidth(15f);
+        paint.setStrokeWidth(8f);
         canvas.drawLine(x, y, x2, y2, paint);
     }
 
     @Override
     public void drawLine(float x, float y, float x2, float y2, int color) {
         paint.setColor(color);
-        paint.setStrokeWidth(12f);
+        paint.setStrokeWidth(8f);
         canvas.drawLine(x, y, x2, y2, paint);
     }
 

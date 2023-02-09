@@ -7,11 +7,13 @@ import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.util.Assets;
 import com.gamedesign.notouching.util.GameObjects;
+import com.gamedesign.notouching.world.WorldHandler;
 import com.google.fpl.liquidfun.Joint;
 import com.google.fpl.liquidfun.PrismaticJoint;
 import com.google.fpl.liquidfun.PrismaticJointDef;
 import com.google.fpl.liquidfun.RevoluteJoint;
 import com.google.fpl.liquidfun.RevoluteJointDef;
+import com.google.fpl.liquidfun.World;
 
 public class Car {
 
@@ -22,8 +24,8 @@ public class Car {
     public RevoluteJoint backWheelJoint;
     public GameObject frontAxle;
     public GameObject rearAxle;
-    public PrismaticJoint frontAxlePrismaticJoint;
-    public PrismaticJoint rearAxlePrismaticJoint;
+    public Joint frontAxlePrismaticJoint;
+    public Joint rearAxlePrismaticJoint;
 
 
     public Car(Game game) {
@@ -52,13 +54,13 @@ public class Car {
         axlePrismaticJointDef.setBodyB(frontWheel.getBody());
         axlePrismaticJointDef.setLocalAnchorA( chassisDrawable.width / 4,  chassisDrawable.height + 0.55f);
         axlePrismaticJointDef.setLocalAnchorB(0, 0);
-        frontAxlePrismaticJoint = game.getWorld().createJoint(axlePrismaticJointDef);
+        frontAxlePrismaticJoint = WorldHandler.createJoint(axlePrismaticJointDef);
         // rear axle
         axlePrismaticJointDef.setBodyA(chassis.getBody());
         axlePrismaticJointDef.setBodyB(backWheel.getBody());
         axlePrismaticJointDef.setLocalAnchorA(- chassisDrawable.width / 4,  chassisDrawable.height + 0.55f);
         axlePrismaticJointDef.setLocalAnchorB(0, 0);
-        rearAxlePrismaticJoint = game.getWorld().createJoint(axlePrismaticJointDef);
+        rearAxlePrismaticJoint = WorldHandler.createJoint(axlePrismaticJointDef);
 
 /*        RevoluteJointDef firstWheelJointDef = new RevoluteJointDef();
         firstWheelJointDef.setBodyA(chassis.getBody());

@@ -16,6 +16,4 @@ public interface Game {
     Screen getCurrentScreen();
 
     Screen getStartScreen();
-
-    World getWorld();
 }

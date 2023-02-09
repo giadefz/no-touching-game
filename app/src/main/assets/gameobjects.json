@@ -345,6 +345,69 @@
           ]
         }
       ]
+    },
+    {
+      "gameObjectName": "BOMB",
+      "components": [
+        {
+          "component": "Position",
+          "args": [
+            {
+              "name": "x",
+              "value": "8"
+            },
+            {
+              "name": "y",
+              "value": "12"
+            },
+            {
+              "name": "angle",
+              "value": "0"
+            },
+            {
+              "name": "dynamic",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "component": "CircleDrawable",
+          "args": [
+            {
+              "name": "alpha",
+              "value": "200"
+            },
+            {
+              "name": "red",
+              "value": "225"
+            },
+            {
+              "name": "green",
+              "value": "140"
+            },
+            {
+              "name": "blue",
+              "value": "30"
+            },
+            {
+              "name": "radius",
+              "value": "1"
+            },
+            {
+              "name": "friction",
+              "value": "0.8"
+            },
+            {
+              "name": "restitution",
+              "value": "0.0"
+            },
+            {
+              "name": "density",
+              "value": "2"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

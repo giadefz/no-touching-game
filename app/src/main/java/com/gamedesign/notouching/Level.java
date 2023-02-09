@@ -1,5 +1,7 @@
 package com.gamedesign.notouching;
 
+import static com.gamedesign.notouching.util.ScreenInfo.SCALING_FACTOR;
+
 import android.graphics.Color;
 
 import com.gamedesign.notouching.component.ComponentType;
@@ -7,10 +9,8 @@ import com.gamedesign.notouching.component.Drawable;
 import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.framework.Graphics;
 import com.gamedesign.notouching.framework.Input;
-import com.gamedesign.notouching.util.ScreenInfo;
 import com.google.fpl.liquidfun.Body;
 import com.google.fpl.liquidfun.Joint;
-import com.google.fpl.liquidfun.RopeJoint;
 import com.google.fpl.liquidfun.Vec2;
 
 import java.util.ArrayList;
@@ -19,9 +19,10 @@ import java.util.Objects;
 
 public class Level {
 
-    public static final float DISTANCE = 3;
+    public static final float DISTANCE_BETWEEN_TILES = 3;
     public static final float PIER_HALF_HEIGHT = 12.775f;
     public static final int ROPE_COLOR = Color.argb(200, 255, 248, 220);
+    public static final float MOTOR_SPEED = 50f;
     private final List<GameObject> gameObjects;
     private final List<Joint> ropesBetweenTiles;
     private final List<Rope> addedRopes;
@@ -38,7 +39,7 @@ public class Level {
         this.addedRopes = new ArrayList<>();
         this.graphics = graphics;
         this.newRopeCoordinates = new Vec2(0, 0);
-        this.startingPointCoordinates = new Vec2(0, 0); //64, 169 -- 1823,169
+        this.startingPointCoordinates = new Vec2(0, 0);
     }
 
     public synchronized GameObject addGameObject(GameObject obj) {
@@ -95,22 +96,22 @@ public class Level {
     }
 
     private void drawRopes() {
-        ropesBetweenTiles.forEach(this::drawRope);
+        ropesBetweenTiles.forEach(this::drawRopeBetweenTiles);
 
         addedRopes.forEach( rope ->{
             Joint joint = rope.joint;
             Body bodyA = joint.getBodyA();
             Body bodyB = joint.getBodyB();
             float bodyBAngle = bodyB.getAngle();
-            graphics.drawLine((bodyA.getPositionX()) * ScreenInfo.SCALING_FACTOR, (bodyA.getPositionY() - PIER_HALF_HEIGHT) * ScreenInfo.SCALING_FACTOR,
-                    (bodyB.getPositionX() + (rope.localCoordinatesX * (float) Math.cos(bodyBAngle))) * ScreenInfo.SCALING_FACTOR,
-                    (bodyB.getPositionY() + (rope.localCoordinatesY * (float) Math.sin(bodyBAngle))) * ScreenInfo.SCALING_FACTOR,
+            graphics.drawLine((bodyA.getPositionX()) * SCALING_FACTOR, (bodyA.getPositionY() - PIER_HALF_HEIGHT) * SCALING_FACTOR,
+                    (bodyB.getPositionX() + ((rope.localCoordinatesX * (float) Math.cos(bodyBAngle)) - (rope.localCoordinatesY * (float) Math.sin(bodyBAngle)))) * SCALING_FACTOR,
+                    (bodyB.getPositionY() + ((rope.localCoordinatesX * (float) Math.sin(bodyBAngle)) + (rope.localCoordinatesY * (float) Math.cos(bodyBAngle)))) * SCALING_FACTOR,
                     ROPE_COLOR);
         });
 
     }
 
-    private void drawRope(Joint j) {
+    private void drawRopeBetweenTiles(Joint j) {
         Body bodyA = j.getBodyA();
         Body bodyB = j.getBodyB();
         float angleA = bodyA.getAngle();
@@ -120,24 +121,24 @@ public class Level {
         float bposY = bodyB.getPositionY();
         float bposX = bodyB.getPositionX();
 
-        graphics.drawLine(((aposX + (DISTANCE * (float) Math.cos(angleA)))) * 32 , ((aposY + (DISTANCE * (float) Math.sin(angleA)))) * 32,
-                ((bposX - (DISTANCE * (float) Math.cos(angleB)))) * 32, ((bposY - (DISTANCE * (float) Math.sin(angleB)))) * 32,
+        graphics.drawLine(((aposX + (DISTANCE_BETWEEN_TILES * (float) Math.cos(angleA)))) * SCALING_FACTOR , ((aposY + (DISTANCE_BETWEEN_TILES * (float) Math.sin(angleA)))) * SCALING_FACTOR,
+                ((bposX - (DISTANCE_BETWEEN_TILES * (float) Math.cos(angleB)))) * SCALING_FACTOR, ((bposY - (DISTANCE_BETWEEN_TILES * (float) Math.sin(angleB)))) * SCALING_FACTOR,
                 ROPE_COLOR);
     }
 
     private void drawFirstRopeFromPier() { //todo: refactor
         Body bodyA = firstRopeFromPier.getBodyA();
         Body bodyB = firstRopeFromPier.getBodyB();
-        graphics.drawLine((bodyA.getPositionX()) * ScreenInfo.SCALING_FACTOR, (bodyA.getPositionY() - PIER_HALF_HEIGHT) * ScreenInfo.SCALING_FACTOR,
-                (bodyB.getPositionX() - (DISTANCE * (float) Math.cos(bodyB.getAngle()))) * ScreenInfo.SCALING_FACTOR, (bodyB.getPositionY() - (DISTANCE * (float) Math.sin(bodyB.getAngle()))) * ScreenInfo.SCALING_FACTOR,
+        graphics.drawLine((bodyA.getPositionX()) * SCALING_FACTOR, (bodyA.getPositionY() - PIER_HALF_HEIGHT) * SCALING_FACTOR,
+                (bodyB.getPositionX() - (DISTANCE_BETWEEN_TILES * (float) Math.cos(bodyB.getAngle()))) * SCALING_FACTOR, (bodyB.getPositionY() - (DISTANCE_BETWEEN_TILES * (float) Math.sin(bodyB.getAngle()))) * SCALING_FACTOR,
                 ROPE_COLOR);
     }
 
     private void drawSecondRopeFromPier() {
         Body bodyA = secondRopeFromPier.getBodyA();
         Body bodyB = secondRopeFromPier.getBodyB();
-        graphics.drawLine((bodyA.getPositionX()) * ScreenInfo.SCALING_FACTOR, (bodyA.getPositionY() - PIER_HALF_HEIGHT) * ScreenInfo.SCALING_FACTOR,
-                (bodyB.getPositionX() + (DISTANCE * (float) Math.cos(bodyB.getAngle()))) * ScreenInfo.SCALING_FACTOR, (bodyB.getPositionY() + (DISTANCE * (float) Math.sin(bodyB.getAngle()))) * ScreenInfo.SCALING_FACTOR,
+        graphics.drawLine((bodyA.getPositionX()) * SCALING_FACTOR, (bodyA.getPositionY() - PIER_HALF_HEIGHT) * SCALING_FACTOR,
+                (bodyB.getPositionX() + (DISTANCE_BETWEEN_TILES * (float) Math.cos(bodyB.getAngle()))) * SCALING_FACTOR, (bodyB.getPositionY() + (DISTANCE_BETWEEN_TILES * (float) Math.sin(bodyB.getAngle()))) * SCALING_FACTOR,
                 ROPE_COLOR);
     }
 
@@ -148,7 +149,7 @@ public class Level {
     }
 
     public synchronized void moveCar(){
-        car.move(50f);
+        car.move(MOTOR_SPEED);
     }
 
     public synchronized void addNewRope(Rope newRope) {

@@ -30,7 +30,6 @@ public abstract class AndroidGame extends Activity implements Game {
     FileIO fileIO;
     Screen screen;
     WakeLock wakeLock;
-    World world;
     private static final float XMIN = -4, XMAX = 16, YMIN = -22, YMAX = 22;
 
     @Override
@@ -43,12 +42,10 @@ public abstract class AndroidGame extends Activity implements Game {
 
         System.loadLibrary("liquidfun");
         System.loadLibrary("liquidfun_jni");
-        world = new World(0, 7);
         boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
         int frameBufferWidth = isLandscape ? 1920 : 1080;
         int frameBufferHeight = isLandscape ? 1080 : 1920;
         Box physicalSize = new Box(XMIN, YMIN, XMAX, YMAX);
-        ScreenInfo.injectInfo(physicalSize, frameBufferHeight, frameBufferWidth);
         Bitmap frameBuffer = Bitmap.createBitmap(frameBufferWidth,
                 frameBufferHeight, Config.RGB_565);
 
@@ -109,11 +106,6 @@ public abstract class AndroidGame extends Activity implements Game {
     @Override
     public Audio getAudio() {
         return audio;
-    }
-
-    @Override
-    public World getWorld() {
-        return world;
     }
 
     @Override
