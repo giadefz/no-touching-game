@@ -11,7 +11,7 @@ import java.util.HashSet;
 
 public class MyContactListener extends ContactListener {
 
-    private Collection<Collision> cache = new HashSet<>();
+    private final Collection<Collision> cache = new HashSet<>();
 
     public Collection<Collision> getCollisions() {
         Collection<Collision> result = new HashSet<>(cache);

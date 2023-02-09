@@ -1,7 +1,6 @@
 package com.gamedesign.notouching;
 
 import com.gamedesign.notouching.component.BoxDrawable;
-import com.gamedesign.notouching.component.Component;
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.framework.Game;
@@ -9,11 +8,8 @@ import com.gamedesign.notouching.util.Assets;
 import com.gamedesign.notouching.util.GameObjects;
 import com.gamedesign.notouching.world.WorldHandler;
 import com.google.fpl.liquidfun.Joint;
-import com.google.fpl.liquidfun.PrismaticJoint;
 import com.google.fpl.liquidfun.PrismaticJointDef;
 import com.google.fpl.liquidfun.RevoluteJoint;
-import com.google.fpl.liquidfun.RevoluteJointDef;
-import com.google.fpl.liquidfun.World;
 
 public class Car {
 
@@ -26,6 +22,7 @@ public class Car {
     public GameObject rearAxle;
     public Joint frontAxlePrismaticJoint;
     public Joint rearAxlePrismaticJoint;
+    public Game game;
 
 
     public Car(Game game) {

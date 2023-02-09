@@ -4,7 +4,6 @@ import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.world.WorldHandler;
 import com.google.fpl.liquidfun.Body;
 import com.google.fpl.liquidfun.BodyDef;
-import com.google.fpl.liquidfun.PolygonShape;
 import com.google.fpl.liquidfun.Vec2;
 
 import java.util.HashMap;
@@ -49,9 +48,5 @@ public abstract class Entity {
 
     public Body getBody() {
         return body;
-    }
-
-    public void setShape(PolygonShape shape){
-
     }
 }

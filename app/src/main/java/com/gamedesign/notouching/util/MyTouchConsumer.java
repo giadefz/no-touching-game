@@ -16,7 +16,6 @@ import com.gamedesign.notouching.world.WorldHandler;
 import com.google.fpl.liquidfun.Joint;
 import com.google.fpl.liquidfun.RopeJointDef;
 import com.google.fpl.liquidfun.Vec2;
-import com.google.fpl.liquidfun.World;
 
 public class MyTouchConsumer extends TouchConsumer {
 

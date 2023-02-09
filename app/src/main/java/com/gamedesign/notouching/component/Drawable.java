@@ -15,7 +15,6 @@ public abstract class Drawable extends Component {
 
     public void drawThis() {
         Body body = owner.getBody();
-        Graphics graphics = owner.game.getGraphics();
         if (body != null) {
             float x = body.getPositionX(), y = body.getPositionY(), angle = body.getAngle();
             this.draw(x, y, angle);
