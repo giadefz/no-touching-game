@@ -3,6 +3,7 @@ package com.gamedesign.notouching.screen;
 import android.graphics.Color;
 import android.util.Log;
 
+import com.gamedesign.notouching.Car;
 import com.gamedesign.notouching.Level;
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.GameObject;
@@ -42,9 +43,8 @@ public class GameScreen extends Screen {
         this.level = new Level(game);
         this.touchConsumer = new MyTouchConsumer(level, SECOND_PIER_X_COORDINATE, FIRST_PIER_X_COORDINATE, PIER_Y_COORDINATE, PIER_HALF_HEIGHT);
         WorldHandler.setContactListener(contactListener);
-        level.addGameObject((Assets.gameObjectsJSON.getGameObject(GameObjects.BOMB, game)));
+//        level.addGameObject((Assets.gameObjectsJSON.getGameObject(GameObjects.BOMB, game)));
 //        level.addGameObject(Assets.gameObjectsJSON.getGameObject(GameObjects.BOTTOM, game));
-//        level.addCar(new Car(game));
     }
 
 
@@ -63,6 +63,8 @@ public class GameScreen extends Screen {
             WorldHandler.step();
 
             handleCollisions(contactListener.getCollisions());
+
+            level.moveCar();
 
             level.render();
 

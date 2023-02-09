@@ -4,9 +4,7 @@ public enum ComponentType {
 
 
     Drawable,
-    Physics,
-    Controllable,
     Position,
-    AI
+    Exploding
 
 }

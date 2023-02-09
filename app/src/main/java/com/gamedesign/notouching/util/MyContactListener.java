@@ -1,5 +1,6 @@
 package com.gamedesign.notouching.util;
 
+import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.GameObject;
 import com.google.fpl.liquidfun.Body;
 import com.google.fpl.liquidfun.Contact;
@@ -28,8 +29,10 @@ public class MyContactListener extends ContactListener {
         GameObject a = (GameObject)userdataA,
                    b = (GameObject)userdataB;
 
+        boolean isThereABomb = a.getComponent(ComponentType.Exploding) != null || b.getComponent(ComponentType.Exploding) != null;
+
         // TODO: use an object pool instead
-        cache.add(new Collision(a, b));
+        cache.add(new Collision(a, b, isThereABomb));
 
         // Sound sound = CollisionSounds.getSound(a.getClass(), b.getClass());
         //if (sound!=null)

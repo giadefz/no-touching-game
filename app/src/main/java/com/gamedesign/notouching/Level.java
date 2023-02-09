@@ -10,7 +10,6 @@ import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.component.PixmapDrawable;
 import com.gamedesign.notouching.component.Position;
 import com.gamedesign.notouching.framework.Game;
-import com.gamedesign.notouching.framework.Graphics;
 import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.util.Assets;
 import com.gamedesign.notouching.util.GameObjects;
@@ -23,6 +22,7 @@ import com.google.fpl.liquidfun.Vec2;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class Level {
 
@@ -31,8 +31,8 @@ public class Level {
     private static final int ROPE_COLOR = Color.argb(200, 255, 248, 220);
     private static final float MOTOR_SPEED = 50f;
     private static final int TILES_NUMBER = 7;
-    private static final float starting_tile_positionX = 8;
-    private static final float starting_tile_positionY = 17;
+    private static final float STARTING_TILE_POSITION_X = 8;
+    private static final float STARTING_TILE_POSITION_Y = 19;
     private static final float TILE_ROPE_LENGTH = 1.2f;
     private static final float PIER_DISTANCE = 55;
     public static final float PIER_TILE_ROPE_LENGTH = 3f;
@@ -45,6 +45,7 @@ public class Level {
     private Car car;
     public Vec2 newRopeCoordinates;
     public Vec2 startingPointCoordinates;
+    public final Vec2 temp = new Vec2();
 
     public Level(Game game) {
         this.gameObjects = new ArrayList<>();
@@ -55,6 +56,9 @@ public class Level {
         this.startingPointCoordinates = new Vec2(0, 0);
         setUpTiles();
         setUpPiers();
+        Random random = new Random();
+        float xCoordinatesOfLeftTileEdge = (getXCoordinatesOfLeftTileEdge(random.nextInt(5) + 1) * SCALING_FACTOR) + 38f;
+        this.addCar(new Car(game, xCoordinatesOfLeftTileEdge, this, 5f));
     }
 
     public synchronized GameObject addGameObject(GameObject obj) {
@@ -65,8 +69,6 @@ public class Level {
     public synchronized void addCar(Car car) {
         this.car = car;
         this.addGameObject(car.chassis);
-        this.addGameObject(car.frontAxle);
-        this.addGameObject(car.rearAxle);
         this.addGameObject(car.frontWheel);
         this.addGameObject(car.backWheel);
     }
@@ -108,7 +110,7 @@ public class Level {
         for (int i = 1; i < TILES_NUMBER; i++) {
             GameObject tile = Assets.gameObjectsJSON.getGameObject(GameObjects.TILE, game);
             PixmapDrawable component = tile.getComponent(ComponentType.Drawable);
-            tile.setPosition(starting_tile_positionX + i * (component.width + 1), starting_tile_positionY);
+            tile.setPosition(STARTING_TILE_POSITION_X + i * (component.width + 1), STARTING_TILE_POSITION_Y);
             tile = this.addGameObject(tile);
             this.addRopeBetweenTiles(this.insertRopeBetweenTiles(firstTile, tile, component));
             firstTile = tile;
@@ -212,8 +214,16 @@ public class Level {
                     newRopeCoordinates.getX(), newRopeCoordinates.getY(), ROPE_COLOR);
     }
 
+    private float getXCoordinatesOfLeftTileEdge(int tileNumber){
+        GameObject tile = this.gameObjects.get(tileNumber);
+        PixmapDrawable component = tile.getComponent(ComponentType.Drawable);
+        temp.setX(-component.width / 2);
+        temp.setY(0);
+        return tile.getBody().getWorldPoint(temp).getX();
+    }
+
     public synchronized void moveCar(){
-        car.move(MOTOR_SPEED);
+        car.move();
     }
 
     public synchronized void addNewRope(Rope newRope) {

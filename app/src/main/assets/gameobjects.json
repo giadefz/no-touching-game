@@ -177,7 +177,7 @@
             },
             {
               "name": "y",
-              "value": "12"
+              "value": "11"
             },
             {
               "name": "angle",
@@ -371,39 +371,44 @@
           ]
         },
         {
-          "component": "CircleDrawable",
+          "component": "BoxDrawable",
           "args": [
             {
               "name": "alpha",
-              "value": "200"
+              "value": "255"
             },
             {
               "name": "red",
-              "value": "225"
+              "value": "255"
             },
             {
               "name": "green",
-              "value": "140"
+              "value": "255"
             },
             {
               "name": "blue",
-              "value": "30"
+              "value": "255"
             },
             {
-              "name": "radius",
+              "name": "width",
               "value": "1"
             },
             {
-              "name": "friction",
-              "value": "0.8"
-            },
-            {
-              "name": "restitution",
-              "value": "0.0"
+              "name": "height",
+              "value": "1.65"
             },
             {
               "name": "density",
-              "value": "2"
+              "value": "1.6"
+            }
+          ]
+        },
+        {
+          "component": "Exploding",
+          "args": [
+            {
+              "name": "timeUntilIgnition",
+              "value": "2.5"
             }
           ]
         }

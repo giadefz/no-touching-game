@@ -90,6 +90,11 @@ public class World {
     return (cPtr == 0) ? null : new Joint(cPtr, false);
   }
 
+  public RopeJoint createJoint(RopeJointDef def) {
+    long cPtr = liquidfunJNI.World_createJoint(swigCPtr, this, JointDef.getCPtr(def), def);
+    return (cPtr == 0) ? null : new RopeJoint(cPtr, false);
+  }
+
   public RevoluteJoint createJoint(RevoluteJointDef def) {
     long cPtr = liquidfunJNI.World_createJoint(swigCPtr, this, JointDef.getCPtr(def), def);
     return (cPtr == 0) ? null : new RevoluteJoint(cPtr, false);

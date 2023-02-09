@@ -5,6 +5,12 @@ import com.google.fpl.liquidfun.BodyDef;
 import com.google.fpl.liquidfun.ContactListener;
 import com.google.fpl.liquidfun.Joint;
 import com.google.fpl.liquidfun.JointDef;
+import com.google.fpl.liquidfun.PrismaticJoint;
+import com.google.fpl.liquidfun.PrismaticJointDef;
+import com.google.fpl.liquidfun.RevoluteJoint;
+import com.google.fpl.liquidfun.RevoluteJointDef;
+import com.google.fpl.liquidfun.RopeJoint;
+import com.google.fpl.liquidfun.RopeJointDef;
 import com.google.fpl.liquidfun.World;
 
 public class WorldHandler {
@@ -25,7 +31,17 @@ public class WorldHandler {
         return instance.world.createBody(bodyDef);
     }
 
-    public static Joint createJoint(JointDef jointDef){
+    public static RevoluteJoint createJoint(RevoluteJointDef jointDef){
+        if(instance == null) instance = new WorldHandler();
+        return instance.world.createJoint(jointDef);
+    }
+
+    public static RopeJoint createJoint(RopeJointDef jointDef){
+        if(instance == null) instance = new WorldHandler();
+        return instance.world.createJoint(jointDef);
+    }
+
+    public static PrismaticJoint createJoint(PrismaticJointDef jointDef){
         if(instance == null) instance = new WorldHandler();
         return instance.world.createJoint(jointDef);
     }

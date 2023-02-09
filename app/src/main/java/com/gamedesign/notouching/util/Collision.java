@@ -7,10 +7,12 @@ import com.gamedesign.notouching.component.GameObject;
  */
 public class Collision {
     GameObject a, b;
+    boolean isThereABomb;
 
-    public Collision(GameObject a, GameObject b) {
+    public Collision(GameObject a, GameObject b, boolean isThereABomb) {
         this.a = a;
         this.b = b;
+        this.isThereABomb = isThereABomb;
     }
 
     @Override
