@@ -236,4 +236,11 @@ public class Level {
         return toRemove;
     }
 
+    public void destroyCar() {
+        this.gameObjects.remove(car.chassis);
+        this.gameObjects.remove(car.backWheel);
+        this.gameObjects.remove(car.frontWheel);
+        car.destroy();
+
+    }
 }

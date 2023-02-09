@@ -74,7 +74,10 @@ public class GameScreen extends Screen {
 
     private void handleCollisions(Collection<Collision> collisions){
         for(Collision event: collisions){
-            event.toString();
+            if(event.a.name.equals(GameObjects.CHASSIS) && event.b.name.equals(GameObjects.PIER) ||
+                    event.b.name.equals(GameObjects.CHASSIS) && event.a.name.equals(GameObjects.PIER)){
+                level.destroyCar();
+            }
         }
     }
 

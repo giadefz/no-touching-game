@@ -92,6 +92,11 @@ public class Car {
         this.motorSpeed = 10f;
     }
 
+    public void destroy() {
+        WorldHandler.destroyBody(chassis.getBody());
+        WorldHandler.destroyBody(frontWheel.getBody());
+        WorldHandler.destroyBody(backWheel.getBody());
+    }
 }
 
 //    PrismaticJointDef axlePrismaticJointDef = new PrismaticJointDef();

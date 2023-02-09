@@ -51,6 +51,10 @@ public class WorldHandler {
         instance.world.setContactListener(contactListener);
     }
 
+    public static void destroyBody(Body body){
+        instance.world.destroyBody(body);
+    }
+
     public static void step(){
         if(instance == null) instance = new WorldHandler();
         instance.world.step(step, VELOCITY_ITERATIONS, POSITION_ITERATIONS, PARTICLE_ITERATIONS);
