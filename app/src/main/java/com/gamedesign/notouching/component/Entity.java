@@ -45,6 +45,12 @@ public abstract class Entity {
         position.setY(y);
         body.setTransform(position, body.getAngle());
     }
+    public void setPosition(float x, float y, float angle){
+        Vec2 position = body.getPosition();
+        position.setX(x);
+        position.setY(y);
+        body.setTransform(position, angle);
+    }
 
     public Body getBody() {
         return body;

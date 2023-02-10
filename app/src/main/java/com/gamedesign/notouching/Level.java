@@ -6,6 +6,7 @@ import android.graphics.Color;
 
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Drawable;
+import com.gamedesign.notouching.component.Exploding;
 import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.component.PixmapDrawable;
 import com.gamedesign.notouching.component.Position;
@@ -46,6 +47,7 @@ public class Level {
     public Vec2 newRopeCoordinates;
     public Vec2 startingPointCoordinates;
     public final Vec2 temp = new Vec2();
+    public boolean ticktockStarted;
 
     public Level(Game game) {
         this.gameObjects = new ArrayList<>();
@@ -57,8 +59,9 @@ public class Level {
         setUpTiles();
         setUpPiers();
         Random random = new Random();
-        float xCoordinatesOfLeftTileEdge = (getXCoordinatesOfLeftTileEdge(random.nextInt(5) + 1) * SCALING_FACTOR);
-        this.addCar(new Car(game, xCoordinatesOfLeftTileEdge, this, 5f));
+        int index = random.nextInt(5) + 1;
+        float xCoordinatesOfLeftTileEdge = (getXCoordinatesOfLeftTileEdge(index) * SCALING_FACTOR);
+        this.addCar(new Car(game, xCoordinatesOfLeftTileEdge, this, 5f, ropesBetweenTiles.get(index - 1)));
     }
 
     public synchronized GameObject addGameObject(GameObject obj) {
@@ -97,12 +100,35 @@ public class Level {
                 .orElse(null);
     }
 
-    public synchronized void render() {
+    public synchronized void updateLevel(float deltaTime) {
         drawGameObjects();
         drawRopes();
         drawFirstRopeFromPier();
         drawSecondRopeFromPier();
         drawNewRope();
+        if(ticktockStarted)
+            ticktockBomb(deltaTime);
+    }
+
+    private synchronized void ticktockBomb(float deltaTime) {
+        for(GameObject go: gameObjects){
+            Exploding component = go.getComponent(ComponentType.Exploding);
+            if(component != null){
+                component.shortenFuse(deltaTime);
+                if (component.isExploded()){
+                    handleExplosion(go, component);
+                }
+            }
+        }
+    }
+
+    private void handleExplosion(GameObject go, Exploding component) {
+        ropesBetweenTiles.remove(component.target);
+        gameObjects.remove(go);
+        ticktockStarted = false;
+        this.addCar(new Car(game, 3000f, this, 10f, null));
+        newRopeCoordinates.setY(0);
+        newRopeCoordinates.setX(0);
     }
 
     private void setUpTiles(){
@@ -241,6 +267,6 @@ public class Level {
         this.gameObjects.remove(car.backWheel);
         this.gameObjects.remove(car.frontWheel);
         car.destroy();
-
+        ticktockStarted = true;
     }
 }

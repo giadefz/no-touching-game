@@ -24,6 +24,7 @@ public class LoadingScreen extends Screen {
         Graphics graphics = game.getGraphics();
 
         Assets.click = game.getAudio().newSound("click.ogg");
+        Assets.explosion = game.getAudio().newSound("explosion.ogg");
         Assets.background = graphics.newPixmap("background.png", Graphics.PixmapFormat.RGB565);
         Assets.mainMenu = graphics.newPixmap("mainmenu.png", Graphics.PixmapFormat.ARGB4444);
         Assets.buttons = graphics.newPixmap("buttons.png", Graphics.PixmapFormat.ARGB4444);

@@ -13,6 +13,9 @@ import com.google.fpl.liquidfun.RopeJoint;
 import com.google.fpl.liquidfun.RopeJointDef;
 import com.google.fpl.liquidfun.World;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class WorldHandler {
 
     private final World world;
@@ -21,7 +24,6 @@ public class WorldHandler {
     private static final int POSITION_ITERATIONS = 3;
     private static final int PARTICLE_ITERATIONS = 3;
     private static final float step = 1/60f;
-
     private WorldHandler() {
         this.world = new World(0, 7);
     }
@@ -55,6 +57,9 @@ public class WorldHandler {
         instance.world.destroyBody(body);
     }
 
+    public static void destroyJoint(Joint joint){
+        instance.world.destroyJoint(joint);
+    }
     public static void step(){
         if(instance == null) instance = new WorldHandler();
         instance.world.step(step, VELOCITY_ITERATIONS, POSITION_ITERATIONS, PARTICLE_ITERATIONS);

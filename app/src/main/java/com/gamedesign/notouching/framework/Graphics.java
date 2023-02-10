@@ -34,6 +34,8 @@ public interface Graphics {
 
     void drawCircle(float radius, float x, float y, int color);
 
+    void drawText(String text, float x, float y);
+
     int getWidth();
 
     int getHeight();

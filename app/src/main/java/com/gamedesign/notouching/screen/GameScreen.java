@@ -1,27 +1,18 @@
 package com.gamedesign.notouching.screen;
 
 import android.graphics.Color;
-import android.util.Log;
 
-import com.gamedesign.notouching.Car;
 import com.gamedesign.notouching.Level;
-import com.gamedesign.notouching.component.ComponentType;
-import com.gamedesign.notouching.component.GameObject;
-import com.gamedesign.notouching.component.PixmapDrawable;
-import com.gamedesign.notouching.component.Position;
 import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.framework.Graphics;
 import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.framework.Screen;
 import com.gamedesign.notouching.framework.TouchConsumer;
-import com.gamedesign.notouching.util.Assets;
 import com.gamedesign.notouching.util.Collision;
 import com.gamedesign.notouching.util.GameObjects;
 import com.gamedesign.notouching.util.MyContactListener;
 import com.gamedesign.notouching.util.MyTouchConsumer;
 import com.gamedesign.notouching.world.WorldHandler;
-import com.google.fpl.liquidfun.Joint;
-import com.google.fpl.liquidfun.RopeJointDef;
 
 import java.util.Collection;
 import java.util.List;
@@ -53,7 +44,7 @@ public class GameScreen extends Screen {
     public void update(float deltaTime) {
         if (RUNNING) {
             List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
-            if (touchEvents.size() > 0) {
+            if (touchEvents.size() > 0 && level.ticktockStarted) {
                 touchEvents.forEach(touchConsumer::handleTouchEvent);
             }
 
@@ -66,9 +57,9 @@ public class GameScreen extends Screen {
 
             level.moveCar();
 
-            level.render();
+            level.updateLevel(deltaTime);
 
-            Log.println(Log.ASSERT, "TIME", String.valueOf(deltaTime));
+//            Log.println(Log.ASSERT, "TIME", String.valueOf(deltaTime));
         }
     }
 

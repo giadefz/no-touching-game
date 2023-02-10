@@ -10,6 +10,7 @@ public class Assets {
     public static Pixmap icon;
     public static Pixmap tile;
     public static Sound click;
+    public static Sound explosion;
     public static Pixmap background;
     public static Pixmap buttons;
     public static Pixmap mainMenu;
