@@ -1,12 +1,14 @@
 package com.gamedesign.notouching.level;
 
-import static com.gamedesign.notouching.level.Level.DISTANCE_BETWEEN_TILES;
+
 import static com.gamedesign.notouching.level.Level.PIER_HALF_HEIGHT;
 import static com.gamedesign.notouching.level.Level.ROPE_COLOR;
 import static com.gamedesign.notouching.util.ScreenInfo.SCALING_FACTOR;
 
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Drawable;
+import com.gamedesign.notouching.component.GameObject;
+import com.gamedesign.notouching.component.PixmapDrawable;
 import com.google.fpl.liquidfun.Body;
 import com.google.fpl.liquidfun.Joint;
 
@@ -64,25 +66,33 @@ public abstract class LevelState {
         float angleB = bodyB.getAngle();
         float bposY = bodyB.getPositionY();
         float bposX = bodyB.getPositionX();
+        GameObject userDataA = (GameObject) bodyA.getUserData();
+        PixmapDrawable drawableA = userDataA.getComponent(ComponentType.Drawable);
 
-        level.game.getGraphics().drawLine(((aposX + (DISTANCE_BETWEEN_TILES * (float) Math.cos(angleA)))) * SCALING_FACTOR , ((aposY + (DISTANCE_BETWEEN_TILES * (float) Math.sin(angleA)))) * SCALING_FACTOR,
-                ((bposX - (DISTANCE_BETWEEN_TILES * (float) Math.cos(angleB)))) * SCALING_FACTOR, ((bposY - (DISTANCE_BETWEEN_TILES * (float) Math.sin(angleB)))) * SCALING_FACTOR,
+        GameObject userDataB = (GameObject) bodyB.getUserData();
+        PixmapDrawable drawableB = userDataB.getComponent(ComponentType.Drawable);
+        level.game.getGraphics().drawLine(((aposX + ((drawableA.width / 2) * (float) Math.cos(angleA)))) * SCALING_FACTOR , ((aposY + ((drawableA.width / 2) * (float) Math.sin(angleA)))) * SCALING_FACTOR,
+                ((bposX - ((drawableB.width / 2) * (float) Math.cos(angleB)))) * SCALING_FACTOR, ((bposY - ((drawableB.width / 2) * (float) Math.sin(angleB)))) * SCALING_FACTOR,
                 ROPE_COLOR);
     }
 
     protected void drawFirstRopeFromPier() { //todo: refactor
         Body bodyA = level.firstRopeFromPier.getBodyA();
         Body bodyB = level.firstRopeFromPier.getBodyB();
+        GameObject userDataB = (GameObject) bodyB.getUserData();
+        PixmapDrawable drawableB = userDataB.getComponent(ComponentType.Drawable);
         level.game.getGraphics().drawLine((bodyA.getPositionX()) * SCALING_FACTOR, (bodyA.getPositionY() - PIER_HALF_HEIGHT) * SCALING_FACTOR,
-                (bodyB.getPositionX() - (DISTANCE_BETWEEN_TILES * (float) Math.cos(bodyB.getAngle()))) * SCALING_FACTOR, (bodyB.getPositionY() - (DISTANCE_BETWEEN_TILES * (float) Math.sin(bodyB.getAngle()))) * SCALING_FACTOR,
+                (bodyB.getPositionX() - ((drawableB.width / 2) * (float) Math.cos(bodyB.getAngle()))) * SCALING_FACTOR, (bodyB.getPositionY() - ((drawableB.width / 2) * (float) Math.sin(bodyB.getAngle()))) * SCALING_FACTOR,
                 ROPE_COLOR);
     }
 
     protected void drawSecondRopeFromPier() {
         Body bodyA = level.secondRopeFromPier.getBodyA();
         Body bodyB = level.secondRopeFromPier.getBodyB();
+        GameObject userDataB = (GameObject) bodyB.getUserData();
+        PixmapDrawable drawableB = userDataB.getComponent(ComponentType.Drawable);
         level.game.getGraphics().drawLine((bodyA.getPositionX()) * SCALING_FACTOR, (bodyA.getPositionY() - PIER_HALF_HEIGHT) * SCALING_FACTOR,
-                (bodyB.getPositionX() + (DISTANCE_BETWEEN_TILES * (float) Math.cos(bodyB.getAngle()))) * SCALING_FACTOR, (bodyB.getPositionY() + (DISTANCE_BETWEEN_TILES * (float) Math.sin(bodyB.getAngle()))) * SCALING_FACTOR,
+                (bodyB.getPositionX() + ((drawableB.width / 2) * (float) Math.cos(bodyB.getAngle()))) * SCALING_FACTOR, (bodyB.getPositionY() + ((drawableB.width / 2) * (float) Math.sin(bodyB.getAngle()))) * SCALING_FACTOR,
                 ROPE_COLOR);
     }
 

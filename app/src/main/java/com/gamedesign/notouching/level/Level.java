@@ -6,7 +6,6 @@ import android.graphics.Color;
 
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Drawable;
-import com.gamedesign.notouching.component.Entity;
 import com.gamedesign.notouching.component.Exploding;
 import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.component.PixmapDrawable;
@@ -26,10 +25,9 @@ import java.util.Random;
 
 public class Level {
 
-    public static final float DISTANCE_BETWEEN_TILES = 3;
     public static final float PIER_HALF_HEIGHT = 12.775f;
     public static final int ROPE_COLOR = Color.argb(200, 255, 248, 220);
-    public static final float MOTOR_SPEED = 50f;
+    public static final int DISTANCE_BETWEEN_TILES = 1;
     public static final int TILES_NUMBER = 7;
     public static final float STARTING_TILE_POSITION_X = 8;
     public static final float STARTING_TILE_POSITION_Y = 19;
@@ -55,16 +53,22 @@ public class Level {
         this.gameObjects = new ArrayList<>();
         this.ropesBetweenTiles = new ArrayList<>();
         this.addedRopes = new ArrayList<>();
+
         this.game = game;
+
         this.newRopeCoordinates = new Vec2(0, 0);
         this.startingPointCoordinates = new Vec2(0, 0);
+
         this.state = new StartLevelState(this);
+
         setUpTiles();
         setUpPiers();
+
         Random random = new Random();
         int index = random.nextInt(5) + 1;
-        float xCoordinatesOfLeftTileEdge = (getXCoordinatesOfLeftTileEdge(index) * SCALING_FACTOR);
-        this.addCar(new Car(game, xCoordinatesOfLeftTileEdge, this, 5f, ropesBetweenTiles.get(index - 1)));
+        float xCoordinatesOfTileLeftEdge = (getXCoordinatesOfTileLeftEdge(index) * SCALING_FACTOR);
+
+        this.addCar(new Car(game, xCoordinatesOfTileLeftEdge, this, 5f, ropesBetweenTiles.get(index - 1)));
     }
 
     public synchronized GameObject addGameObject(GameObject obj) {
@@ -112,7 +116,7 @@ public class Level {
         for (int i = 1; i < TILES_NUMBER; i++) {
             GameObject tile = Assets.gameObjectsJSON.getGameObject(GameObjects.TILE, game);
             PixmapDrawable component = tile.getComponent(ComponentType.Drawable);
-            tile.setPosition(STARTING_TILE_POSITION_X + i * (component.width + 1), STARTING_TILE_POSITION_Y);
+            tile.setPosition(STARTING_TILE_POSITION_X + i * (component.width + DISTANCE_BETWEEN_TILES), STARTING_TILE_POSITION_Y);
             tile = this.addGameObject(tile);
             this.addRopeBetweenTiles(this.insertRopeBetweenTiles(firstTile, tile, component));
             firstTile = tile;
@@ -156,7 +160,7 @@ public class Level {
         return WorldHandler.createJoint(jointDef);
     }
 
-    private float getXCoordinatesOfLeftTileEdge(int tileNumber){
+    private float getXCoordinatesOfTileLeftEdge(int tileNumber){
         GameObject tile = this.gameObjects.get(tileNumber);
         PixmapDrawable component = tile.getComponent(ComponentType.Drawable);
         temp.setX(-component.width / 2);
