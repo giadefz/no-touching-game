@@ -2,12 +2,13 @@ package com.gamedesign.notouching.screen;
 
 import android.graphics.Color;
 
-import com.gamedesign.notouching.Level;
+import com.gamedesign.notouching.level.Level;
 import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.framework.Graphics;
 import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.framework.Screen;
 import com.gamedesign.notouching.framework.TouchConsumer;
+import com.gamedesign.notouching.level.TicktockState;
 import com.gamedesign.notouching.util.Collision;
 import com.gamedesign.notouching.util.GameObjects;
 import com.gamedesign.notouching.util.MyContactListener;
@@ -44,7 +45,7 @@ public class GameScreen extends Screen {
     public void update(float deltaTime) {
         if (RUNNING) {
             List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
-            if (touchEvents.size() > 0 && level.ticktockStarted) {
+            if (touchEvents.size() > 0 && level.state instanceof TicktockState) {
                 touchEvents.forEach(touchConsumer::handleTouchEvent);
             }
 

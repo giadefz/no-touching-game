@@ -1,4 +1,4 @@
-package com.gamedesign.notouching;
+package com.gamedesign.notouching.level;
 
 import static com.gamedesign.notouching.util.ScreenInfo.SCALING_FACTOR;
 
@@ -29,25 +29,25 @@ public class Level {
 
     public static final float DISTANCE_BETWEEN_TILES = 3;
     public static final float PIER_HALF_HEIGHT = 12.775f;
-    private static final int ROPE_COLOR = Color.argb(200, 255, 248, 220);
-    private static final float MOTOR_SPEED = 50f;
-    private static final int TILES_NUMBER = 7;
-    private static final float STARTING_TILE_POSITION_X = 8;
-    private static final float STARTING_TILE_POSITION_Y = 19;
-    private static final float TILE_ROPE_LENGTH = 1.2f;
-    private static final float PIER_DISTANCE = 55;
+    public static final int ROPE_COLOR = Color.argb(200, 255, 248, 220);
+    public static final float MOTOR_SPEED = 50f;
+    public static final int TILES_NUMBER = 7;
+    public static final float STARTING_TILE_POSITION_X = 8;
+    public static final float STARTING_TILE_POSITION_Y = 19;
+    public static final float TILE_ROPE_LENGTH = 1.2f;
+    public static final float PIER_DISTANCE = 55;
     public static final float PIER_TILE_ROPE_LENGTH = 3f;
-    private final List<GameObject> gameObjects;
-    private final List<Joint> ropesBetweenTiles;
-    private final List<Rope> addedRopes;
+    public final List<GameObject> gameObjects;
+    public final List<Joint> ropesBetweenTiles;
+    public final List<Rope> addedRopes;
     public Joint firstRopeFromPier;
     public Joint secondRopeFromPier;
-    private final Game game;
+    public final Game game;
     private Car car;
     public Vec2 newRopeCoordinates;
     public Vec2 startingPointCoordinates;
     public final Vec2 temp = new Vec2();
-    public boolean ticktockStarted;
+    public LevelState state;
 
     public Level(Game game) {
         this.gameObjects = new ArrayList<>();
@@ -56,6 +56,7 @@ public class Level {
         this.game = game;
         this.newRopeCoordinates = new Vec2(0, 0);
         this.startingPointCoordinates = new Vec2(0, 0);
+        this.state = new BaseLevelState(this);
         setUpTiles();
         setUpPiers();
         Random random = new Random();
@@ -101,34 +102,7 @@ public class Level {
     }
 
     public synchronized void updateLevel(float deltaTime) {
-        drawGameObjects();
-        drawRopes();
-        drawFirstRopeFromPier();
-        drawSecondRopeFromPier();
-        drawNewRope();
-        if(ticktockStarted)
-            ticktockBomb(deltaTime);
-    }
-
-    private synchronized void ticktockBomb(float deltaTime) {
-        for(GameObject go: gameObjects){
-            Exploding component = go.getComponent(ComponentType.Exploding);
-            if(component != null){
-                component.shortenFuse(deltaTime);
-                if (component.isExploded()){
-                    handleExplosion(go, component);
-                }
-            }
-        }
-    }
-
-    private void handleExplosion(GameObject go, Exploding component) {
-        ropesBetweenTiles.remove(component.target);
-        gameObjects.remove(go);
-        ticktockStarted = false;
-        this.addCar(new Car(game, 3000f, this, 10f, null));
-        newRopeCoordinates.setY(0);
-        newRopeCoordinates.setX(0);
+        state.updateLevel(deltaTime);
     }
 
     private void setUpTiles(){
@@ -180,66 +154,6 @@ public class Level {
         return WorldHandler.createJoint(jointDef);
     }
 
-    private void drawGameObjects() {
-        gameObjects.stream()
-                .map(gameObject -> gameObject.<Drawable>getComponent(ComponentType.Drawable))
-                .filter(Objects::nonNull)
-                .forEach(Drawable::drawThis);
-    }
-
-    private void drawRopes() {
-        ropesBetweenTiles.forEach(this::drawRopeBetweenTiles);
-
-        addedRopes.forEach( rope ->{
-            Joint joint = rope.joint;
-            Body bodyA = joint.getBodyA();
-            Body bodyB = joint.getBodyB();
-            float bodyBAngle = bodyB.getAngle();
-            game.getGraphics().drawLine((bodyA.getPositionX()) * SCALING_FACTOR, (bodyA.getPositionY() - PIER_HALF_HEIGHT) * SCALING_FACTOR,
-                    (bodyB.getPositionX() + ((rope.localCoordinatesX * (float) Math.cos(bodyBAngle)) - (rope.localCoordinatesY * (float) Math.sin(bodyBAngle)))) * SCALING_FACTOR,
-                    (bodyB.getPositionY() + ((rope.localCoordinatesX * (float) Math.sin(bodyBAngle)) + (rope.localCoordinatesY * (float) Math.cos(bodyBAngle)))) * SCALING_FACTOR,
-                    ROPE_COLOR);
-        });
-
-    }
-
-    private void drawRopeBetweenTiles(Joint j) {
-        Body bodyA = j.getBodyA();
-        Body bodyB = j.getBodyB();
-        float angleA = bodyA.getAngle();
-        float aposY = bodyA.getPositionY();
-        float aposX = bodyA.getPositionX();
-        float angleB = bodyB.getAngle();
-        float bposY = bodyB.getPositionY();
-        float bposX = bodyB.getPositionX();
-
-        game.getGraphics().drawLine(((aposX + (DISTANCE_BETWEEN_TILES * (float) Math.cos(angleA)))) * SCALING_FACTOR , ((aposY + (DISTANCE_BETWEEN_TILES * (float) Math.sin(angleA)))) * SCALING_FACTOR,
-                ((bposX - (DISTANCE_BETWEEN_TILES * (float) Math.cos(angleB)))) * SCALING_FACTOR, ((bposY - (DISTANCE_BETWEEN_TILES * (float) Math.sin(angleB)))) * SCALING_FACTOR,
-                ROPE_COLOR);
-    }
-
-    private void drawFirstRopeFromPier() { //todo: refactor
-        Body bodyA = firstRopeFromPier.getBodyA();
-        Body bodyB = firstRopeFromPier.getBodyB();
-        game.getGraphics().drawLine((bodyA.getPositionX()) * SCALING_FACTOR, (bodyA.getPositionY() - PIER_HALF_HEIGHT) * SCALING_FACTOR,
-                (bodyB.getPositionX() - (DISTANCE_BETWEEN_TILES * (float) Math.cos(bodyB.getAngle()))) * SCALING_FACTOR, (bodyB.getPositionY() - (DISTANCE_BETWEEN_TILES * (float) Math.sin(bodyB.getAngle()))) * SCALING_FACTOR,
-                ROPE_COLOR);
-    }
-
-    private void drawSecondRopeFromPier() {
-        Body bodyA = secondRopeFromPier.getBodyA();
-        Body bodyB = secondRopeFromPier.getBodyB();
-        game.getGraphics().drawLine((bodyA.getPositionX()) * SCALING_FACTOR, (bodyA.getPositionY() - PIER_HALF_HEIGHT) * SCALING_FACTOR,
-                (bodyB.getPositionX() + (DISTANCE_BETWEEN_TILES * (float) Math.cos(bodyB.getAngle()))) * SCALING_FACTOR, (bodyB.getPositionY() + (DISTANCE_BETWEEN_TILES * (float) Math.sin(bodyB.getAngle()))) * SCALING_FACTOR,
-                ROPE_COLOR);
-    }
-
-    private void drawNewRope(){
-        if(newRopeCoordinates.getX() != 0)
-            game.getGraphics().drawLine(startingPointCoordinates.getX(), startingPointCoordinates.getY(),
-                    newRopeCoordinates.getX(), newRopeCoordinates.getY(), ROPE_COLOR);
-    }
-
     private float getXCoordinatesOfLeftTileEdge(int tileNumber){
         GameObject tile = this.gameObjects.get(tileNumber);
         PixmapDrawable component = tile.getComponent(ComponentType.Drawable);
@@ -256,17 +170,11 @@ public class Level {
         this.addedRopes.add(newRope);
     }
 
-    public synchronized Joint removeRope(int index){
-        Joint toRemove = this.ropesBetweenTiles.get(index);
-        this.ropesBetweenTiles.remove(toRemove);
-        return toRemove;
-    }
-
     public void destroyCar() {
         this.gameObjects.remove(car.chassis);
         this.gameObjects.remove(car.backWheel);
         this.gameObjects.remove(car.frontWheel);
         car.destroy();
-        ticktockStarted = true;
+        state.nextState();
     }
 }

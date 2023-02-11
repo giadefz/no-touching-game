@@ -5,8 +5,8 @@ import static com.gamedesign.notouching.util.ScreenInfo.Y_DISTANCE_FROM_FINGER;
 
 import android.util.Log;
 
-import com.gamedesign.notouching.Level;
-import com.gamedesign.notouching.Rope;
+import com.gamedesign.notouching.level.Level;
+import com.gamedesign.notouching.level.Rope;
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Drawable;
 import com.gamedesign.notouching.component.GameObject;

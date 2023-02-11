@@ -1,4 +1,4 @@
-package com.gamedesign.notouching;
+package com.gamedesign.notouching.level;
 
 import com.google.fpl.liquidfun.Joint;
 import com.google.fpl.liquidfun.Vec2;
