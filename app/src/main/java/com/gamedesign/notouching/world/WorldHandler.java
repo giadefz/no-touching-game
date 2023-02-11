@@ -1,5 +1,7 @@
 package com.gamedesign.notouching.world;
 
+import com.gamedesign.notouching.util.Collision;
+import com.gamedesign.notouching.util.MyContactListener;
 import com.google.fpl.liquidfun.Body;
 import com.google.fpl.liquidfun.BodyDef;
 import com.google.fpl.liquidfun.ContactListener;
@@ -14,18 +16,21 @@ import com.google.fpl.liquidfun.RopeJointDef;
 import com.google.fpl.liquidfun.World;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class WorldHandler {
 
     private final World world;
     public static WorldHandler instance;
+    private  static MyContactListener contactListener = new MyContactListener();
     private static final int VELOCITY_ITERATIONS = 8;
     private static final int POSITION_ITERATIONS = 3;
     private static final int PARTICLE_ITERATIONS = 3;
     private static final float step = 1/60f;
     private WorldHandler() {
         this.world = new World(0, 7);
+        this.world.setContactListener(contactListener);
     }
 
     public static Body createBody(BodyDef bodyDef){
@@ -51,6 +56,10 @@ public class WorldHandler {
     public static void setContactListener(ContactListener contactListener){
         if(instance == null) instance = new WorldHandler();
         instance.world.setContactListener(contactListener);
+    }
+
+    public static Collection<Collision> getCollisions(){
+        return contactListener.getCollisions();
     }
 
     public static void destroyBody(Body body){

@@ -1,8 +1,14 @@
 package com.gamedesign.notouching.level;
 
+import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_RETRY_BUTTON;
+import static com.gamedesign.notouching.util.ScreenInfo.Y_COORD_RETRY_BUTTON;
+
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Exploding;
 import com.gamedesign.notouching.component.GameObject;
+import com.gamedesign.notouching.util.Assets;
+
+import java.util.Locale;
 
 public class TicktockState extends LevelState {
 
@@ -12,38 +18,38 @@ public class TicktockState extends LevelState {
 
     @Override
     public void updateLevel(float deltaTime) {
-        drawGameObjects();
-        drawRopes();
-        drawFirstRopeFromPier();
-        drawSecondRopeFromPier();
-        drawNewRope();
+        commonUpdates();
         ticktockBomb(deltaTime);
+        drawStopButton();
     }
 
     @Override
     public void nextState() {
-        level.state = new BaseLevelState(level);
+        level.state = new CheckWinState(level);
     }
 
 
     private void ticktockBomb(float deltaTime) {
         for(GameObject go: level.gameObjects){
-            Exploding component = go.getComponent(ComponentType.Exploding);
-            if(component != null){
-                component.shortenFuse(deltaTime);
-                if (component.isExploded()){
-                    handleExplosion(go, component);
+            Exploding bomb = go.getComponent(ComponentType.Exploding);
+            if(bomb != null){
+                bomb.shortenFuse(deltaTime);
+                if (bomb.isExploded()){
+                    level.handleExplosion(go, bomb);
+                }else{
+                    drawTimer(bomb.timeUntilIgnition);
                 }
             }
         }
     }
 
-    private void handleExplosion(GameObject go, Exploding component) {
-        level.ropesBetweenTiles.remove(component.target);
-        level.gameObjects.remove(go);
-        level.addCar(new Car(level.game, 3000f, level, 10f, null));
-        level.newRopeCoordinates.setY(0);
-        level.newRopeCoordinates.setX(0);
+    private void drawTimer(float timeUntilIgnition){
+        String timeString = String.format(Locale.getDefault(), "%.2f", timeUntilIgnition);
+        level.game.getGraphics().drawText(timeString ,850, 100);
+    }
+
+    private void drawStopButton(){
+        level.game.getGraphics().drawPixmap(Assets.stopButton, X_COORD_RETRY_BUTTON, Y_COORD_RETRY_BUTTON);
     }
 
 

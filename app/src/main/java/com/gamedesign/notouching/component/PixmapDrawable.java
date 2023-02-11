@@ -32,7 +32,11 @@ public class PixmapDrawable extends Drawable {
     public boolean isBodyWithinBounds(Input.TouchEvent event) {
         Body body = owner.getBody();
         Vec2 worldPoint = body.getWorldPoint(upperLeftCorner);
-        return inBounds(event, worldPoint.getX() * ScreenInfo.SCALING_FACTOR, worldPoint.getY() * ScreenInfo.SCALING_FACTOR, width * ScreenInfo.SCALING_FACTOR, height * ScreenInfo.SCALING_FACTOR);
+        return inBounds(event,
+                worldPoint.getX() * ScreenInfo.SCALING_FACTOR,
+                worldPoint.getY() * ScreenInfo.SCALING_FACTOR,
+                ((width * (float) Math.cos(body.getAngle())) - height * (float) Math.sin(body.getAngle())) * ScreenInfo.SCALING_FACTOR,
+                ((width * (float) Math.sin(body.getAngle())) + height * (float) Math.cos(body.getAngle())) * ScreenInfo.SCALING_FACTOR);
     }
 
     @Override

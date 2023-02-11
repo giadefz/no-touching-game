@@ -24,6 +24,14 @@ public abstract class LevelState {
 
     public abstract void nextState();
 
+    protected void commonUpdates(){
+        drawGameObjects();
+        drawRopes();
+        drawFirstRopeFromPier();
+        drawSecondRopeFromPier();
+        drawNewRope();
+    }
+
     protected void drawGameObjects() {
         level.gameObjects.stream()
                 .map(gameObject -> gameObject.<Drawable>getComponent(ComponentType.Drawable))

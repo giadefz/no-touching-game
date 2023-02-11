@@ -6,6 +6,7 @@ import android.graphics.Color;
 
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Drawable;
+import com.gamedesign.notouching.component.Entity;
 import com.gamedesign.notouching.component.Exploding;
 import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.component.PixmapDrawable;
@@ -15,14 +16,12 @@ import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.util.Assets;
 import com.gamedesign.notouching.util.GameObjects;
 import com.gamedesign.notouching.world.WorldHandler;
-import com.google.fpl.liquidfun.Body;
 import com.google.fpl.liquidfun.Joint;
 import com.google.fpl.liquidfun.RopeJointDef;
 import com.google.fpl.liquidfun.Vec2;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 public class Level {
@@ -37,6 +36,8 @@ public class Level {
     public static final float TILE_ROPE_LENGTH = 1.2f;
     public static final float PIER_DISTANCE = 55;
     public static final float PIER_TILE_ROPE_LENGTH = 3f;
+
+
     public final List<GameObject> gameObjects;
     public final List<Joint> ropesBetweenTiles;
     public final List<Rope> addedRopes;
@@ -48,6 +49,7 @@ public class Level {
     public Vec2 startingPointCoordinates;
     public final Vec2 temp = new Vec2();
     public LevelState state;
+    public float timeBombStopped;
 
     public Level(Game game) {
         this.gameObjects = new ArrayList<>();
@@ -56,7 +58,7 @@ public class Level {
         this.game = game;
         this.newRopeCoordinates = new Vec2(0, 0);
         this.startingPointCoordinates = new Vec2(0, 0);
-        this.state = new BaseLevelState(this);
+        this.state = new StartLevelState(this);
         setUpTiles();
         setUpPiers();
         Random random = new Random();
@@ -177,4 +179,17 @@ public class Level {
         car.destroy();
         state.nextState();
     }
+
+    public void handleExplosion(GameObject go, Exploding component) {
+        this.ropesBetweenTiles.remove(component.target);
+        this.gameObjects.remove(go);
+        this.newRopeCoordinates.setY(0);
+        this.newRopeCoordinates.setX(0);
+        state = new IdleState(this, 2.5f, new CheckWinState(this));
+    }
+
+    public void destroy(){
+        WorldHandler.delete();
+    }
+
 }

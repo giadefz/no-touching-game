@@ -14,6 +14,8 @@ public class Assets {
     public static Pixmap background;
     public static Pixmap buttons;
     public static Pixmap mainMenu;
+    public static Pixmap retryButton;
+    public static Pixmap stopButton;
 
     public static Pixmap getPixmapByName(String pixmapName){
         switch (pixmapName) {

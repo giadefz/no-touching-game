@@ -189,6 +189,7 @@ public class AndroidGraphics implements Graphics {
     public void drawText(String text, float x, float y) {
         paint.setColor(Color.WHITE);
         paint.setStyle(Style.FILL);
+        paint.setTextSize(48f);
         canvas.drawText(text, x, y, paint);
     }
 

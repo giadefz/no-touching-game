@@ -1,4 +1,4 @@
-package com.gamedesign.notouching.util;
+package com.gamedesign.notouching.touch;
 
 import static com.gamedesign.notouching.util.ScreenInfo.HALF_SCREEN;
 import static com.gamedesign.notouching.util.ScreenInfo.Y_DISTANCE_FROM_FINGER;
@@ -12,22 +12,25 @@ import com.gamedesign.notouching.component.Drawable;
 import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.framework.TouchConsumer;
+import com.gamedesign.notouching.util.ScreenInfo;
 import com.gamedesign.notouching.world.WorldHandler;
 import com.google.fpl.liquidfun.Joint;
 import com.google.fpl.liquidfun.RopeJointDef;
 import com.google.fpl.liquidfun.Vec2;
 
-public class MyTouchConsumer extends TouchConsumer {
+public class LevelTouchConsumer extends TouchConsumer {
 
-    private final Level level;
+    public int pierIndex;
+    public Level level;
     private final float secondPierXCoordinate;
     private final float firstPierXCoordinate;
     private final float pierYCoordinate;
     private final float pierHalfHeight;
 
-    public MyTouchConsumer(Level level, float secondPierXCoordinate, float firstPierXCoordinate, float pierYCoordinate, float pierHalfHeight) {
+    public LevelTouchConsumer(Level level, float secondPierXCoordinate, float firstPierXCoordinate, float pierYCoordinate, float pierHalfHeight, int pierIndex) {
         super(event -> event.y = event.y + Y_DISTANCE_FROM_FINGER);
         this.level = level;
+        this.pierIndex = pierIndex;
         this.secondPierXCoordinate = secondPierXCoordinate;
         this.firstPierXCoordinate = firstPierXCoordinate;
         this.pierYCoordinate = pierYCoordinate;
@@ -66,9 +69,9 @@ public class MyTouchConsumer extends TouchConsumer {
     private Rope createNewRope(Input.TouchEvent event, GameObject destinationTile) {
         RopeJointDef jointDef = new RopeJointDef();
         if (level.startingPointCoordinates.getX() > HALF_SCREEN)
-            jointDef.setBodyA(level.getGameObject(8).getBody());
+            jointDef.setBodyA(level.getGameObject(pierIndex + 1).getBody());
         else
-            jointDef.setBodyA(level.getGameObject(7).getBody());
+            jointDef.setBodyA(level.getGameObject(pierIndex).getBody());
         jointDef.setBodyB(destinationTile.getBody());
         jointDef.setLocalAnchorA(0, pierHalfHeight);
         Drawable drawable = destinationTile.getComponent(ComponentType.Drawable);

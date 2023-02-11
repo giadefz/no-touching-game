@@ -38,4 +38,8 @@ public class Exploding extends Component {
     public boolean isExploded() {
         return exploded;
     }
+
+    public void setExplodedToTrue() {
+        this.timeUntilIgnition = 0;
+    }
 }
