@@ -101,6 +101,7 @@ public class Level {
 
     public synchronized GameObject getGameObjectWithinBound(Input.TouchEvent event){
         return this.gameObjects.stream()
+                .filter(gameObject -> gameObject.name.equals(GameObjects.TILE))
                 .filter(gameObject  -> gameObject.<Drawable>getComponent(ComponentType.Drawable)
                         .isBodyWithinBounds(event))
                 .findFirst()
