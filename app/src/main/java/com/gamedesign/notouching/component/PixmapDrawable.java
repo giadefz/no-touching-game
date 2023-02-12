@@ -22,7 +22,7 @@ public class PixmapDrawable extends Drawable {
     public String pixmapName;
     private final Rect src = new Rect();
     private Pixmap pixmap;
-    protected Vec2 upperLeftCorner;
+    protected Vec2 vec = new Vec2();
 
 
     public PixmapDrawable() {
@@ -31,12 +31,11 @@ public class PixmapDrawable extends Drawable {
     @Override
     public boolean isBodyWithinBounds(Input.TouchEvent event) {
         Body body = owner.getBody();
-        Vec2 worldPoint = body.getWorldPoint(upperLeftCorner);
-        return inBounds(event,
-                worldPoint.getX() * ScreenInfo.SCALING_FACTOR,
-                worldPoint.getY() * ScreenInfo.SCALING_FACTOR,
-                ((width * (float) Math.cos(body.getAngle())) - height * (float) Math.sin(body.getAngle())) * ScreenInfo.SCALING_FACTOR,
-                ((width * (float) Math.sin(body.getAngle())) + height * (float) Math.cos(body.getAngle())) * ScreenInfo.SCALING_FACTOR);
+        vec.setX(event.x / ScreenInfo.SCALING_FACTOR);
+        vec.setY(event.y / ScreenInfo.SCALING_FACTOR);
+        Vec2 localPoint = body.getLocalPoint(vec);
+        return ((localPoint.getY() >= - this.height / 2 && localPoint.getY() <= this.height / 2) &&
+                (localPoint.getX() >= - this.width / 2 && localPoint.getX() <= this.width /2));
     }
 
     @Override
@@ -50,7 +49,6 @@ public class PixmapDrawable extends Drawable {
     @Override
     public void postConstructOperations() {
         Body body = owner.getBody();
-        this.upperLeftCorner = new Vec2(- width / 2, - height / 2);
         PolygonShape box = new PolygonShape();
         box.setAsBox(width / 2, height / 2);
         FixtureDef fixturedef = new FixtureDef();

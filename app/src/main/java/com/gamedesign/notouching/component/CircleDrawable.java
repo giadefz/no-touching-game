@@ -22,13 +22,16 @@ public class CircleDrawable extends Drawable {
     public float restitution;
     public float friction;
     private int color;
-    private Vec2 upperLeftCorner;
+    protected Vec2 vec = new Vec2();
 
     @Override
     public boolean isBodyWithinBounds(Input.TouchEvent event) {
         Body body = owner.getBody();
-        Vec2 worldPoint = body.getWorldPoint(upperLeftCorner);
-        return inBounds(event, worldPoint.getX() * ScreenInfo.SCALING_FACTOR, worldPoint.getY() * ScreenInfo.SCALING_FACTOR, radius * ScreenInfo.SCALING_FACTOR, radius * ScreenInfo.SCALING_FACTOR);
+        vec.setX(event.x / ScreenInfo.SCALING_FACTOR);
+        vec.setY(event.y / ScreenInfo.SCALING_FACTOR);
+        Vec2 localPoint = body.getLocalPoint(vec);
+        return ((localPoint.getY() >= - this.radius && localPoint.getY() <= this.radius) &&
+                (localPoint.getX() >= - this.radius && localPoint.getX() <= this.radius));
     }
 
     @Override
@@ -44,7 +47,6 @@ public class CircleDrawable extends Drawable {
     public void postConstructOperations() {
         Body body = owner.getBody();
         this.color = Color.argb(alpha, red, green, blue);
-        this.upperLeftCorner = new Vec2(- radius / 2, radius / 2);
         CircleShape circle = new CircleShape();
         circle.setRadius(radius);
         FixtureDef fixturedef = new FixtureDef();

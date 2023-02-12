@@ -20,7 +20,7 @@ public class BoxDrawable extends Drawable {
     public float height;
     public float density;
     private int color;
-    protected Vec2 upperLeftCorner;
+    protected Vec2 vec = new Vec2();
 
     public BoxDrawable() {
     }
@@ -28,11 +28,11 @@ public class BoxDrawable extends Drawable {
     @Override
     public boolean isBodyWithinBounds(Input.TouchEvent event) {
         Body body = owner.getBody();
-        Vec2 worldPoint = body.getWorldPoint(upperLeftCorner);
-        return inBounds(event, worldPoint.getX() * ScreenInfo.SCALING_FACTOR,
-                worldPoint.getY() * ScreenInfo.SCALING_FACTOR, 
-                width * ScreenInfo.SCALING_FACTOR,
-                height * ScreenInfo.SCALING_FACTOR);
+        vec.setX(event.x / ScreenInfo.SCALING_FACTOR);
+        vec.setY(event.y / ScreenInfo.SCALING_FACTOR);
+        Vec2 localPoint = body.getLocalPoint(vec);
+        return ((localPoint.getY() >= - this.height / 2 && localPoint.getY() <= this.height / 2) &&
+                (localPoint.getX() >= - this.width / 2 && localPoint.getX() <= this.width /2));
     }
 
     @Override
@@ -49,7 +49,6 @@ public class BoxDrawable extends Drawable {
     public void postConstructOperations() {
         Body body = owner.getBody();
         this.color = Color.argb(alpha, red, green, blue);
-        this.upperLeftCorner = new Vec2(-width / 2, - height / 2);
         PolygonShape box = new PolygonShape();
         box.setAsBox(width / 2, height / 2);
         FixtureDef fixturedef = new FixtureDef();
