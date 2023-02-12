@@ -23,11 +23,11 @@ public class WorldHandler {
 
     private final World world;
     public static WorldHandler instance;
-    private  static MyContactListener contactListener = new MyContactListener();
+    private static final MyContactListener contactListener = new MyContactListener();
     private static final int VELOCITY_ITERATIONS = 8;
     private static final int POSITION_ITERATIONS = 3;
     private static final int PARTICLE_ITERATIONS = 3;
-    private static final float step = 1/60f;
+    public static final float step = 1/60f;
     private WorldHandler() {
         this.world = new World(0, 7);
         this.world.setContactListener(contactListener);

@@ -102,26 +102,9 @@ public class Car {
         frontWheel.getBody().setActive(false);
         backWheel.getBody().setActive(false);
     }
-}
 
-//    PrismaticJointDef axlePrismaticJointDef = new PrismaticJointDef();
-//        axlePrismaticJointDef.setLowerTranslation(-1f);
-//                axlePrismaticJointDef.setUpperTranslation(0.3f);
-//                axlePrismaticJointDef.setLocalAxisA(0,-1);
-//                axlePrismaticJointDef.setEnableLimit(true);
-//                axlePrismaticJointDef.setEnableMotor(true);
-//                axlePrismaticJointDef.setCollideConnected(false);
-//                axlePrismaticJointDef.setMaxMotorForce(0.5f);
-//                axlePrismaticJointDef.setMotorSpeed(1f);
-//                // front axle
-//                axlePrismaticJointDef.setBodyA(chassis.getBody());
-//                axlePrismaticJointDef.setBodyB(frontWheel.getBody());
-//                axlePrismaticJointDef.setLocalAnchorA( chassisDrawable.width / 4,  chassisDrawable.height + 0.55f);
-//                axlePrismaticJointDef.setLocalAnchorB(0, 0);
-//                frontAxlePrismaticJoint = WorldHandler.createJoint(axlePrismaticJointDef);
-//                // rear axle
-//                axlePrismaticJointDef.setBodyA(chassis.getBody());
-//                axlePrismaticJointDef.setBodyB(backWheel.getBody());
-//                axlePrismaticJointDef.setLocalAnchorA(- chassisDrawable.width / 4,  chassisDrawable.height + 0.55f);
-//                axlePrismaticJointDef.setLocalAnchorB(0, 0);
-//                rearAxlePrismaticJoint = WorldHandler.createJoint(axlePrismaticJointDef);
+    public boolean isLost(){
+        return chassis.getBody().getPosition().getY() >= 40;
+    }
+
+}

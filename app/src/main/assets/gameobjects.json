@@ -408,7 +408,7 @@
           "args": [
             {
               "name": "timeUntilIgnition",
-              "value": "25"
+              "value": "60"
             }
           ]
         }

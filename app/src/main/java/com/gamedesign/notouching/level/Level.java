@@ -3,7 +3,9 @@ package com.gamedesign.notouching.level;
 import static com.gamedesign.notouching.util.ScreenInfo.SCALING_FACTOR;
 
 import android.graphics.Color;
+import android.util.SparseArray;
 
+import com.gamedesign.notouching.component.Component;
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Drawable;
 import com.gamedesign.notouching.component.Exploding;
@@ -42,7 +44,7 @@ public class Level {
     public Joint firstRopeFromPier;
     public Joint secondRopeFromPier;
     public final Game game;
-    private Car car;
+    Car car;
     public Vec2 newRopeCoordinates;
     public Vec2 startingPointCoordinates;
     public final Vec2 temp = new Vec2();

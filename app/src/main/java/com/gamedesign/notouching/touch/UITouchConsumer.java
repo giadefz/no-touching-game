@@ -11,6 +11,7 @@ import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.framework.TouchConsumer;
 import com.gamedesign.notouching.level.CheckWinState;
 import com.gamedesign.notouching.level.Level;
+import com.gamedesign.notouching.level.LossState;
 import com.gamedesign.notouching.level.TicktockState;
 import com.gamedesign.notouching.level.WinState;
 import com.gamedesign.notouching.screen.GameScreen;
@@ -30,7 +31,7 @@ public class UITouchConsumer extends TouchConsumer {
     @Override
     protected void handleTouchDown(Input.TouchEvent event) {
         if(inBounds(event, X_COORD_RETRY_BUTTON, Y_COORD_RETRY_BUTTON, 80, 80)){
-            if(level.state instanceof CheckWinState || level.state instanceof WinState){
+            if(level.state instanceof CheckWinState || level.state instanceof WinState || level.state instanceof LossState){
                 level.destroy();
                 Level newLevel = new Level(game);
                 gameScreen.level = newLevel;

@@ -20,6 +20,8 @@ import com.gamedesign.notouching.world.WorldHandler;
 import java.util.Collection;
 import java.util.List;
 
+import lombok.SneakyThrows;
+
 public class GameScreen extends Screen {
 
     public static final float PIER_HALF_HEIGHT = -12.775f;
@@ -46,7 +48,7 @@ public class GameScreen extends Screen {
     public void update(float deltaTime) {
         if (RUNNING) {
             List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
-            if(touchEvents.size() > 0 && (level.state instanceof CheckWinState || level.state instanceof WinState)){
+            if(touchEvents.size() > 0 ){
                 touchEvents.forEach(UItouchConsumer::handleTouchEvent);
             }
             if (touchEvents.size() > 0 && level.state instanceof TicktockState) {
@@ -61,7 +63,13 @@ public class GameScreen extends Screen {
             handleCollisions(WorldHandler.getCollisions());
 
             level.moveCar();
-
+            if(deltaTime < WorldHandler.step){
+                try {
+                    Thread.sleep((long) (WorldHandler.step - deltaTime));
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             level.updateLevel(deltaTime);
 
 //            Log.println(Log.ASSERT, "TIME", String.valueOf(deltaTime));
