@@ -1,5 +1,6 @@
 package com.gamedesign.notouching.framework.impl;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -12,7 +13,11 @@ public class AndroidFastRenderView extends SurfaceView implements Runnable {
     Thread renderThread = null;
     SurfaceHolder holder;
     volatile boolean running = false;
-    
+
+    public AndroidFastRenderView(Context context) {
+        super(context);
+    }
+
     public AndroidFastRenderView(AndroidGame game, Bitmap framebuffer) {
         super(game);
         this.game = game;
@@ -41,9 +46,11 @@ public class AndroidFastRenderView extends SurfaceView implements Runnable {
             game.getCurrentScreen().present(deltaTime);
             
             Canvas canvas = holder.lockCanvas();
-            canvas.getClipBounds(dstRect);
-            canvas.drawBitmap(framebuffer, null, dstRect, null);                           
-            holder.unlockCanvasAndPost(canvas);
+            if(canvas != null) {
+                canvas.getClipBounds(dstRect);
+                canvas.drawBitmap(framebuffer, null, dstRect, null);
+                holder.unlockCanvasAndPost(canvas);
+            }
         }
     }
 

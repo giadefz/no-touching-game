@@ -9,6 +9,7 @@ public class Exploding extends Component {
     public float timeUntilIgnition;
     public Joint target;
     private boolean exploded;
+    public float timeStopped;
 
     @Override
     public ComponentType type() {
@@ -40,6 +41,7 @@ public class Exploding extends Component {
     }
 
     public void setExplodedToTrue() {
+        this.timeStopped = timeUntilIgnition;
         this.timeUntilIgnition = 0;
     }
 }

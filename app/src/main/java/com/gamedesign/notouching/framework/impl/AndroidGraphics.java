@@ -187,7 +187,7 @@ public class AndroidGraphics implements Graphics {
 
     @Override
     public void drawText(String text, float x, float y) {
-        paint.setColor(Color.WHITE);
+        paint.setColor(Color.BLACK);
         paint.setStyle(Style.FILL);
         paint.setTextSize(48f);
         canvas.drawText(text, x, y, paint);

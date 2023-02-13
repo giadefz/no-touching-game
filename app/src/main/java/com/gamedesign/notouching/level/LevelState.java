@@ -1,6 +1,7 @@
 package com.gamedesign.notouching.level;
 
 
+import static com.gamedesign.notouching.level.Level.NEW_ROPE_COLOR;
 import static com.gamedesign.notouching.level.Level.PIER_HALF_HEIGHT;
 import static com.gamedesign.notouching.level.Level.ROPE_COLOR;
 import static com.gamedesign.notouching.util.ScreenInfo.SCALING_FACTOR;
@@ -9,6 +10,7 @@ import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Drawable;
 import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.component.PixmapDrawable;
+import com.gamedesign.notouching.util.Assets;
 import com.google.fpl.liquidfun.Body;
 import com.google.fpl.liquidfun.Joint;
 
@@ -27,11 +29,16 @@ public abstract class LevelState {
     public abstract void nextState();
 
     protected void commonUpdates(){
+        drawBackGround();
         drawGameObjects();
         drawRopes();
         drawFirstRopeFromPier();
         drawSecondRopeFromPier();
         drawNewRope();
+    }
+
+    private void drawBackGround() {
+        level.game.getGraphics().drawPixmap(level.backGround, 0, 0);
     }
 
     protected void drawGameObjects() {
@@ -52,7 +59,7 @@ public abstract class LevelState {
             level.game.getGraphics().drawLine((bodyA.getPositionX()) * SCALING_FACTOR, (bodyA.getPositionY() - PIER_HALF_HEIGHT) * SCALING_FACTOR,
                     (bodyB.getPositionX() + ((rope.localCoordinatesX * (float) Math.cos(bodyBAngle)) - (rope.localCoordinatesY * (float) Math.sin(bodyBAngle)))) * SCALING_FACTOR,
                     (bodyB.getPositionY() + ((rope.localCoordinatesX * (float) Math.sin(bodyBAngle)) + (rope.localCoordinatesY * (float) Math.cos(bodyBAngle)))) * SCALING_FACTOR,
-                    ROPE_COLOR);
+                    NEW_ROPE_COLOR);
         });
 
     }
@@ -99,7 +106,7 @@ public abstract class LevelState {
     protected void drawNewRope(){
         if(level.newRopeCoordinates.getX() != 0)
             level.game.getGraphics().drawLine(level.startingPointCoordinates.getX(), level.startingPointCoordinates.getY(),
-                    level.newRopeCoordinates.getX(), level.newRopeCoordinates.getY(), ROPE_COLOR);
+                    level.newRopeCoordinates.getX(), level.newRopeCoordinates.getY(), NEW_ROPE_COLOR);
     }
 
 

@@ -1,7 +1,7 @@
 package com.gamedesign.notouching.level;
 
-import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_RETRY_BUTTON;
-import static com.gamedesign.notouching.util.ScreenInfo.Y_COORD_RETRY_BUTTON;
+import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_BUTTON;
+import static com.gamedesign.notouching.util.ScreenInfo.Y_COORD_BUTTON;
 
 import com.gamedesign.notouching.util.Assets;
 
@@ -34,7 +34,7 @@ public class CheckWinState extends LevelState {
     }
 
     private void drawRetryButton(){
-        level.game.getGraphics().drawPixmap(Assets.retryButton, X_COORD_RETRY_BUTTON, Y_COORD_RETRY_BUTTON);
+        level.game.getGraphics().drawPixmap(Assets.retryButton, X_COORD_BUTTON, Y_COORD_BUTTON);
     }
 
 }

@@ -1,7 +1,9 @@
 package com.gamedesign.notouching.touch;
 
-import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_RETRY_BUTTON;
-import static com.gamedesign.notouching.util.ScreenInfo.Y_COORD_RETRY_BUTTON;
+import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_BUTTON;
+import static com.gamedesign.notouching.util.ScreenInfo.Y_COORD_BUTTON;
+
+import android.util.Log;
 
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Exploding;
@@ -30,19 +32,25 @@ public class UITouchConsumer extends TouchConsumer {
 
     @Override
     protected void handleTouchDown(Input.TouchEvent event) {
-        if(inBounds(event, X_COORD_RETRY_BUTTON, Y_COORD_RETRY_BUTTON, 80, 80)){
-            if(level.state instanceof CheckWinState || level.state instanceof WinState || level.state instanceof LossState){
+        if(inBounds(event, X_COORD_BUTTON, Y_COORD_BUTTON, 125, 125)){
+            if(level.state instanceof  WinState){
                 level.destroy();
-                Level newLevel = new Level(game);
-                gameScreen.level = newLevel;
-                gameScreen.levelTouchConsumer.level = newLevel; //todo: try to refactor this!
-                gameScreen.levelTouchConsumer.pierIndex = newLevel.PIER_INDEX;
-                this.level = newLevel;
+                level.seed = System.currentTimeMillis();
+                //TODO: controlla quante volte di fila hai vinto e incrementa la difficoltà
+                gameScreen.levelTouchConsumer.pierIndex = level.PIER_INDEX;
+                gameScreen.totalPoints += ((WinState) level.state).points;
+                level.setUpLevel(game, gameScreen.totalPoints);
+            }
+            if(level.state instanceof CheckWinState || level.state instanceof LossState){
+                level.destroy();
+                level.setUpLevel(game, 0);
+                gameScreen.levelTouchConsumer.pierIndex = level.PIER_INDEX;
+                gameScreen.totalPoints = 0;
             } else if(level.state instanceof TicktockState){
                 for(GameObject go: level.gameObjects){
                     Exploding component = go.getComponent(ComponentType.Exploding);
                     if(component != null){
-                        level.timeBombStopped = component.timeUntilIgnition;
+                        level.timeBombStopped = component.timeStopped;
                         component.setExplodedToTrue();
                     }
                 }

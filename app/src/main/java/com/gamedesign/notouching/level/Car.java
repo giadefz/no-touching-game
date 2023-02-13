@@ -38,7 +38,6 @@ public class Car {
     private float decreasingMotorSpeed;
     private final Joint bombTarget;
     private final Vec2 vec2 = new Vec2();
-    private final Vec2 vec = new Vec2();
 
 
     public Car(Game game, float targetCoordinate, Level level, float motorSpeed, Joint bombTarget) {
@@ -76,8 +75,8 @@ public class Car {
     public void move(){
         if(!stopped) {
             CirclePixmapDrawable frontWheelComponent = frontWheel.getComponent(ComponentType.Drawable);
-            GameObject lastTile = level.gameObjects.get(level.TILES_NUMBER - 1);
-            PixmapDrawable lastTileComponent = lastTile.getComponent(ComponentType.Drawable);
+            GameObject secondPier = level.gameObjects.get(level.PIER_INDEX + 1);
+            PixmapDrawable secondPierComponent = secondPier.getComponent(ComponentType.Drawable);
 
             if ((chassis.getBody().getWorldCenter().getX() * SCALING_FACTOR - targetCoordinate) < - 50) {
                 frontWheelJoint.setMotorSpeed(motorSpeed);
@@ -91,12 +90,6 @@ public class Car {
                 vec2.setY(0); vec2.setX(0);
                 stopped = true;
                 ejectBomb();
-            }
-            vec2.setY(0); vec2.setX(frontWheelComponent.radius);
-            vec.setY(0); vec.setX(lastTileComponent.width / 2);
-            if(frontWheel.getBody().getWorldPoint(vec2).getX() - lastTile.getBody().getWorldPoint(vec).getX() < 0.2 && frontWheel.getBody().getWorldPoint(vec2).getX() - lastTile.getBody().getWorldPoint(vec).getX() > 0 ){
-                this.destroy();
-                stopped = true;
             }
         }
 
@@ -118,9 +111,9 @@ public class Car {
     }
 
     public void destroy() {
-        WorldHandler.destroyBody(chassis.getBody());
-        WorldHandler.destroyBody(frontWheel.getBody());
-        WorldHandler.destroyBody(backWheel.getBody());
+        chassis.getBody().setActive(false);
+        frontWheel.getBody().setActive(false);
+        backWheel.getBody().setActive(false);
         level.gameObjects.remove(chassis);
         level.gameObjects.remove(frontWheel);
         level.gameObjects.remove(backWheel);

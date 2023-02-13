@@ -36,6 +36,7 @@ public class LoadingScreen extends Screen {
         Assets.pier = graphics.newPixmap("pier.png", Graphics.PixmapFormat.RGB565);
         Assets.wheel = graphics.newPixmap("wheel.png", Graphics.PixmapFormat.RGB565);
         Assets.chassis = graphics.newPixmap("chassis.png", Graphics.PixmapFormat.RGB565);
+        Assets.nextLevel = graphics.newPixmap("nextlevel.png", Graphics.PixmapFormat.RGB565);
 
 
         try (Reader reader = new InputStreamReader(game.getFileIO().readAsset("gameobjects.json"))) {

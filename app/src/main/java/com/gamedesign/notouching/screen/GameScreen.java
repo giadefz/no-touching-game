@@ -1,7 +1,9 @@
 package com.gamedesign.notouching.screen;
 
 import android.graphics.Color;
+import android.util.Log;
 
+import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.level.CheckWinState;
 import com.gamedesign.notouching.level.Level;
 import com.gamedesign.notouching.framework.Game;
@@ -27,18 +29,20 @@ public class GameScreen extends Screen {
 
     public static final float PIER_HALF_HEIGHT = -12.775f;
     public static final int SECOND_PIER_X_COORDINATE = 1823;
-    private static final int PIER_INDEX = 7;
     public Level level;
     public static final int FIRST_PIER_X_COORDINATE = 64;
     public static final int PIER_Y_COORDINATE = 169;
     public final LevelTouchConsumer levelTouchConsumer;
     private final TouchConsumer UItouchConsumer;
+    public int totalPoints;
 
     private boolean RUNNING;
 
     public GameScreen(Game game) {
         super(game);
-        this.level = new Level(game);
+        this.level = new Level(game, System.currentTimeMillis(), totalPoints);
+        Log.println(Log.INFO, "SEED",String.valueOf(level.seed));
+        level.backGround = Assets.lvl1background;
         this.levelTouchConsumer = new LevelTouchConsumer(level, SECOND_PIER_X_COORDINATE, FIRST_PIER_X_COORDINATE, PIER_Y_COORDINATE, PIER_HALF_HEIGHT, level.PIER_INDEX);
         this.UItouchConsumer = new UITouchConsumer(level, this, game);
     }
@@ -50,7 +54,7 @@ public class GameScreen extends Screen {
             if(touchEvents.size() > 0 ){
                 touchEvents.forEach(UItouchConsumer::handleTouchEvent);
             }
-            if (touchEvents.size() > 0 && level.state instanceof TicktockState) {
+            if (touchEvents.size() > 0 && level.ropeBudget > 0 && level.state instanceof TicktockState) {
                 touchEvents.forEach(UItouchConsumer::handleTouchEvent);
                 touchEvents.forEach(levelTouchConsumer::handleTouchEvent);
             }
@@ -62,7 +66,7 @@ public class GameScreen extends Screen {
             handleCollisions(WorldHandler.getCollisions());
 
             level.moveCar();
-            if(deltaTime < WorldHandler.step){
+            if(deltaTime < WorldHandler.step){ //limit to 60FPS
                 try {
                     Thread.sleep((long) (WorldHandler.step - deltaTime));
                 } catch (InterruptedException e) {
@@ -70,14 +74,15 @@ public class GameScreen extends Screen {
                 }
             }
             level.updateLevel(deltaTime);
-
-//            Log.println(Log.ASSERT, "TIME", String.valueOf(deltaTime));
         }
     }
 
     private void handleCollisions(Collection<Collision> collisions){
         for(Collision event: collisions){
-
+            if(event.a.name.equals(GameObjects.CHASSIS) && event.b.name.equals(GameObjects.PIER) ||
+                    event.b.name.equals(GameObjects.CHASSIS) && event.a.name.equals(GameObjects.PIER)){
+                level.car.destroy();
+            }
         }
     }
 

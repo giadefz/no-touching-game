@@ -21,6 +21,7 @@ public class Assets {
     public static Pixmap pier;
     public static Pixmap wheel;
     public static Pixmap chassis;
+    public static Pixmap nextLevel;
 
     public static Pixmap getPixmapByName(String pixmapName){
         switch (pixmapName) {

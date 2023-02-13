@@ -1,7 +1,7 @@
 package com.gamedesign.notouching.level;
 
-import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_RETRY_BUTTON;
-import static com.gamedesign.notouching.util.ScreenInfo.Y_COORD_RETRY_BUTTON;
+import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_BUTTON;
+import static com.gamedesign.notouching.util.ScreenInfo.Y_COORD_BUTTON;
 
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Exploding;
@@ -19,6 +19,7 @@ public class TicktockState extends LevelState {
     @Override
     public void updateLevel(float deltaTime) {
         commonUpdates();
+        drawBudget();
         ticktockBomb(deltaTime);
         drawStopButton();
     }
@@ -28,6 +29,10 @@ public class TicktockState extends LevelState {
         level.state = new CheckWinState(level);
     }
 
+
+    private void drawBudget() {
+        level.game.getGraphics().drawText("Budget: " + String.valueOf(level.ropeBudget), 50, 40);
+    }
 
     private void ticktockBomb(float deltaTime) {
         for(GameObject go: level.gameObjects){
@@ -49,7 +54,7 @@ public class TicktockState extends LevelState {
     }
 
     private void drawStopButton(){
-        level.game.getGraphics().drawPixmap(Assets.stopButton, X_COORD_RETRY_BUTTON, Y_COORD_RETRY_BUTTON);
+        level.game.getGraphics().drawPixmap(Assets.stopButton, X_COORD_BUTTON, Y_COORD_BUTTON);
     }
 
 

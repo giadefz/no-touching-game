@@ -12,6 +12,7 @@ import com.gamedesign.notouching.component.PixmapDrawable;
 import com.gamedesign.notouching.component.Position;
 import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.framework.Input;
+import com.gamedesign.notouching.framework.Pixmap;
 import com.gamedesign.notouching.util.Assets;
 import com.gamedesign.notouching.util.GameObjects;
 import com.gamedesign.notouching.util.TileBuilder;
@@ -25,51 +26,62 @@ import java.util.List;
 import java.util.Random;
 
 public class Level {
+    private static final int STARTING_TILE_POSITION_X = 5;
+    private static final int DISTANCE_TO_COVER = 42;
+
+    private static final float STARTING_TILE_POSITION_Y = 18;
+    private static final float PIER_DISTANCE = 55;
+
 
     public static final float PIER_HALF_HEIGHT = 12.775f;
-    public static final int ROPE_COLOR = Color.argb(200, 255, 248, 220);
-    public static final int STARTING_TILE_POSITION_X = 5;
-    public static final int DISTANCE_TO_COVER = 42;
-    public static int MAX_TILE_LENGTH = 5;
-    public static int MIN_TILE_LENGTH = 3;
+    public static final int ROPE_COLOR = Color.argb(200, 101, 67, 33);
+    public static final int NEW_ROPE_COLOR = Color.BLACK;
+    public static final int ROPE_COST = 1000;
+    public int MAX_TILE_LENGTH = 8;
+    public int MIN_TILE_LENGTH = 5;
     public int TILES_NUMBER;
     public int PIER_INDEX;
-    public static final float STARTING_TILE_POSITION_Y = 18;
-    public static final float PIER_DISTANCE = 55;
-
-
     public final List<GameObject> gameObjects;
     public final List<Joint> ropesBetweenTiles;
     public final List<Rope> addedRopes;
     public Joint firstRopeFromPier;
     public Joint secondRopeFromPier;
     public final Game game;
-    Car car;
-    public Vec2 newRopeCoordinates;
-    public Vec2 startingPointCoordinates;
-    public final Vec2 temp = new Vec2();
-    public final Vec2 temp2 = new Vec2();
+    public Car car;
+    public Vec2 newRopeCoordinates = new Vec2();
+    public Vec2 startingPointCoordinates = new Vec2();
+    private final Vec2 temp = new Vec2();
+    private final Vec2 temp2 = new Vec2();
     public LevelState state;
     public Random random;
     public float timeBombStopped;
+    public Pixmap backGround;
+    public long seed;
+    public int ropeBudget;
+    public int totalPoints;
 
-    public Level(Game game) {
+    public Level(Game game, long seed, int totalPoints) {
         this.gameObjects = new ArrayList<>();
         this.ropesBetweenTiles = new ArrayList<>();
         this.addedRopes = new ArrayList<>();
-
         this.game = game;
+        this.seed = seed;
+        setUpLevel(game, totalPoints);
+    }
 
-        this.newRopeCoordinates = new Vec2(0, 0);
-        this.startingPointCoordinates = new Vec2(0, 0);
+    public void setUpLevel(Game game, int totalPoints) {
+        this.ropeBudget = 14000;
+        this.totalPoints = totalPoints;
+        this.newRopeCoordinates.setX(0); this.newRopeCoordinates.setY(0);
+        this.startingPointCoordinates.setX(0); this.startingPointCoordinates.setY(0);
 
         this.state = new StartLevelState(this);
-        this.random = new Random();
+        this.random = new Random(seed);
 
         setUpTiles();
         setUpPiers();
 
-        int index = this.random.nextInt(TILES_NUMBER - 1) + 1;
+        int index = this.random.nextInt(TILES_NUMBER - 2) + 1;
         float xCoordinatesOfTileLeftEdge = (getXCoordinatesOfTileRightEdge(index) * SCALING_FACTOR);
 
         this.addCar(new Car(game, xCoordinatesOfTileLeftEdge, this, 5f, ropesBetweenTiles.get(index-1)));
@@ -216,6 +228,7 @@ public class Level {
 
     public synchronized void addNewRope(Rope newRope) {
         this.addedRopes.add(newRope);
+        this.ropeBudget -= ROPE_COST;
     }
 
     public void handleExplosion(GameObject go, Exploding component) {
@@ -228,6 +241,9 @@ public class Level {
 
     public void destroy(){
         WorldHandler.delete();
+        this.gameObjects.clear();
+        this.ropesBetweenTiles.clear();
+        this.addedRopes.clear();
     }
 
 }
