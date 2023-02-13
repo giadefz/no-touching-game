@@ -29,8 +29,13 @@ public class LoadingScreen extends Screen {
         Assets.mainMenu = graphics.newPixmap("mainmenu.png", Graphics.PixmapFormat.ARGB4444);
         Assets.buttons = graphics.newPixmap("buttons.png", Graphics.PixmapFormat.ARGB4444);
         Assets.tile = graphics.newPixmap("BridgeTiles.png", Graphics.PixmapFormat.ARGB4444);
-        Assets.retryButton = graphics.newPixmap("retry.png", Graphics.PixmapFormat.ARGB4444);
+        Assets.bomb = graphics.newPixmap("bomb.png", Graphics.PixmapFormat.ARGB4444);
         Assets.stopButton = graphics.newPixmap("stop.png", Graphics.PixmapFormat.ARGB4444);
+        Assets.retryButton = graphics.newPixmap("retry.png", Graphics.PixmapFormat.ARGB4444);
+        Assets.lvl1background = graphics.newPixmap("lvl1background.png", Graphics.PixmapFormat.RGB565);
+        Assets.pier = graphics.newPixmap("pier.png", Graphics.PixmapFormat.RGB565);
+        Assets.wheel = graphics.newPixmap("wheel.png", Graphics.PixmapFormat.RGB565);
+        Assets.chassis = graphics.newPixmap("chassis.png", Graphics.PixmapFormat.RGB565);
 
 
         try (Reader reader = new InputStreamReader(game.getFileIO().readAsset("gameobjects.json"))) {

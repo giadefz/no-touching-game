@@ -12,6 +12,7 @@ import com.gamedesign.notouching.framework.TouchConsumer;
 import com.gamedesign.notouching.level.TicktockState;
 import com.gamedesign.notouching.level.WinState;
 import com.gamedesign.notouching.touch.UITouchConsumer;
+import com.gamedesign.notouching.util.Assets;
 import com.gamedesign.notouching.util.Collision;
 import com.gamedesign.notouching.util.GameObjects;
 import com.gamedesign.notouching.touch.LevelTouchConsumer;
@@ -41,8 +42,6 @@ public class GameScreen extends Screen {
         this.levelTouchConsumer = new LevelTouchConsumer(level, SECOND_PIER_X_COORDINATE, FIRST_PIER_X_COORDINATE, PIER_Y_COORDINATE, PIER_HALF_HEIGHT, level.PIER_INDEX);
         this.UItouchConsumer = new UITouchConsumer(level, this, game);
     }
-
-
 
     @Override
     public void update(float deltaTime) {
@@ -87,6 +86,7 @@ public class GameScreen extends Screen {
 
     @Override
     public void present(float deltaTime) {
+
         RUNNING = true;
     }
 

@@ -6,6 +6,7 @@ import com.gamedesign.notouching.component.BoxDrawable;
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Exploding;
 import com.gamedesign.notouching.component.GameObject;
+import com.gamedesign.notouching.component.PixmapDrawable;
 import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.util.Assets;
 import com.gamedesign.notouching.util.GameObjects;
@@ -43,7 +44,7 @@ public class Car {
         this.backWheel = Assets.gameObjectsJSON.getGameObject(GameObjects.WHEEL, game);
         this.frontWheel = Assets.gameObjectsJSON.getGameObject(GameObjects.WHEEL, game);
         this.bombTarget = bombTarget;
-        BoxDrawable chassisDrawable = chassis.getComponent(ComponentType.Drawable);
+        PixmapDrawable chassisDrawable = chassis.getComponent(ComponentType.Drawable);
 
         RevoluteJointDef firstWheelJointDef = new RevoluteJointDef();
         firstWheelJointDef.setBodyA(chassis.getBody());

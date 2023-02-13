@@ -102,24 +102,8 @@
           ]
         },
         {
-          "component": "BoxDrawable",
+          "component": "PixmapDrawable",
           "args": [
-            {
-              "name": "alpha",
-              "value": "200"
-            },
-            {
-              "name": "red",
-              "value": "255"
-            },
-            {
-              "name": "green",
-              "value": "50"
-            },
-            {
-              "name": "blue",
-              "value": "0"
-            },
             {
               "name": "width",
               "value": "2"
@@ -131,6 +115,18 @@
             {
               "name": "density",
               "value": "0.5"
+            },
+            {
+              "name": "srcRight",
+              "value": "64"
+            },
+            {
+              "name": "srcBottom",
+              "value": "818"
+            },
+            {
+              "name": "pixmapName",
+              "value": "pier"
             }
           ]
         }
@@ -161,24 +157,8 @@
           ]
         },
         {
-          "component": "BoxDrawable",
+          "component": "PixmapDrawable",
           "args": [
-            {
-              "name": "alpha",
-              "value": "200"
-            },
-            {
-              "name": "red",
-              "value": "225"
-            },
-            {
-              "name": "green",
-              "value": "140"
-            },
-            {
-              "name": "blue",
-              "value": "30"
-            },
             {
               "name": "width",
               "value": "7.5"
@@ -190,6 +170,18 @@
             {
               "name": "density",
               "value": "1.6"
+            },
+            {
+              "name": "srcRight",
+              "value": "232"
+            },
+            {
+              "name": "srcBottom",
+              "value": "120"
+            },
+            {
+              "name": "pixmapName",
+              "value": "chassis"
             }
           ]
         }
@@ -220,39 +212,39 @@
           ]
         },
         {
-          "component": "CircleDrawable",
+          "component": "CirclePixmapDrawable",
           "args": [
-            {
-              "name": "alpha",
-              "value": "200"
-            },
-            {
-              "name": "red",
-              "value": "225"
-            },
-            {
-              "name": "green",
-              "value": "140"
-            },
-            {
-              "name": "blue",
-              "value": "30"
-            },
             {
               "name": "radius",
               "value": "1.25"
             },
             {
               "name": "friction",
-              "value": "0.95"
+              "value": "0.8"
+            },
+            {
+              "name": "density",
+              "value": "0.8"
             },
             {
               "name": "restitution",
               "value": "0.0"
             },
             {
-              "name": "density",
+              "name": "friction",
               "value": "0.8"
+            },
+            {
+              "name": "srcRight",
+              "value": "80"
+            },
+            {
+              "name": "srcBottom",
+              "value": "80"
+            },
+            {
+              "name": "pixmapName",
+              "value": "wheel"
             }
           ]
         }
@@ -283,24 +275,8 @@
           ]
         },
         {
-          "component": "BoxDrawable",
+          "component": "PixmapDrawable",
           "args": [
-            {
-              "name": "alpha",
-              "value": "255"
-            },
-            {
-              "name": "red",
-              "value": "255"
-            },
-            {
-              "name": "green",
-              "value": "255"
-            },
-            {
-              "name": "blue",
-              "value": "255"
-            },
             {
               "name": "width",
               "value": "1.3"
@@ -312,6 +288,18 @@
             {
               "name": "density",
               "value": "1.6"
+            },
+            {
+              "name": "srcRight",
+              "value": "32"
+            },
+            {
+              "name": "srcBottom",
+              "value": "58"
+            },
+            {
+              "name": "pixmapName",
+              "value": "bomb"
             }
           ]
         },

@@ -16,11 +16,22 @@ public class Assets {
     public static Pixmap mainMenu;
     public static Pixmap retryButton;
     public static Pixmap stopButton;
+    public static Pixmap bomb;
+    public static Pixmap lvl1background;
+    public static Pixmap pier;
+    public static Pixmap wheel;
+    public static Pixmap chassis;
 
     public static Pixmap getPixmapByName(String pixmapName){
         switch (pixmapName) {
             case "tile": return tile;
+            case "bomb": return bomb;
+            case "pier": return pier;
             case "icon": return icon;
+            case "wheel": return wheel;
+            case "chassis": return chassis;
+
+
             default: throw new IllegalArgumentException("No pixmap by name: " + pixmapName);
         }
     }
