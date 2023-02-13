@@ -4,6 +4,7 @@ import static com.gamedesign.notouching.util.ScreenInfo.SCALING_FACTOR;
 
 import com.gamedesign.notouching.component.BoxDrawable;
 import com.gamedesign.notouching.component.CircleDrawable;
+import com.gamedesign.notouching.component.CirclePixmapDrawable;
 import com.gamedesign.notouching.component.Component;
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Exploding;
@@ -74,7 +75,7 @@ public class Car {
 
     public void move(){
         if(!stopped) {
-            CircleDrawable frontWheelComponent = frontWheel.getComponent(ComponentType.Drawable);
+            CirclePixmapDrawable frontWheelComponent = frontWheel.getComponent(ComponentType.Drawable);
             GameObject lastTile = level.gameObjects.get(level.TILES_NUMBER - 1);
             PixmapDrawable lastTileComponent = lastTile.getComponent(ComponentType.Drawable);
 
@@ -103,10 +104,10 @@ public class Car {
 
     private void ejectBomb() {
         GameObject bomb = Assets.gameObjectsJSON.getGameObject(GameObjects.BOMB, game);
-        BoxDrawable bombDrawable = bomb.getComponent(ComponentType.Drawable);
+        PixmapDrawable bombDrawable = bomb.getComponent(ComponentType.Drawable);
         Exploding component = bomb.getComponent(ComponentType.Exploding);
         component.setTarget(bombTarget);
-        BoxDrawable chassisDrawable = chassis.getComponent(ComponentType.Drawable);
+        PixmapDrawable chassisDrawable = chassis.getComponent(ComponentType.Drawable);
         vec2.setX(- (chassisDrawable.width / 2 + bombDrawable.width));
         vec2.setY(0);
         Vec2 chassisCoordinates = chassis.getBody().getWorldPoint(vec2);
