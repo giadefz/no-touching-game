@@ -36,6 +36,7 @@ public class UITouchConsumer extends TouchConsumer {
                 Level newLevel = new Level(game);
                 gameScreen.level = newLevel;
                 gameScreen.levelTouchConsumer.level = newLevel; //todo: try to refactor this!
+                gameScreen.levelTouchConsumer.pierIndex = newLevel.PIER_INDEX;
                 this.level = newLevel;
             } else if(level.state instanceof TicktockState){
                 for(GameObject go: level.gameObjects){

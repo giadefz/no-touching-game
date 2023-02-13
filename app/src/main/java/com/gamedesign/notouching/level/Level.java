@@ -73,7 +73,7 @@ public class Level {
         setUpTiles();
         setUpPiers();
 
-        int index = this.random.nextInt(5) + 1;
+        int index = this.random.nextInt(TILES_NUMBER) + 1;
         float xCoordinatesOfTileLeftEdge = (getXCoordinatesOfTileLeftEdge(index) * SCALING_FACTOR);
 
         this.addCar(new Car(game, xCoordinatesOfTileLeftEdge, this, 5f, ropesBetweenTiles.get(index - 1)));
