@@ -3,6 +3,8 @@ package com.gamedesign.notouching.level;
 import static com.gamedesign.notouching.util.ScreenInfo.SCALING_FACTOR;
 
 import com.gamedesign.notouching.component.BoxDrawable;
+import com.gamedesign.notouching.component.CircleDrawable;
+import com.gamedesign.notouching.component.Component;
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Exploding;
 import com.gamedesign.notouching.component.GameObject;
@@ -31,8 +33,11 @@ public class Car {
     private float targetCoordinate;
     private boolean stopped;
     private final Level level;
-    private float motorSpeed;
+    private final float motorSpeed;
+    private float decreasingMotorSpeed;
     private final Joint bombTarget;
+    private final Vec2 vec2 = new Vec2();
+    private final Vec2 vec = new Vec2();
 
 
     public Car(Game game, float targetCoordinate, Level level, float motorSpeed, Joint bombTarget) {
@@ -69,6 +74,10 @@ public class Car {
 
     public void move(){
         if(!stopped) {
+            CircleDrawable frontWheelComponent = frontWheel.getComponent(ComponentType.Drawable);
+            GameObject lastTile = level.gameObjects.get(level.TILES_NUMBER - 1);
+            PixmapDrawable lastTileComponent = lastTile.getComponent(ComponentType.Drawable);
+
             if ((chassis.getBody().getWorldCenter().getX() * SCALING_FACTOR - targetCoordinate) < - 50) {
                 frontWheelJoint.setMotorSpeed(motorSpeed);
                 backWheelJoint.setMotorSpeed(motorSpeed);
@@ -76,11 +85,17 @@ public class Car {
                 frontWheelJoint.setMotorSpeed(-motorSpeed);
                 backWheelJoint.setMotorSpeed(-motorSpeed);
             } else {
-                frontWheelJoint.setMotorSpeed(10);
-                backWheelJoint.setMotorSpeed(10);
-                chassis.getBody().setLinearVelocity(new Vec2(0, 0));
+                frontWheelJoint.setMotorSpeed(motorSpeed);
+                backWheelJoint.setMotorSpeed(0);
+                vec2.setY(0); vec2.setX(0);
                 stopped = true;
                 ejectBomb();
+            }
+            vec2.setY(0); vec2.setX(frontWheelComponent.radius);
+            vec.setY(0); vec.setX(lastTileComponent.width / 2);
+            if(frontWheel.getBody().getWorldPoint(vec2).getX() - lastTile.getBody().getWorldPoint(vec).getX() < 0.2 && frontWheel.getBody().getWorldPoint(vec2).getX() - lastTile.getBody().getWorldPoint(vec).getX() > 0 ){
+                this.destroy();
+                stopped = true;
             }
         }
 
@@ -88,20 +103,27 @@ public class Car {
 
     private void ejectBomb() {
         GameObject bomb = Assets.gameObjectsJSON.getGameObject(GameObjects.BOMB, game);
+        BoxDrawable bombDrawable = bomb.getComponent(ComponentType.Drawable);
         Exploding component = bomb.getComponent(ComponentType.Exploding);
         component.setTarget(bombTarget);
-        Vec2 chassisCoordinates = chassis.getBody().getWorldCenter();
+        BoxDrawable chassisDrawable = chassis.getComponent(ComponentType.Drawable);
+        vec2.setX(- (chassisDrawable.width / 2 + bombDrawable.width));
+        vec2.setY(0);
+        Vec2 chassisCoordinates = chassis.getBody().getWorldPoint(vec2);
         bomb.setPosition(chassisCoordinates.getX(), chassisCoordinates.getY() + 4f);
         level.addGameObject(bomb);
         this.targetCoordinate = 3000f;
         stopped = false;
-        this.motorSpeed = 10f;
     }
 
     public void destroy() {
-        chassis.getBody().setActive(false);
-        frontWheel.getBody().setActive(false);
-        backWheel.getBody().setActive(false);
+        WorldHandler.destroyBody(chassis.getBody());
+        WorldHandler.destroyBody(frontWheel.getBody());
+        WorldHandler.destroyBody(backWheel.getBody());
+        level.gameObjects.remove(chassis);
+        level.gameObjects.remove(frontWheel);
+        level.gameObjects.remove(backWheel);
+        level.state.nextState();
     }
 
     public boolean isLost(){

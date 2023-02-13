@@ -5,6 +5,8 @@ import com.gamedesign.notouching.util.MyContactListener;
 import com.google.fpl.liquidfun.Body;
 import com.google.fpl.liquidfun.BodyDef;
 import com.google.fpl.liquidfun.ContactListener;
+import com.google.fpl.liquidfun.Fixture;
+import com.google.fpl.liquidfun.FixtureDef;
 import com.google.fpl.liquidfun.Joint;
 import com.google.fpl.liquidfun.JointDef;
 import com.google.fpl.liquidfun.PrismaticJoint;

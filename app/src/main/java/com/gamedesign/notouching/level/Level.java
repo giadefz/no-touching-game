@@ -3,10 +3,7 @@ package com.gamedesign.notouching.level;
 import static com.gamedesign.notouching.util.ScreenInfo.SCALING_FACTOR;
 
 import android.graphics.Color;
-import android.util.SparseArray;
 
-import com.gamedesign.notouching.R;
-import com.gamedesign.notouching.component.Component;
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Drawable;
 import com.gamedesign.notouching.component.Exploding;
@@ -17,7 +14,6 @@ import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.util.Assets;
 import com.gamedesign.notouching.util.GameObjects;
-import com.gamedesign.notouching.util.ScreenInfo;
 import com.gamedesign.notouching.util.TileBuilder;
 import com.gamedesign.notouching.world.WorldHandler;
 import com.google.fpl.liquidfun.Joint;
@@ -34,8 +30,8 @@ public class Level {
     public static final int ROPE_COLOR = Color.argb(200, 255, 248, 220);
     public static final int STARTING_TILE_POSITION_X = 5;
     public static final int DISTANCE_TO_COVER = 42;
-    public static final int MAX_TILE_LENGTH = 13;
-    public static final int MIN_TILE_LENGTH = 3;
+    public static int MAX_TILE_LENGTH = 5;
+    public static int MIN_TILE_LENGTH = 3;
     public int TILES_NUMBER;
     public int PIER_INDEX;
     public static final float STARTING_TILE_POSITION_Y = 18;
@@ -73,10 +69,10 @@ public class Level {
         setUpTiles();
         setUpPiers();
 
-        int index = this.random.nextInt(TILES_NUMBER) + 1;
-        float xCoordinatesOfTileLeftEdge = (getXCoordinatesOfTileLeftEdge(index) * SCALING_FACTOR);
+        int index = this.random.nextInt(TILES_NUMBER - 1) + 1;
+        float xCoordinatesOfTileLeftEdge = (getXCoordinatesOfTileRightEdge(index) * SCALING_FACTOR);
 
-        this.addCar(new Car(game, xCoordinatesOfTileLeftEdge, this, 5f, ropesBetweenTiles.get(index - 1)));
+        this.addCar(new Car(game, xCoordinatesOfTileLeftEdge, this, 5f, ropesBetweenTiles.get(index-1)));
     }
 
     public synchronized GameObject addGameObject(GameObject obj) {
@@ -160,11 +156,12 @@ public class Level {
         GameObject firstTile = this.getGameObject(0);
         PixmapDrawable firstTileDrawable = firstTile.getComponent(ComponentType.Drawable);
         GameObject lastTile = this.getGameObject(TILES_NUMBER - 1);
+        PixmapDrawable lastTileDrawable = lastTile.getComponent(ComponentType.Drawable);
         Position firstPierPosition = firstPier.getComponent(ComponentType.Position);
         secondPier.setPosition(firstPierPosition.x + PIER_DISTANCE, firstPierPosition.y);
         secondPier = this.addGameObject(secondPier);
-        Joint firstJoint = setRopeBetweenPierAndTile(firstPier, firstTile, - firstTileDrawable.width / 2, 0);
-        Joint secondJoint = setRopeBetweenPierAndTile(secondPier, lastTile, firstTileDrawable.width / 2, 0);
+        Joint firstJoint = setRopeBetweenPierAndTile(firstPier, firstTile, - firstTileDrawable.width / 2, 0.3f);
+        Joint secondJoint = setRopeBetweenPierAndTile(secondPier, lastTile, lastTileDrawable.width / 2, 0.3f);
         this.setFirstRopeFromPier(firstJoint);
         this.setSecondRopeFromPier(secondJoint);
     }
@@ -200,15 +197,15 @@ public class Level {
         float xDiff = firstTile.getBody().getWorldPoint(temp).getX() - tile.getBody().getWorldPoint(temp2).getX();
         float yDiff = firstTile.getBody().getWorldPoint(temp).getY() - tile.getBody().getWorldPoint(temp2).getY();
         float diff = (float) Math.sqrt(xDiff * xDiff - yDiff * yDiff);
-        jointDef.setMaxLength(diff);
+        jointDef.setMaxLength(diff + 0.03f);
         jointDef.setCollideConnected(true);
         return WorldHandler.createJoint(jointDef);
     }
 
-    private float getXCoordinatesOfTileLeftEdge(int tileNumber){
+    private float getXCoordinatesOfTileRightEdge(int tileNumber){
         GameObject tile = this.gameObjects.get(tileNumber);
         PixmapDrawable component = tile.getComponent(ComponentType.Drawable);
-        temp.setX(-component.width / 2);
+        temp.setX(component.width / 2);
         temp.setY(0);
         return tile.getBody().getWorldPoint(temp).getX();
     }
@@ -219,14 +216,6 @@ public class Level {
 
     public synchronized void addNewRope(Rope newRope) {
         this.addedRopes.add(newRope);
-    }
-
-    public void destroyCar() {
-        this.gameObjects.remove(car.chassis);
-        this.gameObjects.remove(car.backWheel);
-        this.gameObjects.remove(car.frontWheel);
-        car.destroy();
-        state.nextState();
     }
 
     public void handleExplosion(GameObject go, Exploding component) {
