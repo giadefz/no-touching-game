@@ -5,6 +5,7 @@ import static com.gamedesign.notouching.util.ScreenInfo.SCALING_FACTOR;
 import android.graphics.Color;
 import android.util.SparseArray;
 
+import com.gamedesign.notouching.R;
 import com.gamedesign.notouching.component.Component;
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Drawable;
@@ -16,6 +17,8 @@ import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.util.Assets;
 import com.gamedesign.notouching.util.GameObjects;
+import com.gamedesign.notouching.util.ScreenInfo;
+import com.gamedesign.notouching.util.TileBuilder;
 import com.gamedesign.notouching.world.WorldHandler;
 import com.google.fpl.liquidfun.Joint;
 import com.google.fpl.liquidfun.RopeJointDef;
@@ -29,13 +32,14 @@ public class Level {
 
     public static final float PIER_HALF_HEIGHT = 12.775f;
     public static final int ROPE_COLOR = Color.argb(200, 255, 248, 220);
-    public static final int DISTANCE_BETWEEN_TILES = 1;
-    public static final int TILES_NUMBER = 7;
-    public static final float STARTING_TILE_POSITION_X = 8;
-    public static final float STARTING_TILE_POSITION_Y = 19;
-    public static final float TILE_ROPE_LENGTH = 1.2f;
+    public static final int STARTING_TILE_POSITION_X = 5;
+    public static final int DISTANCE_TO_COVER = 42;
+    public static final int MAX_TILE_LENGTH = 13;
+    public static final int MIN_TILE_LENGTH = 3;
+    public int TILES_NUMBER;
+    public int PIER_INDEX;
+    public static final float STARTING_TILE_POSITION_Y = 18;
     public static final float PIER_DISTANCE = 55;
-    public static final float PIER_TILE_ROPE_LENGTH = 3f;
 
 
     public final List<GameObject> gameObjects;
@@ -48,7 +52,9 @@ public class Level {
     public Vec2 newRopeCoordinates;
     public Vec2 startingPointCoordinates;
     public final Vec2 temp = new Vec2();
+    public final Vec2 temp2 = new Vec2();
     public LevelState state;
+    public Random random;
     public float timeBombStopped;
 
     public Level(Game game) {
@@ -62,12 +68,12 @@ public class Level {
         this.startingPointCoordinates = new Vec2(0, 0);
 
         this.state = new StartLevelState(this);
+        this.random = new Random();
 
         setUpTiles();
         setUpPiers();
 
-        Random random = new Random();
-        int index = random.nextInt(5) + 1;
+        int index = this.random.nextInt(5) + 1;
         float xCoordinatesOfTileLeftEdge = (getXCoordinatesOfTileLeftEdge(index) * SCALING_FACTOR);
 
         this.addCar(new Car(game, xCoordinatesOfTileLeftEdge, this, 5f, ropesBetweenTiles.get(index - 1)));
@@ -115,15 +121,37 @@ public class Level {
     }
 
     private void setUpTiles(){
-        GameObject firstTile = this.addGameObject(Assets.gameObjectsJSON.getGameObject(GameObjects.TILE, game));
-        for (int i = 1; i < TILES_NUMBER; i++) {
-            GameObject tile = Assets.gameObjectsJSON.getGameObject(GameObjects.TILE, game);
-            PixmapDrawable component = tile.getComponent(ComponentType.Drawable);
-            tile.setPosition(STARTING_TILE_POSITION_X + i * (component.width + DISTANCE_BETWEEN_TILES), STARTING_TILE_POSITION_Y);
+        int distanceToCover = DISTANCE_TO_COVER;
+        int randWidth = random.nextInt(MAX_TILE_LENGTH - MIN_TILE_LENGTH) + MIN_TILE_LENGTH; //tiles between 3 and 10 width
+//        int randWidth = 6; //tiles between 3 and 10 width
+        distanceToCover -= randWidth;
+        GameObject firstTile = TileBuilder.buildTile(randWidth, game);
+        firstTile.setPosition(STARTING_TILE_POSITION_X + (randWidth / 2f), STARTING_TILE_POSITION_Y);
+        firstTile = this.addGameObject(firstTile);
+        int i = 1;
+        while (distanceToCover > 0){
+            randWidth = random.nextInt(7) + MIN_TILE_LENGTH;
+            PixmapDrawable firstTileComponent = firstTile.getComponent(ComponentType.Drawable);
+            if(randWidth > distanceToCover){
+                randWidth = distanceToCover;
+            }
+            distanceToCover -= randWidth;
+            if(distanceToCover < MIN_TILE_LENGTH){
+                randWidth += distanceToCover;
+                distanceToCover = 0;
+            }
+            GameObject tile = TileBuilder.buildTile(randWidth, game);
+            PixmapDrawable tileComponent = tile.getComponent(ComponentType.Drawable);
+            temp.setX(firstTileComponent.width / 2);
+            temp.setY(0);
+            tile.setPosition(firstTile.getBody().getWorldPoint(temp).getX() + (tileComponent.width / 2) + 1, STARTING_TILE_POSITION_Y);
             tile = this.addGameObject(tile);
-            this.addRopeBetweenTiles(this.insertRopeBetweenTiles(firstTile, tile, component));
+            this.addRopeBetweenTiles(this.insertRopeBetweenTiles(firstTile, tile, firstTileComponent));
             firstTile = tile;
+            i++;
         }
+        TILES_NUMBER = i;
+        PIER_INDEX = i;
     }
 
     private void setUpPiers() {
@@ -135,8 +163,8 @@ public class Level {
         Position firstPierPosition = firstPier.getComponent(ComponentType.Position);
         secondPier.setPosition(firstPierPosition.x + PIER_DISTANCE, firstPierPosition.y);
         secondPier = this.addGameObject(secondPier);
-        Joint firstJoint = setRopeBetweenPierAndTile(firstPier, firstTile, - firstTileDrawable.width / 2, firstTileDrawable.height / 2);
-        Joint secondJoint = setRopeBetweenPierAndTile(secondPier, lastTile, firstTileDrawable.width / 2, firstTileDrawable.height / 2);
+        Joint firstJoint = setRopeBetweenPierAndTile(firstPier, firstTile, - firstTileDrawable.width / 2, 0);
+        Joint secondJoint = setRopeBetweenPierAndTile(secondPier, lastTile, firstTileDrawable.width / 2, 0);
         this.setFirstRopeFromPier(firstJoint);
         this.setSecondRopeFromPier(secondJoint);
     }
@@ -148,17 +176,31 @@ public class Level {
         pierRope.setLocalAnchorA(0, 0);
         pierRope.setLocalAnchorB(xCoordinateOnTile, yCoordinateOnTile);
         pierRope.setCollideConnected(true);
-        pierRope.setMaxLength(PIER_TILE_ROPE_LENGTH);
+        temp.setX(xCoordinateOnTile);
+        temp.setY(yCoordinateOnTile);
+        float xDiff = pier.getBody().getPositionX() - tile.getBody().getWorldPoint(temp).getX();
+        float yDiff = pier.getBody().getPositionY() - tile.getBody().getWorldPoint(temp).getY();
+        float diff = (float) Math.sqrt(xDiff * xDiff - yDiff * yDiff);
+        pierRope.setMaxLength(diff);
         return WorldHandler.createJoint(pierRope);
     }
 
-    private Joint insertRopeBetweenTiles(GameObject firstTile, GameObject tile, PixmapDrawable component) {
+    private Joint insertRopeBetweenTiles(GameObject firstTile, GameObject tile, PixmapDrawable firstTileComponent) {
         RopeJointDef jointDef = new RopeJointDef();
+        PixmapDrawable tileComponent = tile.getComponent(ComponentType.Drawable);
         jointDef.setBodyA(firstTile.getBody());
         jointDef.setBodyB(tile.getBody());
-        jointDef.setLocalAnchorA(component.width, component.height / 2);
-        jointDef.setLocalAnchorB(0, component.height / 2);
-        jointDef.setMaxLength(TILE_ROPE_LENGTH);
+        jointDef.setLocalAnchorA(firstTileComponent.width / 2, 0);
+        jointDef.setLocalAnchorB(- tileComponent.width / 2, 0);
+        temp.setX(firstTileComponent.width / 2);
+        temp.setY(0);
+
+        temp2.setX(-tileComponent.width / 2);
+        temp2.setY(0);
+        float xDiff = firstTile.getBody().getWorldPoint(temp).getX() - tile.getBody().getWorldPoint(temp2).getX();
+        float yDiff = firstTile.getBody().getWorldPoint(temp).getY() - tile.getBody().getWorldPoint(temp2).getY();
+        float diff = (float) Math.sqrt(xDiff * xDiff - yDiff * yDiff);
+        jointDef.setMaxLength(diff);
         jointDef.setCollideConnected(true);
         return WorldHandler.createJoint(jointDef);
     }

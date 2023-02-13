@@ -52,7 +52,7 @@ public class Car {
         firstWheelJointDef.setLocalAnchorB(0, 0);
         firstWheelJointDef.setCollideConnected(true);
         firstWheelJointDef.setEnableMotor(true);
-        firstWheelJointDef.setMaxMotorTorque(30f);
+        firstWheelJointDef.setMaxMotorTorque(100f);
         frontWheelJoint = WorldHandler.createJoint(firstWheelJointDef);
 
         RevoluteJointDef backWheelJointDef = new RevoluteJointDef();
@@ -75,8 +75,8 @@ public class Car {
                 frontWheelJoint.setMotorSpeed(-motorSpeed);
                 backWheelJoint.setMotorSpeed(-motorSpeed);
             } else {
-                frontWheelJoint.setMotorSpeed(0);
-                backWheelJoint.setMotorSpeed(0);
+                frontWheelJoint.setMotorSpeed(10);
+                backWheelJoint.setMotorSpeed(10);
                 chassis.getBody().setLinearVelocity(new Vec2(0, 0));
                 stopped = true;
                 ejectBomb();

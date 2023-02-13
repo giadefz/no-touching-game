@@ -38,7 +38,7 @@ public class GameScreen extends Screen {
     public GameScreen(Game game) {
         super(game);
         this.level = new Level(game);
-        this.levelTouchConsumer = new LevelTouchConsumer(level, SECOND_PIER_X_COORDINATE, FIRST_PIER_X_COORDINATE, PIER_Y_COORDINATE, PIER_HALF_HEIGHT, PIER_INDEX);
+        this.levelTouchConsumer = new LevelTouchConsumer(level, SECOND_PIER_X_COORDINATE, FIRST_PIER_X_COORDINATE, PIER_Y_COORDINATE, PIER_HALF_HEIGHT, level.PIER_INDEX);
         this.UItouchConsumer = new UITouchConsumer(level, this, game);
     }
 

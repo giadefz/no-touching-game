@@ -17,6 +17,7 @@ public class PixmapDrawable extends Drawable {
     public float width;
     public float height;
     public float density;
+    public float friction;
     public int srcRight;
     public int srcBottom;
     public String pixmapName;

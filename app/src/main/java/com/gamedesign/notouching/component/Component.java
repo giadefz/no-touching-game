@@ -19,7 +19,7 @@ import lombok.SneakyThrows;
 @Getter
 public abstract class Component {
 
-    protected Entity owner;
+    public Entity owner;
 
     public static Map<Class<?>, FieldSetter> fieldSetterMap = new HashMap<>();
 

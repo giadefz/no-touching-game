@@ -53,7 +53,7 @@ public class BoxDrawable extends Drawable {
         box.setAsBox(width / 2, height / 2);
         FixtureDef fixturedef = new FixtureDef();
         fixturedef.setShape(box);
-        fixturedef.setFriction(0.8f);       // default 0.2
+        fixturedef.setFriction(1f);       // default 0.2
         fixturedef.setRestitution(0f);    // default 0
         fixturedef.setDensity(density);     // default 0
         body.createFixture(fixturedef);
