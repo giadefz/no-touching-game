@@ -1,5 +1,6 @@
 package com.gamedesign.notouching.touch;
 
+import static com.gamedesign.notouching.level.LevelStates.LOSS_STATE;
 import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_BUTTON;
 import static com.gamedesign.notouching.util.ScreenInfo.Y_COORD_BUTTON;
 
@@ -41,7 +42,11 @@ public class UITouchConsumer extends TouchConsumer {
                 level.setUpLevel(game, gameScreen.totalPoints);
                 gameScreen.levelTouchConsumer.pierIndex = level.PIER_INDEX;
             }
-            if(level.state instanceof CheckWinState || level.state instanceof LossState){
+            else if(level.state instanceof CheckWinState){
+                LOSS_STATE.initializeState(level);
+                level.state = LOSS_STATE;
+            }
+            else if (level.state instanceof LossState){
                 level.destroy();
                 level.setUpLevel(game, 0);
                 gameScreen.levelTouchConsumer.pierIndex = level.PIER_INDEX;

@@ -1,5 +1,8 @@
 package com.gamedesign.notouching.level;
 
+import static com.gamedesign.notouching.level.LevelStates.CHECK_WIN_STATE;
+import static com.gamedesign.notouching.level.LevelStates.IDLE_STATE;
+import static com.gamedesign.notouching.level.LevelStates.START_STATE;
 import static com.gamedesign.notouching.util.ScreenInfo.SCALING_FACTOR;
 
 import android.graphics.Color;
@@ -75,7 +78,8 @@ public class Level {
         this.newRopeCoordinates.setX(0); this.newRopeCoordinates.setY(0);
         this.startingPointCoordinates.setX(0); this.startingPointCoordinates.setY(0);
 
-        this.state = new StartLevelState(this);
+        START_STATE.initializeState(this);
+        this.state = START_STATE;
         this.random = new Random(seed);
 
         setUpTiles();
@@ -236,7 +240,8 @@ public class Level {
         this.gameObjects.remove(go);
         this.newRopeCoordinates.setY(0);
         this.newRopeCoordinates.setX(0);
-        state = new IdleState(this, 2.5f, new CheckWinState(this));
+        IDLE_STATE.initializeState(this, CHECK_WIN_STATE, 2.5f);
+        state = IDLE_STATE;
     }
 
     public void destroy(){

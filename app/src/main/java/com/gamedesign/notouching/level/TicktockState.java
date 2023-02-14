@@ -1,5 +1,6 @@
 package com.gamedesign.notouching.level;
 
+import static com.gamedesign.notouching.level.LevelStates.CHECK_WIN_STATE;
 import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_BUTTON;
 import static com.gamedesign.notouching.util.ScreenInfo.Y_COORD_BUTTON;
 
@@ -12,8 +13,7 @@ import java.util.Locale;
 
 public class TicktockState extends LevelState {
 
-    public TicktockState(Level level) {
-        super(level);
+    public TicktockState() {
     }
 
     @Override
@@ -26,7 +26,8 @@ public class TicktockState extends LevelState {
 
     @Override
     public void nextState() {
-        level.state = new CheckWinState(level);
+        CHECK_WIN_STATE.initializeState(level);
+        level.state = CHECK_WIN_STATE;
     }
 
 

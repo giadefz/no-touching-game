@@ -10,7 +10,6 @@ import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Drawable;
 import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.component.PixmapDrawable;
-import com.gamedesign.notouching.util.Assets;
 import com.google.fpl.liquidfun.Body;
 import com.google.fpl.liquidfun.Joint;
 
@@ -18,9 +17,12 @@ import java.util.Objects;
 
 public abstract class LevelState {
 
-    final Level level;
+    Level level;
 
-    public LevelState(Level level) {
+    public LevelState() {
+    }
+
+    public void initializeState(Level level){
         this.level = level;
     }
 

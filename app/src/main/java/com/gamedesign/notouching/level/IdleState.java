@@ -3,10 +3,18 @@ package com.gamedesign.notouching.level;
 public class IdleState extends LevelState {
 
     private float timeUntilNextState;
-    private final LevelState nextState;
+    private LevelState nextState;
 
-    public IdleState(Level level, float timeUntilNextState, LevelState nextState) {
-        super(level);
+    public IdleState() {
+    }
+
+    @Override
+    public void initializeState(Level level) {
+        super.initializeState(level);
+    }
+
+    public void initializeState(Level level, LevelState nextState, float timeUntilNextState) {
+        super.initializeState(level);
         this.timeUntilNextState = timeUntilNextState;
         this.nextState = nextState;
     }
@@ -21,6 +29,7 @@ public class IdleState extends LevelState {
 
     @Override
     public void nextState() {
+        nextState.initializeState(level);
         level.state = nextState;
     }
 }

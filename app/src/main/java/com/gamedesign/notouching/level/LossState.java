@@ -11,8 +11,7 @@ public class LossState extends LevelState {
 
     private static final String LOSS_STRING = "HAI PERSO!!!!!";
 
-    public LossState(Level level) {
-        super(level);
+    public LossState() {
     }
 
     @Override

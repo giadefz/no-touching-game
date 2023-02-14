@@ -10,9 +10,13 @@ public class WinState extends LevelState {
     public static final String WON_STRING = "HAI VINTO!!!";
     public int points;
 
-    public WinState(Level level) {
-        super(level);
-        points = calculatePoints();
+    public WinState() {
+    }
+
+    @Override
+    public void initializeState(Level level) {
+        super.initializeState(level);
+        this.points = calculatePoints();
     }
 
     @Override
