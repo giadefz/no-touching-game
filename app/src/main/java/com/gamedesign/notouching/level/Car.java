@@ -2,10 +2,7 @@ package com.gamedesign.notouching.level;
 
 import static com.gamedesign.notouching.util.ScreenInfo.SCALING_FACTOR;
 
-import com.gamedesign.notouching.component.BoxDrawable;
-import com.gamedesign.notouching.component.CircleDrawable;
 import com.gamedesign.notouching.component.CirclePixmapDrawable;
-import com.gamedesign.notouching.component.Component;
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Exploding;
 import com.gamedesign.notouching.component.GameObject;
@@ -31,24 +28,24 @@ public class Car {
     public PrismaticJoint frontAxlePrismaticJoint;
     public PrismaticJoint rearAxlePrismaticJoint;
     public Game game;
-    private float targetCoordinate;
+    private float[] targetCoordinates;
     private boolean stopped;
     private final Level level;
     private final float motorSpeed;
-    private float decreasingMotorSpeed;
-    private final Joint bombTarget;
+    private final Joint[] bombTargets;
     private final Vec2 vec2 = new Vec2();
+    private int bombEjectedIndex = 0;
 
 
-    public Car(Game game, float targetCoordinate, Level level, float motorSpeed, Joint bombTarget) {
-        this.targetCoordinate = targetCoordinate;
+    public Car(Game game, float[] targetCoordinates, Level level, float motorSpeed, Joint... bombTargets) {
+        this.targetCoordinates = targetCoordinates;
         this.level = level;
         this.game = game;
         this.motorSpeed = motorSpeed;
         this.chassis = Assets.gameObjectsJSON.getGameObject(GameObjects.CHASSIS, game);
         this.backWheel = Assets.gameObjectsJSON.getGameObject(GameObjects.WHEEL, game);
         this.frontWheel = Assets.gameObjectsJSON.getGameObject(GameObjects.WHEEL, game);
-        this.bombTarget = bombTarget;
+        this.bombTargets = bombTargets;
         PixmapDrawable chassisDrawable = chassis.getComponent(ComponentType.Drawable);
 
         RevoluteJointDef firstWheelJointDef = new RevoluteJointDef();
@@ -74,6 +71,12 @@ public class Car {
 
     public void move(){
         if(!stopped) {
+            float targetCoordinate;
+            if(this.targetCoordinates.length == bombEjectedIndex){
+                targetCoordinate = 3000f;
+            }else{
+                targetCoordinate = this.targetCoordinates[bombEjectedIndex];
+            }
             CirclePixmapDrawable frontWheelComponent = frontWheel.getComponent(ComponentType.Drawable);
             GameObject secondPier = level.gameObjects.get(level.PIER_INDEX + 1);
             PixmapDrawable secondPierComponent = secondPier.getComponent(ComponentType.Drawable);
@@ -89,25 +92,25 @@ public class Car {
                 backWheelJoint.setMotorSpeed(0);
                 vec2.setY(0); vec2.setX(0);
                 stopped = true;
-                ejectBomb();
+                ejectBomb(bombEjectedIndex);
             }
         }
 
     }
 
-    private void ejectBomb() {
+    private void ejectBomb(int bombIndex) {
         GameObject bomb = Assets.gameObjectsJSON.getGameObject(GameObjects.BOMB, game);
         PixmapDrawable bombDrawable = bomb.getComponent(ComponentType.Drawable);
         Exploding component = bomb.getComponent(ComponentType.Exploding);
-        component.setTarget(bombTarget);
+        component.setTarget(bombTargets[bombIndex]);
         PixmapDrawable chassisDrawable = chassis.getComponent(ComponentType.Drawable);
         vec2.setX(- (chassisDrawable.width / 2 + bombDrawable.width));
         vec2.setY(0);
         Vec2 chassisCoordinates = chassis.getBody().getWorldPoint(vec2);
         bomb.setPosition(chassisCoordinates.getX(), chassisCoordinates.getY() + 4f);
         level.addGameObject(bomb);
-        this.targetCoordinate = 3000f;
         stopped = false;
+        bombEjectedIndex++;
     }
 
     public void destroy() {

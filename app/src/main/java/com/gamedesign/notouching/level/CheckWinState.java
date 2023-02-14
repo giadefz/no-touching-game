@@ -26,7 +26,8 @@ public class CheckWinState extends LevelState {
     public void updateLevel(float deltaTime) {
         timeUntilLoss -= deltaTime;
         if(!carSpawned){
-            level.addCar(new Car(level.game, 3000f, level, 10f, null));
+            float[] target = {};
+            level.addCar(new Car(level.game, target, level, 10f));
             carSpawned = true;
         }
         commonUpdates();
