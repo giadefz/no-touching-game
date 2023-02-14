@@ -32,6 +32,7 @@ public class CheckWinState extends LevelState {
         }
         commonUpdates();
         drawRetryButton();
+        drawLevelNumber();
         if(level.car.isLost() || timeUntilLoss <= 0){
             LOSS_STATE.initializeState(level);
             level.state = LOSS_STATE;

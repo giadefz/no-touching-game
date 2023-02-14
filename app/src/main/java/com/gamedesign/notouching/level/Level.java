@@ -40,8 +40,8 @@ public class Level {
     public static final int ROPE_COLOR = Color.argb(200, 101, 67, 33);
     public static final int NEW_ROPE_COLOR = Color.BLACK;
     public static final int ROPE_COST = 1000;
-    public int MAX_TILE_LENGTH = 8;
-    public int MIN_TILE_LENGTH = 5;
+    public int MAX_TILE_LENGTH;
+    public int MIN_TILE_LENGTH;
     public int TILES_NUMBER;
     public int PIER_INDEX;
     public final List<GameObject> gameObjects;
@@ -62,6 +62,9 @@ public class Level {
     public long seed;
     public int ropeBudget;
     public int totalPoints;
+    public int levelNumber;
+    public float timeUntilBombIgnition;
+    public LevelDifficultySettings difficultySettings;
 
     public Level(Game game, long seed, int totalPoints) {
         this.gameObjects = new ArrayList<>();
@@ -69,26 +72,27 @@ public class Level {
         this.addedRopes = new ArrayList<>();
         this.game = game;
         this.seed = seed;
+        this.levelNumber = 0;
         setUpLevel(game, totalPoints);
     }
 
     public void setUpLevel(Game game, int totalPoints) {
-        this.ropeBudget = 14000;
         this.totalPoints = totalPoints;
+        this.random = new Random(seed);
         this.newRopeCoordinates.setX(0); this.newRopeCoordinates.setY(0);
         this.startingPointCoordinates.setX(0); this.startingPointCoordinates.setY(0);
-
+        this.levelNumber++;
+        this.difficultySettings = LevelDifficultySettingsFactory.getDifficultySettings(this);
+        this.ropeBudget = difficultySettings.getRopeBudget();
+        this.MAX_TILE_LENGTH = this.difficultySettings.getMaxTileLength();
+        this.MIN_TILE_LENGTH = this.difficultySettings.getMinTileLength();
+        this.timeUntilBombIgnition = this.difficultySettings.getTimeUntilIgnition();
         START_STATE.initializeState(this);
         this.state = START_STATE;
-        this.random = new Random(seed);
-
         setUpTiles();
         setUpPiers();
 
-        int index = this.random.nextInt(TILES_NUMBER - 2) + 2;
-        float [] xCoordinatesOfTileLeftEdge = {(getXCoordinatesOfTileRightEdge(index) * SCALING_FACTOR)};
-
-        this.addCar(new Car(game, xCoordinatesOfTileLeftEdge, this, 5f, ropesBetweenTiles.get(index-1)));
+        this.addCar(difficultySettings.getCar(TILES_NUMBER));
     }
 
     public synchronized GameObject addGameObject(GameObject obj) {
@@ -134,7 +138,7 @@ public class Level {
 
     private void setUpTiles(){
         int distanceToCover = DISTANCE_TO_COVER;
-        int randWidth = random.nextInt(MAX_TILE_LENGTH - MIN_TILE_LENGTH) + MIN_TILE_LENGTH; //tiles between 3 and 10 width
+        int randWidth = MAX_TILE_LENGTH != MIN_TILE_LENGTH ? random.nextInt(MAX_TILE_LENGTH - MIN_TILE_LENGTH) + MIN_TILE_LENGTH : MAX_TILE_LENGTH; //tiles between 3 and 10 width
 //        int randWidth = 6; //tiles between 3 and 10 width
         distanceToCover -= randWidth;
         GameObject firstTile = TileBuilder.buildTile(randWidth, game);
@@ -142,7 +146,7 @@ public class Level {
         firstTile = this.addGameObject(firstTile);
         int i = 1;
         while (distanceToCover > 0){
-            randWidth = random.nextInt(7) + MIN_TILE_LENGTH;
+            randWidth = MAX_TILE_LENGTH != MIN_TILE_LENGTH ? random.nextInt(MAX_TILE_LENGTH - MIN_TILE_LENGTH) + MIN_TILE_LENGTH : MAX_TILE_LENGTH;;
             PixmapDrawable firstTileComponent = firstTile.getComponent(ComponentType.Drawable);
             if(randWidth > distanceToCover){
                 randWidth = distanceToCover;
@@ -218,14 +222,6 @@ public class Level {
         return WorldHandler.createJoint(jointDef);
     }
 
-    private float getXCoordinatesOfTileRightEdge(int tileNumber){
-        GameObject tile = this.gameObjects.get(tileNumber);
-        PixmapDrawable component = tile.getComponent(ComponentType.Drawable);
-        temp.setX(component.width / 2);
-        temp.setY(0);
-        return tile.getBody().getWorldPoint(temp).getX();
-    }
-
     public synchronized void moveCar(){
         car.move();
     }
@@ -237,11 +233,8 @@ public class Level {
 
     public void handleExplosion(GameObject go, Exploding component) {
         this.ropesBetweenTiles.remove(component.target);
-        this.gameObjects.remove(go);
         this.newRopeCoordinates.setY(0);
         this.newRopeCoordinates.setX(0);
-        IDLE_STATE.initializeState(this, CHECK_WIN_STATE, 2.5f);
-        state = IDLE_STATE;
     }
 
     public void destroy(){

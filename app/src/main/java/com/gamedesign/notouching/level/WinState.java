@@ -22,6 +22,7 @@ public class WinState extends LevelState {
     @Override
     public void updateLevel(float deltaTime) {
         commonUpdates();
+        drawLevelNumber();
         level.game.getGraphics().drawText(WON_STRING, 679, 122);
         level.game.getGraphics().drawPixmap(Assets.nextLevel, X_COORD_BUTTON, Y_COORD_BUTTON);
         level.game.getGraphics().drawText("PUNTI LIVELLO: " + points, 679, 250);
@@ -29,7 +30,7 @@ public class WinState extends LevelState {
 
     private int calculatePoints(){
         int timeContribution = (int) level.timeBombStopped + 1;
-        return level.ropeBudget * timeContribution / 1000;
+        return (level.ropeBudget * timeContribution / 1000) * level.difficultySettings.getPointsMultiplier();
     }
 
     @Override

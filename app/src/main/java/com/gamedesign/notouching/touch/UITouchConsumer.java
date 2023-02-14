@@ -48,6 +48,7 @@ public class UITouchConsumer extends TouchConsumer {
             }
             else if (level.state instanceof LossState){
                 level.destroy();
+                level.levelNumber = 0;
                 level.setUpLevel(game, 0);
                 gameScreen.levelTouchConsumer.pierIndex = level.PIER_INDEX;
                 gameScreen.totalPoints = 0;

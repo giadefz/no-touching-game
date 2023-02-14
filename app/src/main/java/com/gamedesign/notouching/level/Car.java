@@ -28,7 +28,7 @@ public class Car {
     public PrismaticJoint frontAxlePrismaticJoint;
     public PrismaticJoint rearAxlePrismaticJoint;
     public Game game;
-    private float[] targetCoordinates;
+    public float[] targetCoordinates;
     private boolean stopped;
     private final Level level;
     private final float motorSpeed;
@@ -102,6 +102,7 @@ public class Car {
         GameObject bomb = Assets.gameObjectsJSON.getGameObject(GameObjects.BOMB, game);
         PixmapDrawable bombDrawable = bomb.getComponent(ComponentType.Drawable);
         Exploding component = bomb.getComponent(ComponentType.Exploding);
+        component.timeUntilIgnition = level.timeUntilBombIgnition;
         component.setTarget(bombTargets[bombIndex]);
         PixmapDrawable chassisDrawable = chassis.getComponent(ComponentType.Drawable);
         vec2.setX(- (chassisDrawable.width / 2 + bombDrawable.width));

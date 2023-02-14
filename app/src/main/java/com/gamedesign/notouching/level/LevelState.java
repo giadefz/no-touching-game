@@ -39,6 +39,10 @@ public abstract class LevelState {
         drawNewRope();
     }
 
+    protected void drawLevelNumber() {
+        level.game.getGraphics().drawText("Livello: " + level.levelNumber, 50, 95);
+    }
+
     private void drawBackGround() {
         level.game.getGraphics().drawPixmap(level.backGround, 0, 0);
     }

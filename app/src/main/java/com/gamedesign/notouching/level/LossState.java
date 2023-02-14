@@ -18,6 +18,7 @@ public class LossState extends LevelState {
     public void updateLevel(float deltaTime) {
         commonUpdates();
         drawRetryButton();
+        drawLevelNumber();
         level.game.getGraphics().drawText(LOSS_STRING, 679, 122);
         level.game.getGraphics().drawText("TOTALE PUNTI PARTITA: " + level.totalPoints, 679, 450, Color.RED);
     }
