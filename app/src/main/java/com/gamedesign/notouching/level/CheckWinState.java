@@ -8,7 +8,7 @@ import com.gamedesign.notouching.util.Assets;
 public class CheckWinState extends LevelState {
 
     private boolean carSpawned;
-    private float timeUntilLoss = 30f;
+    private float timeUntilLoss = 20f;
 
     public CheckWinState(Level level) {
         super(level);

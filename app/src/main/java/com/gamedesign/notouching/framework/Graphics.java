@@ -1,5 +1,6 @@
 package com.gamedesign.notouching.framework;
 
+import android.graphics.Color;
 import android.graphics.Rect;
 
 public interface Graphics {
@@ -35,6 +36,7 @@ public interface Graphics {
     void drawCircle(float radius, float x, float y, int color);
 
     void drawText(String text, float x, float y);
+    void drawText(String text, float x, float y, int color);
 
     int getWidth();
 

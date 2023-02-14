@@ -194,6 +194,14 @@ public class AndroidGraphics implements Graphics {
     }
 
     @Override
+    public void drawText(String text, float x, float y, int color) {
+        paint.setColor(color);
+        paint.setStyle(Style.FILL);
+        paint.setTextSize(48f);
+        canvas.drawText(text, x, y, paint);
+    }
+
+    @Override
     public int getWidth() {
         return frameBuffer.getWidth();
     }

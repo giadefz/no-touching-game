@@ -3,11 +3,13 @@ package com.gamedesign.notouching.level;
 import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_BUTTON;
 import static com.gamedesign.notouching.util.ScreenInfo.Y_COORD_BUTTON;
 
+import android.graphics.Color;
+
 import com.gamedesign.notouching.util.Assets;
 
 public class LossState extends LevelState {
 
-    private static final String LOSS_STRING = "HAI PERDUTO!!!!!";
+    private static final String LOSS_STRING = "HAI PERSO!!!!!";
 
     public LossState(Level level) {
         super(level);
@@ -18,7 +20,7 @@ public class LossState extends LevelState {
         commonUpdates();
         drawRetryButton();
         level.game.getGraphics().drawText(LOSS_STRING, 679, 122);
-        level.game.getGraphics().drawText("TOTALE PUNTI PARTITA: " + level.totalPoints, 679, 450);
+        level.game.getGraphics().drawText("TOTALE PUNTI PARTITA: " + level.totalPoints, 679, 450, Color.RED);
     }
 
     @Override

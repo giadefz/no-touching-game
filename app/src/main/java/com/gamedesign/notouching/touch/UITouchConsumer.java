@@ -37,9 +37,9 @@ public class UITouchConsumer extends TouchConsumer {
                 level.destroy();
                 level.seed = System.currentTimeMillis();
                 //TODO: controlla quante volte di fila hai vinto e incrementa la difficoltà
-                gameScreen.levelTouchConsumer.pierIndex = level.PIER_INDEX;
                 gameScreen.totalPoints += ((WinState) level.state).points;
                 level.setUpLevel(game, gameScreen.totalPoints);
+                gameScreen.levelTouchConsumer.pierIndex = level.PIER_INDEX;
             }
             if(level.state instanceof CheckWinState || level.state instanceof LossState){
                 level.destroy();
