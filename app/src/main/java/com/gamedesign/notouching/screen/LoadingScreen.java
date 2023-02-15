@@ -35,6 +35,7 @@ public class LoadingScreen extends Screen {
         Assets.retryButton = graphics.newPixmap("retry.png", Graphics.PixmapFormat.ARGB4444);
         Assets.lvl1background = graphics.newPixmap("nextlevel.png", Graphics.PixmapFormat.RGB565);
         Assets.pier = graphics.newPixmap("pier.png", Graphics.PixmapFormat.RGB565);
+        Assets.pier2 = graphics.newPixmap("pier2.png", Graphics.PixmapFormat.RGB565);
         Assets.wheel = graphics.newPixmap("wheel.png", Graphics.PixmapFormat.RGB565);
         Assets.chassis = graphics.newPixmap("chassis.png", Graphics.PixmapFormat.RGB565);
         Assets.nextLevel = graphics.newPixmap("nextlevel.png", Graphics.PixmapFormat.RGB565);
