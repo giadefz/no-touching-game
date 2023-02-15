@@ -137,7 +137,7 @@ public class Level {
         int distanceToCover = DISTANCE_TO_COVER;
         int randWidth = MAX_TILE_LENGTH != MIN_TILE_LENGTH ? random.nextInt(MAX_TILE_LENGTH - MIN_TILE_LENGTH) + MIN_TILE_LENGTH : MAX_TILE_LENGTH;
         distanceToCover -= randWidth;
-        GameObject firstTile = TileBuilder.buildTile(randWidth, game);
+        GameObject firstTile = TileBuilder.buildTile(randWidth, game, "tile"); // todo: pixmap random per tile
         firstTile.setPosition(STARTING_TILE_POSITION_X + (randWidth / 2f), STARTING_TILE_POSITION_Y);
         firstTile = this.addGameObject(firstTile);
         int i = 1;
@@ -152,7 +152,7 @@ public class Level {
                 randWidth += distanceToCover;
                 distanceToCover = 0;
             }
-            GameObject tile = TileBuilder.buildTile(randWidth, game);
+            GameObject tile = TileBuilder.buildTile(randWidth, game, "tile"); // todo: pixmap random per tile
             PixmapDrawable tileComponent = tile.getComponent(ComponentType.Drawable);
             temp.setX(firstTileComponent.width / 2);
             temp.setY(0);

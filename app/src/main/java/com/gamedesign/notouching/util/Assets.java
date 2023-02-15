@@ -3,9 +3,13 @@ package com.gamedesign.notouching.util;
 import com.gamedesign.notouching.framework.Music;
 import com.gamedesign.notouching.framework.Pixmap;
 import com.gamedesign.notouching.framework.Sound;
+import com.gamedesign.notouching.framework.impl.AndroidPixmap;
 import com.gamedesign.notouching.parse.GameObjectsJSON;
 
+import java.lang.reflect.Field;
 import java.util.Random;
+
+import lombok.SneakyThrows;
 
 public class Assets {
 
@@ -32,22 +36,13 @@ public class Assets {
     public static Pixmap nextLevel;
 
     public static Pixmap getPixmapByName(String pixmapName) {
-        int rndPier = new Random().nextInt(2);
-        switch (pixmapName) {
-            case "tile":
-                return tile;
-            case "bomb":
-                return bomb;
-            case "pier":
-                return pier;
-            case "icon":
-                return icon;
-            case "wheel":
-                return wheel;
-            case "chassis":
-                return chassis;
-            default:
-                throw new IllegalArgumentException("No pixmap by name: " + pixmapName);
+        try {
+            Field field = Assets.class.getField(pixmapName);
+            return (Pixmap) field.get(new AndroidPixmap());
+        } catch (NoSuchFieldException e) {
+            throw new IllegalArgumentException("No pixmap by name: " + pixmapName);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 }
