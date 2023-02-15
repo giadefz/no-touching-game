@@ -1,7 +1,7 @@
 package com.gamedesign.notouching.level;
 
-import static com.gamedesign.notouching.level.LevelStates.LOSS_STATE;
-import static com.gamedesign.notouching.level.LevelStates.WIN_STATE;
+import static com.gamedesign.notouching.level.LevelStates.LOSS;
+import static com.gamedesign.notouching.level.LevelStates.WIN;
 import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_BUTTON;
 import static com.gamedesign.notouching.util.ScreenInfo.Y_COORD_BUTTON;
 
@@ -34,15 +34,15 @@ public class CheckWinState extends LevelState {
         drawRetryButton();
         drawLevelNumber();
         if(level.car.isLost() || timeUntilLoss <= 0){
-            LOSS_STATE.initializeState(level);
-            level.state = LOSS_STATE;
+            LOSS.initializeState(level);
+            level.state = LOSS;
         }
     }
 
     @Override
     public void nextState() {
-        WIN_STATE.initializeState(level);
-        level.state = WIN_STATE;
+        WIN.initializeState(level);
+        level.state = WIN;
     }
 
     private void drawRetryButton(){

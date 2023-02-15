@@ -2,11 +2,12 @@ package com.gamedesign.notouching.level;
 
 public class LevelStates {
 
-    public static StartLevelState START_STATE = new StartLevelState();
-    public static TicktockState TICK_TOCK_STATE = new TicktockState();
-    public static WinState WIN_STATE = new WinState();
-    public static CheckWinState CHECK_WIN_STATE = new CheckWinState();
-    public static LossState LOSS_STATE = new LossState();
-    public static IdleState IDLE_STATE = new IdleState();
+    public static StartLevelState START = new StartLevelState();
+    public static TicktockState TICK_TOCK = new TicktockState();
+    public static WinState WIN = new WinState();
+    public static CheckWinState CHECK_WIN = new CheckWinState();
+    public static LossState LOSS = new LossState();
+    public static IdleState IDLE = new IdleState();
+    public static PauseState PAUSE = new PauseState();
 
 }

@@ -1,7 +1,7 @@
 package com.gamedesign.notouching.level;
 
-import static com.gamedesign.notouching.level.LevelStates.CHECK_WIN_STATE;
-import static com.gamedesign.notouching.level.LevelStates.IDLE_STATE;
+import static com.gamedesign.notouching.level.LevelStates.CHECK_WIN;
+import static com.gamedesign.notouching.level.LevelStates.IDLE;
 import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_BUTTON;
 import static com.gamedesign.notouching.util.ScreenInfo.Y_COORD_BUTTON;
 
@@ -33,6 +33,7 @@ public class TicktockState extends LevelState {
     @Override
     public void updateLevel(float deltaTime) {
         commonUpdates();
+        drawPauseButton();
         drawBudget();
         drawLevelNumber();
         ticktockBomb(deltaTime);
@@ -41,8 +42,8 @@ public class TicktockState extends LevelState {
 
     @Override
     public void nextState() {
-        IDLE_STATE.initializeState(level, CHECK_WIN_STATE, 2.5f);
-        level.state = IDLE_STATE;
+        IDLE.initializeState(level, CHECK_WIN, 2.5f);
+        level.state = IDLE;
     }
 
 

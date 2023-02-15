@@ -32,8 +32,10 @@ public class LoadingScreen extends Screen {
         Assets.tile = graphics.newPixmap("BridgeTiles.png", Graphics.PixmapFormat.ARGB4444);
         Assets.bomb = graphics.newPixmap("bomb.png", Graphics.PixmapFormat.ARGB4444);
         Assets.stopButton = graphics.newPixmap("stop.png", Graphics.PixmapFormat.ARGB4444);
+        Assets.pauseButton = graphics.newPixmap("pause.png", Graphics.PixmapFormat.ARGB4444);
+        Assets.playButton = graphics.newPixmap("play.png", Graphics.PixmapFormat.ARGB4444);
         Assets.retryButton = graphics.newPixmap("retry.png", Graphics.PixmapFormat.ARGB4444);
-        Assets.lvl1background = graphics.newPixmap("nextlevel.png", Graphics.PixmapFormat.RGB565);
+        Assets.lvl1background = graphics.newPixmap("lvl1background.png", Graphics.PixmapFormat.RGB565);
         Assets.pier = graphics.newPixmap("pier.png", Graphics.PixmapFormat.RGB565);
         Assets.pier2 = graphics.newPixmap("pier2.png", Graphics.PixmapFormat.RGB565);
         Assets.wheel = graphics.newPixmap("wheel.png", Graphics.PixmapFormat.RGB565);

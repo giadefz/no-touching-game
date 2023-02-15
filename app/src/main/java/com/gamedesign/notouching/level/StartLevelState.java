@@ -1,6 +1,6 @@
 package com.gamedesign.notouching.level;
 
-import static com.gamedesign.notouching.level.LevelStates.TICK_TOCK_STATE;
+import static com.gamedesign.notouching.level.LevelStates.TICK_TOCK;
 
 public class StartLevelState extends LevelState {
 
@@ -14,7 +14,7 @@ public class StartLevelState extends LevelState {
 
     @Override
     public void nextState() {
-        TICK_TOCK_STATE.initializeState(level);
-        level.state = TICK_TOCK_STATE;
+        TICK_TOCK.initializeState(level);
+        level.state = TICK_TOCK;
     }
 }

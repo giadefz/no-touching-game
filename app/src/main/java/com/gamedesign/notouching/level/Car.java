@@ -38,7 +38,6 @@ public class Car {
     private boolean isPlaying = false;
 
 
-
     public Car(Game game, float[] targetCoordinates, Level level, float motorSpeed, Joint... bombTargets) {
         this.targetCoordinates = targetCoordinates;
         this.level = level;
@@ -53,7 +52,7 @@ public class Car {
         RevoluteJointDef firstWheelJointDef = new RevoluteJointDef();
         firstWheelJointDef.setBodyA(chassis.getBody());
         firstWheelJointDef.setBodyB(frontWheel.getBody());
-        firstWheelJointDef.setLocalAnchorA((chassisDrawable.width / 4 + WHEEL_TO_CHASSIS_DISTANCE),  chassisDrawable.height + WHEEL_TO_CHASSIS_DISTANCE);
+        firstWheelJointDef.setLocalAnchorA((chassisDrawable.width / 4 + WHEEL_TO_CHASSIS_DISTANCE), chassisDrawable.height + WHEEL_TO_CHASSIS_DISTANCE);
         firstWheelJointDef.setLocalAnchorB(0, 0);
         firstWheelJointDef.setCollideConnected(true);
         firstWheelJointDef.setEnableMotor(true);
@@ -63,7 +62,7 @@ public class Car {
         RevoluteJointDef backWheelJointDef = new RevoluteJointDef();
         backWheelJointDef.setBodyA(chassis.getBody());
         backWheelJointDef.setBodyB(backWheel.getBody());
-        backWheelJointDef.setLocalAnchorA(-(chassisDrawable.width / 4 + WHEEL_TO_CHASSIS_DISTANCE),  chassisDrawable.height + WHEEL_TO_CHASSIS_DISTANCE);
+        backWheelJointDef.setLocalAnchorA(-(chassisDrawable.width / 4 + WHEEL_TO_CHASSIS_DISTANCE), chassisDrawable.height + WHEEL_TO_CHASSIS_DISTANCE);
         backWheelJointDef.setLocalAnchorB(0, 0);
         backWheelJointDef.setCollideConnected(true);
         backWheelJointDef.setEnableMotor(true);
@@ -71,39 +70,38 @@ public class Car {
         backWheelJoint = WorldHandler.createJoint(backWheelJointDef);
     }
 
-    public void move(){
-        if(!stopped) {
-            if(!isPlaying) {
-                Assets.engine.setLooping(true);
-                Assets.engine.setVolume(0.5f);
-                Assets.engine.play();
-            }
-            float targetCoordinate;
-            if(this.targetCoordinates.length == bombEjectedIndex){
-                targetCoordinate = 3000f;
-            }else{
-                targetCoordinate = this.targetCoordinates[bombEjectedIndex];
-            }
-            CirclePixmapDrawable frontWheelComponent = frontWheel.getComponent(ComponentType.Drawable);
-            GameObject secondPier = level.gameObjects.get(level.PIER_INDEX + 1);
-            PixmapDrawable secondPierComponent = secondPier.getComponent(ComponentType.Drawable);
-
-            if ((chassis.getBody().getWorldCenter().getX() * SCALING_FACTOR - targetCoordinate) < - 50) {
-                frontWheelJoint.setMotorSpeed(motorSpeed);
-                backWheelJoint.setMotorSpeed(motorSpeed);
-            } else if ((chassis.getBody().getWorldCenter().getX() * SCALING_FACTOR - targetCoordinate) > 50) {
-                frontWheelJoint.setMotorSpeed(-motorSpeed);
-                backWheelJoint.setMotorSpeed(-motorSpeed);
-            } else {
-                frontWheelJoint.setMotorSpeed(motorSpeed);
-                backWheelJoint.setMotorSpeed(0);
-                vec2.setY(0); vec2.setX(0);
-                stopped = true;
-                ejectBomb(bombEjectedIndex);
-            }
-        } else {
-            Assets.engine.dispose();
+    public void move() {
+        if(!isPlaying){
+            Assets.engine.setLooping(true);
+            Assets.engine.setVolume(0.5f);
+            Assets.engine.play();
+            isPlaying = true;
         }
+        float targetCoordinate;
+        if (this.targetCoordinates.length == bombEjectedIndex) {
+            targetCoordinate = 3000f;
+        } else {
+            targetCoordinate = this.targetCoordinates[bombEjectedIndex];
+        }
+        CirclePixmapDrawable frontWheelComponent = frontWheel.getComponent(ComponentType.Drawable);
+        GameObject secondPier = level.gameObjects.get(level.PIER_INDEX + 1);
+        PixmapDrawable secondPierComponent = secondPier.getComponent(ComponentType.Drawable);
+
+        if ((chassis.getBody().getWorldCenter().getX() * SCALING_FACTOR - targetCoordinate) < -50) {
+            frontWheelJoint.setMotorSpeed(motorSpeed);
+            backWheelJoint.setMotorSpeed(motorSpeed);
+        } else if ((chassis.getBody().getWorldCenter().getX() * SCALING_FACTOR - targetCoordinate) > 50) {
+            frontWheelJoint.setMotorSpeed(-motorSpeed);
+            backWheelJoint.setMotorSpeed(-motorSpeed);
+        } else {
+            frontWheelJoint.setMotorSpeed(motorSpeed);
+            backWheelJoint.setMotorSpeed(0);
+            vec2.setY(0);
+            vec2.setX(0);
+            stopped = true;
+            ejectBomb(bombEjectedIndex);
+        }
+
 
     }
 
@@ -114,7 +112,7 @@ public class Car {
         component.timeUntilIgnition = level.timeUntilBombIgnition;
         component.setTarget(bombTargets[bombIndex]);
         PixmapDrawable chassisDrawable = chassis.getComponent(ComponentType.Drawable);
-        vec2.setX(- (chassisDrawable.width / 2 + bombDrawable.width));
+        vec2.setX(-(chassisDrawable.width / 2 + bombDrawable.width));
         vec2.setY(0);
         Vec2 chassisCoordinates = chassis.getBody().getWorldPoint(vec2);
         bomb.setPosition(chassisCoordinates.getX(), chassisCoordinates.getY() + 4f);
@@ -124,6 +122,9 @@ public class Car {
     }
 
     public void destroy() {
+        if (bombEjectedIndex != this.targetCoordinates.length) {
+            ejectBomb(bombEjectedIndex);
+        }
         chassis.getBody().setActive(false);
         frontWheel.getBody().setActive(false);
         backWheel.getBody().setActive(false);
@@ -131,9 +132,11 @@ public class Car {
         level.gameObjects.remove(frontWheel);
         level.gameObjects.remove(backWheel);
         level.state.nextState();
+        Assets.engine.stop();
+        stopped = true;
     }
 
-    public boolean isLost(){
+    public boolean isLost() {
         return chassis.getBody().getPosition().getY() >= 40;
     }
 

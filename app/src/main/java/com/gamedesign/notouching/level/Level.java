@@ -1,9 +1,6 @@
 package com.gamedesign.notouching.level;
 
-import static com.gamedesign.notouching.level.LevelStates.CHECK_WIN_STATE;
-import static com.gamedesign.notouching.level.LevelStates.IDLE_STATE;
-import static com.gamedesign.notouching.level.LevelStates.START_STATE;
-import static com.gamedesign.notouching.util.ScreenInfo.SCALING_FACTOR;
+import static com.gamedesign.notouching.level.LevelStates.START;
 
 import android.graphics.Color;
 
@@ -87,8 +84,8 @@ public class Level {
         this.MAX_TILE_LENGTH = this.difficultySettings.getMaxTileLength();
         this.MIN_TILE_LENGTH = this.difficultySettings.getMinTileLength();
         this.timeUntilBombIgnition = this.difficultySettings.getTimeUntilIgnition();
-        START_STATE.initializeState(this);
-        this.state = START_STATE;
+        START.initializeState(this);
+        this.state = START;
         setUpTiles();
         setUpPiers();
 
@@ -138,8 +135,7 @@ public class Level {
 
     private void setUpTiles(){
         int distanceToCover = DISTANCE_TO_COVER;
-        int randWidth = MAX_TILE_LENGTH != MIN_TILE_LENGTH ? random.nextInt(MAX_TILE_LENGTH - MIN_TILE_LENGTH) + MIN_TILE_LENGTH : MAX_TILE_LENGTH; //tiles between 3 and 10 width
-//        int randWidth = 6; //tiles between 3 and 10 width
+        int randWidth = MAX_TILE_LENGTH != MIN_TILE_LENGTH ? random.nextInt(MAX_TILE_LENGTH - MIN_TILE_LENGTH) + MIN_TILE_LENGTH : MAX_TILE_LENGTH;
         distanceToCover -= randWidth;
         GameObject firstTile = TileBuilder.buildTile(randWidth, game);
         firstTile.setPosition(STARTING_TILE_POSITION_X + (randWidth / 2f), STARTING_TILE_POSITION_Y);
@@ -223,7 +219,9 @@ public class Level {
     }
 
     public synchronized void moveCar(){
-        car.move();
+        if(car != null){
+            car.move();
+        }
     }
 
     public synchronized void addNewRope(Rope newRope) {

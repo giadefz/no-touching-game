@@ -5,11 +5,15 @@ import static com.gamedesign.notouching.level.Level.NEW_ROPE_COLOR;
 import static com.gamedesign.notouching.level.Level.PIER_HALF_HEIGHT;
 import static com.gamedesign.notouching.level.Level.ROPE_COLOR;
 import static com.gamedesign.notouching.util.ScreenInfo.SCALING_FACTOR;
+import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_BUTTON;
+import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_PAUSE_BUTTON;
+import static com.gamedesign.notouching.util.ScreenInfo.Y_COORD_BUTTON;
 
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Drawable;
 import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.component.PixmapDrawable;
+import com.gamedesign.notouching.util.Assets;
 import com.google.fpl.liquidfun.Body;
 import com.google.fpl.liquidfun.Joint;
 
@@ -41,6 +45,10 @@ public abstract class LevelState {
 
     protected void drawLevelNumber() {
         level.game.getGraphics().drawText("Livello: " + level.levelNumber, 50, 95);
+    }
+
+    protected void drawPauseButton(){
+        level.game.getGraphics().drawPixmap(Assets.pauseButton, X_COORD_PAUSE_BUTTON, Y_COORD_BUTTON);
     }
 
     private void drawBackGround() {
