@@ -83,9 +83,7 @@ public class Car {
         } else {
             targetCoordinate = this.targetCoordinates[bombEjectedIndex];
         }
-        CirclePixmapDrawable frontWheelComponent = frontWheel.getComponent(ComponentType.Drawable);
         GameObject secondPier = level.gameObjects.get(level.PIER_INDEX + 1);
-        PixmapDrawable secondPierComponent = secondPier.getComponent(ComponentType.Drawable);
 
         if ((chassis.getBody().getWorldCenter().getX() * SCALING_FACTOR - targetCoordinate) < -50) {
             frontWheelJoint.setMotorSpeed(motorSpeed);

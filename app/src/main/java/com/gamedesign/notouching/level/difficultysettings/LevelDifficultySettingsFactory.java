@@ -1,4 +1,6 @@
-package com.gamedesign.notouching.level;
+package com.gamedesign.notouching.level.difficultysettings;
+
+import com.gamedesign.notouching.level.Level;
 
 public class LevelDifficultySettingsFactory {
 

@@ -1,6 +1,7 @@
-package com.gamedesign.notouching.level;
+package com.gamedesign.notouching.level.difficultysettings;
 
 import com.gamedesign.notouching.framework.Game;
+import com.gamedesign.notouching.level.Car;
 
 public interface LevelDifficultySettings {
 

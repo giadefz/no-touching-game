@@ -1,6 +1,8 @@
-package com.gamedesign.notouching.level;
+package com.gamedesign.notouching.level.difficultysettings;
 
 import static com.gamedesign.notouching.util.ScreenInfo.SCALING_FACTOR;
+
+import com.gamedesign.notouching.level.Car;
 
 public class ImpossibleSettings extends HardSettings {
 

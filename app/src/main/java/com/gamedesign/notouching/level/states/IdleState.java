@@ -1,4 +1,6 @@
-package com.gamedesign.notouching.level;
+package com.gamedesign.notouching.level.states;
+
+import com.gamedesign.notouching.level.Level;
 
 public class IdleState extends LevelState {
 

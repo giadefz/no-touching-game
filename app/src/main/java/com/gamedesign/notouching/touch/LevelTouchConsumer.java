@@ -82,7 +82,7 @@ public class LevelTouchConsumer extends TouchConsumer {
         jointDef.setMaxLength((((float) Math.sqrt(xDiff * xDiff + yDiff * yDiff)) / ScreenInfo.SCALING_FACTOR) + 0.2f);
         jointDef.setCollideConnected(true);
         Joint joint = WorldHandler.createJoint(jointDef);
-        return new Rope(joint, localCoordinatesFromWorldCoordinates.getX(), localCoordinatesFromWorldCoordinates.getY());
+        return new Rope(joint, localCoordinatesFromWorldCoordinates.getX(), localCoordinatesFromWorldCoordinates.getY()); //todo: pattern pool per rope
     }
 
 }

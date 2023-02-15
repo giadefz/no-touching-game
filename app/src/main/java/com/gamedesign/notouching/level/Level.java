@@ -1,6 +1,6 @@
 package com.gamedesign.notouching.level;
 
-import static com.gamedesign.notouching.level.LevelStates.START;
+import static com.gamedesign.notouching.level.states.LevelStates.START;
 
 import android.graphics.Color;
 
@@ -13,6 +13,9 @@ import com.gamedesign.notouching.component.Position;
 import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.framework.Pixmap;
+import com.gamedesign.notouching.level.difficultysettings.LevelDifficultySettings;
+import com.gamedesign.notouching.level.difficultysettings.LevelDifficultySettingsFactory;
+import com.gamedesign.notouching.level.states.LevelState;
 import com.gamedesign.notouching.util.Assets;
 import com.gamedesign.notouching.util.GameObjects;
 import com.gamedesign.notouching.util.TileBuilder;

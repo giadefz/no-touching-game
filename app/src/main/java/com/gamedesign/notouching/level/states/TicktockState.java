@@ -1,13 +1,14 @@
-package com.gamedesign.notouching.level;
+package com.gamedesign.notouching.level.states;
 
-import static com.gamedesign.notouching.level.LevelStates.CHECK_WIN;
-import static com.gamedesign.notouching.level.LevelStates.IDLE;
+import static com.gamedesign.notouching.level.states.LevelStates.CHECK_WIN;
+import static com.gamedesign.notouching.level.states.LevelStates.IDLE;
 import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_BUTTON;
 import static com.gamedesign.notouching.util.ScreenInfo.Y_COORD_BUTTON;
 
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Exploding;
 import com.gamedesign.notouching.component.GameObject;
+import com.gamedesign.notouching.level.Level;
 import com.gamedesign.notouching.util.Assets;
 
 import java.util.Arrays;

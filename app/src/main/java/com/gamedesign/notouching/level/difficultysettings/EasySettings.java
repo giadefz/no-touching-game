@@ -1,10 +1,12 @@
-package com.gamedesign.notouching.level;
+package com.gamedesign.notouching.level.difficultysettings;
 
 import static com.gamedesign.notouching.util.ScreenInfo.SCALING_FACTOR;
 
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.component.PixmapDrawable;
+import com.gamedesign.notouching.level.Car;
+import com.gamedesign.notouching.level.Level;
 import com.google.fpl.liquidfun.Vec2;
 
 public class EasySettings implements LevelDifficultySettings {

@@ -11,7 +11,7 @@ import com.gamedesign.notouching.framework.Graphics;
 import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.framework.Screen;
 import com.gamedesign.notouching.framework.TouchConsumer;
-import com.gamedesign.notouching.level.TicktockState;
+import com.gamedesign.notouching.level.states.TicktockState;
 import com.gamedesign.notouching.touch.UITouchConsumer;
 import com.gamedesign.notouching.util.Assets;
 import com.gamedesign.notouching.util.Collision;

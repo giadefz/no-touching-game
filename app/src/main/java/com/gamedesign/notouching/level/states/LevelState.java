@@ -1,4 +1,4 @@
-package com.gamedesign.notouching.level;
+package com.gamedesign.notouching.level.states;
 
 
 import static com.gamedesign.notouching.level.Level.NEW_ROPE_COLOR;
@@ -13,6 +13,7 @@ import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Drawable;
 import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.component.PixmapDrawable;
+import com.gamedesign.notouching.level.Level;
 import com.gamedesign.notouching.util.Assets;
 import com.google.fpl.liquidfun.Body;
 import com.google.fpl.liquidfun.Joint;

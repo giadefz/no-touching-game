@@ -1,7 +1,7 @@
 package com.gamedesign.notouching.touch;
 
-import static com.gamedesign.notouching.level.LevelStates.LOSS;
-import static com.gamedesign.notouching.level.LevelStates.PAUSE;
+import static com.gamedesign.notouching.level.states.LevelStates.LOSS;
+import static com.gamedesign.notouching.level.states.LevelStates.PAUSE;
 import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_BUTTON;
 import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_PAUSE_BUTTON;
 import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_START_BUTTON;
@@ -14,12 +14,12 @@ import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.framework.TouchConsumer;
-import com.gamedesign.notouching.level.CheckWinState;
+import com.gamedesign.notouching.level.states.CheckWinState;
 import com.gamedesign.notouching.level.Level;
-import com.gamedesign.notouching.level.LossState;
-import com.gamedesign.notouching.level.PauseState;
-import com.gamedesign.notouching.level.TicktockState;
-import com.gamedesign.notouching.level.WinState;
+import com.gamedesign.notouching.level.states.LossState;
+import com.gamedesign.notouching.level.states.PauseState;
+import com.gamedesign.notouching.level.states.TicktockState;
+import com.gamedesign.notouching.level.states.WinState;
 import com.gamedesign.notouching.screen.GameScreen;
 
 public class UITouchConsumer extends TouchConsumer {

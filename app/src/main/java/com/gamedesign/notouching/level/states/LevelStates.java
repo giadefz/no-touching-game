@@ -1,4 +1,4 @@
-package com.gamedesign.notouching.level;
+package com.gamedesign.notouching.level.states;
 
 public class LevelStates {
 
