@@ -35,6 +35,8 @@ public class Car {
     private final Joint[] bombTargets;
     private final Vec2 vec2 = new Vec2();
     private int bombEjectedIndex = 0;
+    private boolean isPlaying = false;
+
 
 
     public Car(Game game, float[] targetCoordinates, Level level, float motorSpeed, Joint... bombTargets) {
@@ -71,6 +73,11 @@ public class Car {
 
     public void move(){
         if(!stopped) {
+            if(!isPlaying) {
+                Assets.engine.setLooping(true);
+                Assets.engine.setVolume(0.5f);
+                Assets.engine.play();
+            }
             float targetCoordinate;
             if(this.targetCoordinates.length == bombEjectedIndex){
                 targetCoordinate = 3000f;
@@ -94,6 +101,8 @@ public class Car {
                 stopped = true;
                 ejectBomb(bombEjectedIndex);
             }
+        } else {
+            Assets.engine.dispose();
         }
 
     }

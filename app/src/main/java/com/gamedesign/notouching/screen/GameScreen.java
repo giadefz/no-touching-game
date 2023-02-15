@@ -1,5 +1,7 @@
 package com.gamedesign.notouching.screen;
 
+import static com.gamedesign.notouching.util.Assets.tileHit;
+
 import android.graphics.Color;
 import android.util.Log;
 
@@ -22,6 +24,7 @@ import com.gamedesign.notouching.world.WorldHandler;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 import lombok.SneakyThrows;
 
@@ -82,6 +85,9 @@ public class GameScreen extends Screen {
             if(event.a.name.equals(GameObjects.CHASSIS) && event.b.name.equals(GameObjects.PIER) ||
                     event.b.name.equals(GameObjects.CHASSIS) && event.a.name.equals(GameObjects.PIER)){
                 level.car.destroy();
+            } else if (event.a.name.equals(GameObjects.WHEEL) && event.b.name.equals(GameObjects.TILE) ||
+                    event.b.name.equals(GameObjects.WHEEL) && event.a.name.equals(GameObjects.TILE)) {
+                Assets.tileHit[new Random().nextInt(tileHit.length)].play(2);
             }
         }
     }

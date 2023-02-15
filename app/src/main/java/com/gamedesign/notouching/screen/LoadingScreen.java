@@ -3,6 +3,7 @@ package com.gamedesign.notouching.screen;
 
 import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.framework.Graphics;
+import com.gamedesign.notouching.framework.Music;
 import com.gamedesign.notouching.framework.Screen;
 import com.gamedesign.notouching.parse.GameObjectsJSON;
 import com.gamedesign.notouching.util.Assets;
@@ -32,11 +33,16 @@ public class LoadingScreen extends Screen {
         Assets.bomb = graphics.newPixmap("bomb.png", Graphics.PixmapFormat.ARGB4444);
         Assets.stopButton = graphics.newPixmap("stop.png", Graphics.PixmapFormat.ARGB4444);
         Assets.retryButton = graphics.newPixmap("retry.png", Graphics.PixmapFormat.ARGB4444);
-        Assets.lvl1background = graphics.newPixmap("lvl1background.png", Graphics.PixmapFormat.RGB565);
+        Assets.lvl1background = graphics.newPixmap("nextlevel.png", Graphics.PixmapFormat.RGB565);
         Assets.pier = graphics.newPixmap("pier.png", Graphics.PixmapFormat.RGB565);
         Assets.wheel = graphics.newPixmap("wheel.png", Graphics.PixmapFormat.RGB565);
         Assets.chassis = graphics.newPixmap("chassis.png", Graphics.PixmapFormat.RGB565);
         Assets.nextLevel = graphics.newPixmap("nextlevel.png", Graphics.PixmapFormat.RGB565);
+        Assets.engine = game.getAudio().newMusic("engine.ogg");
+        Assets.tileHit[0] = game.getAudio().newSound("tileHit1.ogg");
+        Assets.tileHit[1] = game.getAudio().newSound("tileHit2.ogg");
+        Assets.tileHit[2] = game.getAudio().newSound("tileHit3.ogg");
+        Assets.tileHit[3] = game.getAudio().newSound("tileHit4.ogg");
 
 
         try (Reader reader = new InputStreamReader(game.getFileIO().readAsset("gameobjects.json"))) {

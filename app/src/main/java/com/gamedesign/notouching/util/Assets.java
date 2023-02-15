@@ -1,5 +1,6 @@
 package com.gamedesign.notouching.util;
 
+import com.gamedesign.notouching.framework.Music;
 import com.gamedesign.notouching.framework.Pixmap;
 import com.gamedesign.notouching.framework.Sound;
 import com.gamedesign.notouching.parse.GameObjectsJSON;
@@ -11,6 +12,8 @@ public class Assets {
     public static Pixmap tile;
     public static Sound click;
     public static Sound explosion;
+    public static Music engine;
+    public static Sound[] tileHit = new Sound[4];
     public static Pixmap background;
     public static Pixmap buttons;
     public static Pixmap mainMenu;
