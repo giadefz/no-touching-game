@@ -1,18 +1,27 @@
 package com.gamedesign.notouching.framework.impl;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.gamedesign.notouching.framework.Audio;
@@ -21,11 +30,15 @@ import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.framework.Graphics;
 import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.framework.Screen;
+import com.gamedesign.notouching.level.save.SaveFileHandler;
 import com.gamedesign.notouching.util.Box;
 import com.gamedesign.notouching.util.ScreenInfo;
 import com.google.fpl.liquidfun.World;
 
+import java.io.File;
+
 public abstract class AndroidGame extends Activity implements Game {
+    private static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 1;
     AndroidFastRenderView renderView;
     Graphics graphics;
     Audio audio;
@@ -51,6 +64,13 @@ public abstract class AndroidGame extends Activity implements Game {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted, request it
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    READ_EXTERNAL_STORAGE_REQUEST_CODE);
+        }
 
         System.loadLibrary("liquidfun");
         System.loadLibrary("liquidfun_jni");
@@ -71,7 +91,8 @@ public abstract class AndroidGame extends Activity implements Game {
 
         renderView = new AndroidFastRenderView(this, frameBuffer);
         graphics = new AndroidGraphics(getAssets(), frameBuffer);
-        fileIO = new AndroidFileIO(getAssets());
+        File externalFilesDir = getExternalFilesDir(null);
+        fileIO = new AndroidFileIO(getAssets(), externalFilesDir);
         audio = new AndroidAudio(this);
         input = new AndroidInput(this, renderView, scaleX, scaleY);
         screen = getStartScreen();

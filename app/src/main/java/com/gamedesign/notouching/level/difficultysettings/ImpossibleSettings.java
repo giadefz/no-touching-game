@@ -3,6 +3,7 @@ package com.gamedesign.notouching.level.difficultysettings;
 import static com.gamedesign.notouching.util.ScreenInfo.SCALING_FACTOR;
 
 import com.gamedesign.notouching.level.Car;
+import com.gamedesign.notouching.util.Assets;
 
 public class ImpossibleSettings extends HardSettings {
 
@@ -16,7 +17,7 @@ public class ImpossibleSettings extends HardSettings {
                 (this.getXCoordinatesOfTileRightEdge(secondBombIndex) * SCALING_FACTOR)
         };
 
-        return new Car(level.game, xCoordinatesOfTileLeftEdge, level, 5f, level.ropesBetweenTiles.get(firstBombIndex-1), level.ropesBetweenTiles.get(secondBombIndex-1));
+        return new Car(level.game, xCoordinatesOfTileLeftEdge, level, 5f, Assets.terroristChassis, level.ropesBetweenTiles.get(firstBombIndex-1), level.ropesBetweenTiles.get(secondBombIndex-1));
     }
 
     @Override

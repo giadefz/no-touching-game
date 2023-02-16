@@ -7,6 +7,7 @@ import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.component.PixmapDrawable;
 import com.gamedesign.notouching.level.Car;
 import com.gamedesign.notouching.level.Level;
+import com.gamedesign.notouching.util.Assets;
 import com.google.fpl.liquidfun.Vec2;
 
 public class EasySettings implements LevelDifficultySettings {
@@ -45,7 +46,7 @@ public class EasySettings implements LevelDifficultySettings {
 
         float [] xCoordinatesOfTileLeftEdge = {(this.getXCoordinatesOfTileRightEdge(firstBombIndex) * SCALING_FACTOR)};
 
-        return new Car(level.game, xCoordinatesOfTileLeftEdge, level, 5f, level.ropesBetweenTiles.get(firstBombIndex-1));
+        return new Car(level.game, xCoordinatesOfTileLeftEdge, level, 5f, Assets.terroristChassis, level.ropesBetweenTiles.get(firstBombIndex-1));
 
     }
 

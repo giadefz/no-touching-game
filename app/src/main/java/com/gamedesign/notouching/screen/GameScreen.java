@@ -11,6 +11,8 @@ import com.gamedesign.notouching.framework.Graphics;
 import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.framework.Screen;
 import com.gamedesign.notouching.framework.TouchConsumer;
+import com.gamedesign.notouching.level.save.SaveFile;
+import com.gamedesign.notouching.level.save.SaveFileHandler;
 import com.gamedesign.notouching.level.states.TicktockState;
 import com.gamedesign.notouching.touch.UITouchConsumer;
 import com.gamedesign.notouching.util.Assets;
@@ -39,9 +41,13 @@ public class GameScreen extends Screen {
     public GameScreen(Game game) {
         super(game);
         this.running = true;
-        this.level = new Level(game, System.currentTimeMillis(), totalPoints);
+        SaveFile saveFile = SaveFileHandler.readSave(game);
+        if(saveFile != null && saveFile.seed != 0){
+            this.level = new Level(game, saveFile.seed, saveFile.totalPoints, saveFile.levelNumber);
+        }else{
+            this.level = new Level(game, System.currentTimeMillis(), 0, 0);
+        }
         Log.println(Log.INFO, "SEED", String.valueOf(level.seed));
-        level.backGround = Assets.lvl1background;
         this.levelTouchConsumer = new LevelTouchConsumer(level, SECOND_PIER_X_COORDINATE, FIRST_PIER_X_COORDINATE, PIER_Y_COORDINATE, PIER_HALF_HEIGHT, level.PIER_INDEX);
         this.UItouchConsumer = new UITouchConsumer(level, this, game);
     }
@@ -79,9 +85,6 @@ public class GameScreen extends Screen {
             if (event.a.name.equals(GameObjects.CHASSIS) && event.b.name.equals(GameObjects.PIER) ||
                     event.b.name.equals(GameObjects.CHASSIS) && event.a.name.equals(GameObjects.PIER)) {
                 level.car.destroy();
-            } else if (event.a.name.equals(GameObjects.WHEEL) && event.b.name.equals(GameObjects.TILE) ||
-                    event.b.name.equals(GameObjects.WHEEL) && event.a.name.equals(GameObjects.TILE)) {
-                Assets.tileHit[new Random().nextInt(tileHit.length)].play(2);
             }
         }
     }

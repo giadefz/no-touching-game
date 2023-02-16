@@ -4,10 +4,12 @@ import static com.gamedesign.notouching.util.ScreenInfo.SCALING_FACTOR;
 
 import com.gamedesign.notouching.component.CirclePixmapDrawable;
 import com.gamedesign.notouching.component.ComponentType;
+import com.gamedesign.notouching.component.Drawable;
 import com.gamedesign.notouching.component.Exploding;
 import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.component.PixmapDrawable;
 import com.gamedesign.notouching.framework.Game;
+import com.gamedesign.notouching.framework.Pixmap;
 import com.gamedesign.notouching.util.Assets;
 import com.gamedesign.notouching.util.GameObjects;
 import com.gamedesign.notouching.world.WorldHandler;
@@ -38,7 +40,7 @@ public class Car {
     private boolean isPlaying = false;
 
 
-    public Car(Game game, float[] targetCoordinates, Level level, float motorSpeed, Joint... bombTargets) {
+    public Car(Game game, float[] targetCoordinates, Level level, float motorSpeed, Pixmap chassisPixmap, Joint... bombTargets) {
         this.targetCoordinates = targetCoordinates;
         this.level = level;
         this.game = game;
@@ -48,7 +50,7 @@ public class Car {
         this.frontWheel = Assets.gameObjectsJSON.getGameObject(GameObjects.WHEEL, game);
         this.bombTargets = bombTargets;
         PixmapDrawable chassisDrawable = chassis.getComponent(ComponentType.Drawable);
-
+        chassisDrawable.pixmap = chassisPixmap;
         RevoluteJointDef firstWheelJointDef = new RevoluteJointDef();
         firstWheelJointDef.setBodyA(chassis.getBody());
         firstWheelJointDef.setBodyB(frontWheel.getBody());

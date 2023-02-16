@@ -14,12 +14,11 @@ import com.gamedesign.notouching.framework.FileIO;
 
 public class AndroidFileIO implements FileIO {
     AssetManager assets;
-    String externalStoragePath;
+    File externalStoragePath;
 
-    public AndroidFileIO(AssetManager assets) {
+    public AndroidFileIO(AssetManager assets, File externalFilesDir) {
         this.assets = assets;
-        this.externalStoragePath = Environment.getExternalStorageDirectory()
-                .getAbsolutePath() + File.separator;
+        this.externalStoragePath = externalFilesDir;
     }
 
     @Override

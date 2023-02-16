@@ -21,7 +21,7 @@ public class CheckWinState extends LevelState {
     public void initializeState(Level level) {
         super.initializeState(level);
         this.carSpawned = false;
-        this.timeUntilLoss = 10f;
+        this.timeUntilLoss = 20f;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class CheckWinState extends LevelState {
         timeUntilLoss -= deltaTime;
         if(!carSpawned){
             float[] target = {};
-            level.addCar(new Car(level.game, target, level, 10f));
+            level.addCar(new Car(level.game, target, level, 10f, Assets.chassis));
             carSpawned = true;
         }
         commonUpdates();

@@ -22,7 +22,7 @@ public class PixmapDrawable extends Drawable {
     public int srcBottom;
     public String pixmapName;
     private final Rect src = new Rect();
-    private Pixmap pixmap;
+    public Pixmap pixmap;
     protected Vec2 vec = new Vec2();
 
 

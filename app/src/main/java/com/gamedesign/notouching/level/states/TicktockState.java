@@ -9,6 +9,7 @@ import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Exploding;
 import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.level.Level;
+import com.gamedesign.notouching.level.save.SaveFileHandler;
 import com.gamedesign.notouching.util.Assets;
 
 import java.util.Arrays;
@@ -28,6 +29,7 @@ public class TicktockState extends LevelState {
         super.initializeState(level);
         totalBombs = level.car.targetCoordinates.length;
         explodedBombIndex = 0;
+        SaveFileHandler.resetSave(level.game);
         Arrays.fill(toRemove, null);
     }
 

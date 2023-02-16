@@ -4,6 +4,7 @@ import static com.gamedesign.notouching.level.states.LevelStates.START;
 
 import android.graphics.Color;
 
+import com.gamedesign.notouching.component.Component;
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Drawable;
 import com.gamedesign.notouching.component.Exploding;
@@ -66,19 +67,20 @@ public class Level {
     public float timeUntilBombIgnition;
     public LevelDifficultySettings difficultySettings;
 
-    public Level(Game game, long seed, int totalPoints) {
+    public Level(Game game, long seed, int totalPoints, int levelNumber) {
         this.gameObjects = new ArrayList<>();
         this.ropesBetweenTiles = new ArrayList<>();
         this.addedRopes = new ArrayList<>();
         this.game = game;
         this.seed = seed;
-        this.levelNumber = 0;
+        this.levelNumber = levelNumber;
         setUpLevel(game, totalPoints);
     }
 
     public void setUpLevel(Game game, int totalPoints) {
         this.totalPoints = totalPoints;
         this.random = new Random(seed);
+        this.backGround = Assets.getBackgroundByIndex(random.nextInt(3));
         this.newRopeCoordinates.setX(0); this.newRopeCoordinates.setY(0);
         this.startingPointCoordinates.setX(0); this.startingPointCoordinates.setY(0);
         this.levelNumber++;
@@ -140,7 +142,8 @@ public class Level {
         int distanceToCover = DISTANCE_TO_COVER;
         int randWidth = MAX_TILE_LENGTH != MIN_TILE_LENGTH ? random.nextInt(MAX_TILE_LENGTH - MIN_TILE_LENGTH) + MIN_TILE_LENGTH : MAX_TILE_LENGTH;
         distanceToCover -= randWidth;
-        GameObject firstTile = TileBuilder.buildTile(randWidth, game, "tile"); // todo: pixmap random per tile
+        String tilePixmapNameByIndex = Assets.getTilePixmapNameByIndex(random.nextInt(3));
+        GameObject firstTile = TileBuilder.buildTile(randWidth, game, tilePixmapNameByIndex);
         firstTile.setPosition(STARTING_TILE_POSITION_X + (randWidth / 2f), STARTING_TILE_POSITION_Y);
         firstTile = this.addGameObject(firstTile);
         int i = 1;
@@ -155,7 +158,7 @@ public class Level {
                 randWidth += distanceToCover;
                 distanceToCover = 0;
             }
-            GameObject tile = TileBuilder.buildTile(randWidth, game, "tile"); // todo: pixmap random per tile
+            GameObject tile = TileBuilder.buildTile(randWidth, game, tilePixmapNameByIndex);
             PixmapDrawable tileComponent = tile.getComponent(ComponentType.Drawable);
             temp.setX(firstTileComponent.width / 2);
             temp.setY(0);
@@ -170,8 +173,13 @@ public class Level {
     }
 
     private void setUpPiers() {
+        Pixmap pierPixmapByIndex = Assets.getPierPixmapByIndex(random.nextInt(2));
         GameObject firstPier = this.addGameObject(Assets.gameObjectsJSON.getGameObject(GameObjects.PIER, game));
+        PixmapDrawable firstPierComponent = firstPier.getComponent(ComponentType.Drawable);
+        firstPierComponent.pixmap = pierPixmapByIndex;
         GameObject secondPier = Assets.gameObjectsJSON.getGameObject(GameObjects.PIER, game);
+        PixmapDrawable secondPierComponent = secondPier.getComponent(ComponentType.Drawable);
+        secondPierComponent.pixmap = pierPixmapByIndex;
         GameObject firstTile = this.getGameObject(0);
         PixmapDrawable firstTileDrawable = firstTile.getComponent(ComponentType.Drawable);
         GameObject lastTile = this.getGameObject(TILES_NUMBER - 1);
