@@ -7,7 +7,6 @@ import com.gamedesign.notouching.framework.Screen;
 import com.gamedesign.notouching.parse.GameObjectsJSON;
 import com.gamedesign.notouching.util.Assets;
 import com.gamedesign.notouching.util.GsonMapper;
-import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -26,7 +25,7 @@ public class LoadingScreen extends Screen {
         Assets.click = game.getAudio().newSound("click.ogg");
         Assets.explosion = game.getAudio().newSound("explosion.ogg");
         Assets.background = graphics.newPixmap("background.png", Graphics.PixmapFormat.RGB565);
-        Assets.mainMenu = graphics.newPixmap("mainmenu.png", Graphics.PixmapFormat.ARGB4444);
+        Assets.mainMenuPlayButton = graphics.newPixmap("mainmenu.png", Graphics.PixmapFormat.ARGB4444);
         Assets.buttons = graphics.newPixmap("buttons.png", Graphics.PixmapFormat.ARGB4444);
         Assets.tile = graphics.newPixmap("bridgeTile1.png", Graphics.PixmapFormat.ARGB4444);
         Assets.tile2 = graphics.newPixmap("bridgeTile2.png", Graphics.PixmapFormat.ARGB4444);

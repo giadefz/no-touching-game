@@ -20,7 +20,7 @@ public class Assets {
     public static Sound[] tileHit = new Sound[4];
     public static Pixmap background;
     public static Pixmap buttons;
-    public static Pixmap mainMenu;
+    public static Pixmap mainMenuPlayButton;
     public static Pixmap retryButton;
     public static Pixmap nextLevelButton;
     public static Pixmap stopButton;
