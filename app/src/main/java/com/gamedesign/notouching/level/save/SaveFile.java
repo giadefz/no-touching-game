@@ -7,4 +7,6 @@ public class SaveFile {
     public int totalPoints;
     public int highScore;
 
+    protected SaveFile() {
+    }
 }

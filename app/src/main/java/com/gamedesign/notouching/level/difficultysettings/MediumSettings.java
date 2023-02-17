@@ -19,6 +19,6 @@ public class MediumSettings extends EasySettings {
 
     @Override
     public int getPointsMultiplier() {
-        return 2;
+        return 5;
     }
 }

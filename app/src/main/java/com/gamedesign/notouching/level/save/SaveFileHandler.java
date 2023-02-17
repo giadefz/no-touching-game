@@ -15,17 +15,27 @@ public class SaveFileHandler {
     private static final SaveFile save = new SaveFile();
     private static final String saveFileName = "save.json";
 
+    private SaveFileHandler() {
+    }
 
-    public static void save(Game game, int levelNumber, int totalPoints, long seed) {
+    public static SaveFile save(Game game, int levelNumber, int totalPoints, long seed) {
         save.levelNumber = levelNumber;
         save.seed = seed;
         save.totalPoints = totalPoints;
+        SaveFile previousSave = readSave(game);
+        if(previousSave != null){
+            if(previousSave.highScore < save.totalPoints) save.highScore = totalPoints;
+            else save.highScore = previousSave.highScore;
+        }else{
+            save.highScore = totalPoints;
+        }
         try (OutputStream outputStream = game.getFileIO().writeFile(saveFileName)) {
             outputStream.write(GsonMapper.toJsonByteArray(save));
+            return save;
         } catch (IOException e) {
             Log.println(Log.ASSERT, "SAVEFILE", "Failed to save: " + e);
+            return null;
         }
-
     }
 
     public static SaveFile readSave(Game game) {
@@ -34,6 +44,10 @@ public class SaveFileHandler {
         } catch (IOException e) {
             return null;
         }
+    }
+
+    public static SaveFile getSave(){
+        return save;
     }
 
     public static void resetSave(Game game) {

@@ -24,6 +24,6 @@ public class HardSettings extends MediumSettings {
 
     @Override
     public int getPointsMultiplier() {
-        return 3;
+        return 10;
     }
 }

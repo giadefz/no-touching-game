@@ -32,6 +32,6 @@ public class ImpossibleSettings extends HardSettings {
 
     @Override
     public int getPointsMultiplier() {
-        return 5;
+        return 20;
     }
 }
