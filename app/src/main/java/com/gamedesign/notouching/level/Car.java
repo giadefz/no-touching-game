@@ -2,9 +2,7 @@ package com.gamedesign.notouching.level;
 
 import static com.gamedesign.notouching.util.ScreenInfo.SCALING_FACTOR;
 
-import com.gamedesign.notouching.component.CirclePixmapDrawable;
 import com.gamedesign.notouching.component.ComponentType;
-import com.gamedesign.notouching.component.Drawable;
 import com.gamedesign.notouching.component.Exploding;
 import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.component.PixmapDrawable;
@@ -31,16 +29,19 @@ public class Car {
     public PrismaticJoint rearAxlePrismaticJoint;
     public Game game;
     public float[] targetCoordinates;
-    private boolean stopped;
-    private final Level level;
-    private final float motorSpeed;
-    private final Joint[] bombTargets;
+    private Level level;
+    private float motorSpeed;
+    private Joint[] bombTargets;
     private final Vec2 vec2 = new Vec2();
     private int bombEjectedIndex = 0;
     private boolean isPlaying = false;
 
 
-    public Car(Game game, float[] targetCoordinates, Level level, float motorSpeed, Pixmap chassisPixmap, Joint... bombTargets) {
+    public Car() {
+    }
+
+    public void initCar(Game game, float[] targetCoordinates, Level level, float motorSpeed, Pixmap chassisPixmap, Joint... bombTargets) {
+        this.bombEjectedIndex = 0;
         this.targetCoordinates = targetCoordinates;
         this.level = level;
         this.game = game;
@@ -98,7 +99,6 @@ public class Car {
             backWheelJoint.setMotorSpeed(0);
             vec2.setY(0);
             vec2.setX(0);
-            stopped = true;
             ejectBomb(bombEjectedIndex);
         }
 
@@ -117,7 +117,6 @@ public class Car {
         Vec2 chassisCoordinates = chassis.getBody().getWorldPoint(vec2);
         bomb.setPosition(chassisCoordinates.getX(), chassisCoordinates.getY() + 4f);
         level.addGameObject(bomb);
-        stopped = false;
         bombEjectedIndex++;
     }
 
@@ -133,7 +132,6 @@ public class Car {
         level.gameObjects.remove(backWheel);
         level.state.nextState();
         Assets.engine.stop();
-        stopped = true;
     }
 
     public boolean isLost() {

@@ -8,7 +8,7 @@ import com.gamedesign.notouching.util.Assets;
 public class ImpossibleSettings extends HardSettings {
 
     @Override
-    public Car getCar(int tilesNumber) {
+    public void initCar(Car car, int tilesNumber) {
         int firstBombIndex = level.random.nextInt(tilesNumber - 1) + 1;
         int secondBombIndex = level.random.nextInt(level.TILES_NUMBER - firstBombIndex) + firstBombIndex;
 
@@ -17,7 +17,7 @@ public class ImpossibleSettings extends HardSettings {
                 (this.getXCoordinatesOfTileRightEdge(secondBombIndex) * SCALING_FACTOR)
         };
 
-        return new Car(level.game, xCoordinatesOfTileLeftEdge, level, 5f, Assets.terroristChassis, level.ropesBetweenTiles.get(firstBombIndex-1), level.ropesBetweenTiles.get(secondBombIndex-1));
+        car.initCar(level.game, xCoordinatesOfTileLeftEdge, level, 5f, Assets.terroristChassis, level.ropesBetweenTiles.get(firstBombIndex-1), level.ropesBetweenTiles.get(secondBombIndex-1));
     }
 
     @Override

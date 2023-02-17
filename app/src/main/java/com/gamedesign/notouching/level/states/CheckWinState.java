@@ -29,13 +29,14 @@ public class CheckWinState extends LevelState {
         timeUntilLoss -= deltaTime;
         if(!carSpawned){
             float[] target = {};
-            level.addCar(new Car(level.game, target, level, 10f, Assets.chassis));
+            Level.car.initCar(level.game, target, level, 10f, Assets.chassis);
+            level.addCar();
             carSpawned = true;
         }
         commonUpdates();
         drawRetryButton();
         drawLevelNumber();
-        if(level.car.isLost() || timeUntilLoss <= 0){
+        if(Level.car.isLost() || timeUntilLoss <= 0){
             LOSS.initializeState(level);
             level.state = LOSS;
         }

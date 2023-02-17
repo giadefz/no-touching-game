@@ -1,6 +1,5 @@
 package com.gamedesign.notouching.level.difficultysettings;
 
-import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.level.Car;
 
 public interface LevelDifficultySettings {
@@ -12,5 +11,5 @@ public interface LevelDifficultySettings {
 
     int getPointsMultiplier();
 
-    Car getCar(int tilesNumber);
+    void initCar(Car car, int tilesNumber);
 }

@@ -4,7 +4,6 @@ import static com.gamedesign.notouching.level.states.LevelStates.START;
 
 import android.graphics.Color;
 
-import com.gamedesign.notouching.component.Component;
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.Drawable;
 import com.gamedesign.notouching.component.Exploding;
@@ -51,7 +50,7 @@ public class Level {
     public Joint firstRopeFromPier;
     public Joint secondRopeFromPier;
     public final Game game;
-    public Car car;
+    public static Car car = new Car();
     public Vec2 newRopeCoordinates = new Vec2();
     public Vec2 startingPointCoordinates = new Vec2();
     private final Vec2 temp = new Vec2();
@@ -74,10 +73,10 @@ public class Level {
         this.game = game;
         this.seed = seed;
         this.levelNumber = levelNumber;
-        setUpLevel(game, totalPoints);
+        setUpLevel(totalPoints);
     }
 
-    public void setUpLevel(Game game, int totalPoints) {
+    public void setUpLevel(int totalPoints) {
         this.totalPoints = totalPoints;
         this.random = new Random(seed);
         this.backGround = Assets.getBackgroundByIndex(random.nextInt(3));
@@ -93,8 +92,8 @@ public class Level {
         this.state = START;
         setUpTiles();
         setUpPiers();
-
-        this.addCar(difficultySettings.getCar(TILES_NUMBER));
+        difficultySettings.initCar(car, TILES_NUMBER);
+        this.addCar();
     }
 
     public synchronized GameObject addGameObject(GameObject obj) {
@@ -102,8 +101,7 @@ public class Level {
         return obj;
     }
 
-    public synchronized void addCar(Car car) {
-        this.car = car;
+    public void addCar() {
         this.addGameObject(car.chassis);
         this.addGameObject(car.frontWheel);
         this.addGameObject(car.backWheel);
