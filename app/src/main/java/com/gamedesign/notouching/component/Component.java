@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -22,7 +23,8 @@ public abstract class Component {
 
     public Entity owner;
 
-    public static Map<Class<?>, FieldSetter> fieldSetterMap = new HashMap<>();
+    private static final Map<Class<?>, FieldSetter> fieldSetterMap = new HashMap<>();
+    private static final Map<Class<? extends Component>, List<Field>> fieldsMap = new ConcurrentHashMap<>();
 
 
 
@@ -53,8 +55,8 @@ public abstract class Component {
         }
     }
 
-    public void fillFieldsFromArgs(List<GameObjectsJSON.Argument> args, Class<?> componentClass) {
-        List<Field> fields = Arrays.asList(componentClass.getDeclaredFields());
+    public void fillFieldsFromArgs(List<GameObjectsJSON.Argument> args, Class<? extends Component> componentClass) {
+        List<Field> fields = fieldsMap.computeIfAbsent(componentClass, c -> Arrays.asList(c.getDeclaredFields()));
         args.forEach(arg -> {
             Field field = fields.stream()
                     .filter(f -> f.getName().equals(arg.name))
