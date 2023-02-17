@@ -54,7 +54,7 @@ public class UITouchConsumer extends TouchConsumer {
                 level.destroy();
                 level.seed = System.currentTimeMillis();
                 gameScreen.totalPoints += ((WinState) level.state).points;
-                level.setUpLevel(game, gameScreen.totalPoints);
+                level.setUpLevel(gameScreen.totalPoints);
                 gameScreen.levelTouchConsumer.pierIndex = level.PIER_INDEX;
             } else if (level.state instanceof CheckWinState) {
                 LOSS.initializeState(level);
@@ -63,7 +63,7 @@ public class UITouchConsumer extends TouchConsumer {
                 level.destroy();
                 level.seed = System.currentTimeMillis();
                 level.levelNumber = 0;
-                level.setUpLevel(game, 0);
+                level.setUpLevel(0);
                 gameScreen.levelTouchConsumer.pierIndex = level.PIER_INDEX;
                 gameScreen.totalPoints = 0;
             } else if (level.state instanceof TicktockState) {

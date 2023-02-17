@@ -5,5 +5,6 @@ public class SaveFile {
     public int levelNumber;
     public long seed;
     public int totalPoints;
+    public int highScore;
 
 }
