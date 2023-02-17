@@ -23,7 +23,7 @@ public class LossState extends LevelState {
         drawRetryButton();
         drawLevelNumber();
         level.game.getGraphics().drawText(LOSS_STRING, 679, 122);
-        if (SaveFileHandler.getSave().highScore == level.totalPoints) {
+        if (SaveFileHandler.getSave() != null && SaveFileHandler.getSave().highScore == level.totalPoints) {
             level.game.getGraphics().drawText(HIGHSCORE, 679, 850, Color.RED);
         }
         level.game.getGraphics().drawText(TOTAL_POINTS + level.totalPoints, 679, 450, Color.YELLOW);
