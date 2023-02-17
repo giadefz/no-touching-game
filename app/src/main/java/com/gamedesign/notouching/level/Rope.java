@@ -9,6 +9,9 @@ public class Rope {
     public float localCoordinatesX;
     public float localCoordinatesY;
 
+    public Rope() {
+    }
+
     public Rope(Joint joint, float localCoordinatesX, float localCoordinatesY) {
         this.joint = joint;
         this.localCoordinatesX = localCoordinatesX;

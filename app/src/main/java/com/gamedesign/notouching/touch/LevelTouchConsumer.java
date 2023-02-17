@@ -5,6 +5,7 @@ import static com.gamedesign.notouching.util.ScreenInfo.Y_DISTANCE_FROM_FINGER;
 
 import android.util.Log;
 
+import com.gamedesign.notouching.framework.Pool;
 import com.gamedesign.notouching.level.Level;
 import com.gamedesign.notouching.level.Rope;
 import com.gamedesign.notouching.component.ComponentType;
@@ -12,6 +13,7 @@ import com.gamedesign.notouching.component.Drawable;
 import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.framework.TouchConsumer;
+import com.gamedesign.notouching.util.Assets;
 import com.gamedesign.notouching.util.ScreenInfo;
 import com.gamedesign.notouching.world.WorldHandler;
 import com.google.fpl.liquidfun.Joint;
@@ -26,6 +28,7 @@ public class LevelTouchConsumer extends TouchConsumer {
     private final float firstPierXCoordinate;
     private final float pierYCoordinate;
     private final float pierHalfHeight;
+    private final Pool<Rope> ropePool = new Pool<>(Rope::new, 20);
 
     public LevelTouchConsumer(Level level, float secondPierXCoordinate, float firstPierXCoordinate, float pierYCoordinate, float pierHalfHeight, int pierIndex) {
         super(event -> event.y = event.y + Y_DISTANCE_FROM_FINGER);
@@ -82,7 +85,12 @@ public class LevelTouchConsumer extends TouchConsumer {
         jointDef.setMaxLength((((float) Math.sqrt(xDiff * xDiff + yDiff * yDiff)) / ScreenInfo.SCALING_FACTOR) + 0.2f);
         jointDef.setCollideConnected(true);
         Joint joint = WorldHandler.createJoint(jointDef);
-        return new Rope(joint, localCoordinatesFromWorldCoordinates.getX(), localCoordinatesFromWorldCoordinates.getY()); //todo: pattern pool per rope
+        Assets.tileHit[level.random.nextInt(4)].play(3f);
+        Rope rope = ropePool.newObject();
+        rope.joint = joint;
+        rope.localCoordinatesX = localCoordinatesFromWorldCoordinates.getX();
+        rope.localCoordinatesY = localCoordinatesFromWorldCoordinates.getY();
+        return rope;
     }
 
 }
