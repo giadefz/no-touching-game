@@ -1,5 +1,7 @@
 package com.gamedesign.notouching.screen;
 
+import android.graphics.Color;
+
 import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.framework.Pixmap;
@@ -29,10 +31,11 @@ public class TutorialScreen extends Screen implements BoundChecker{
 
     @Override
     public void update(float deltaTime) {
+        game.getGraphics().clear(Color.argb(255, 0, 0, 0));
         game.getGraphics().drawPixmap(pixmaps[chosenImage], 0, 0);
         game.getGraphics().drawPixmap(Assets.nextLevelButton, 1500, 500);
         game.getGraphics().drawPixmap(Assets.retryButton, 300, 500);
-        game.getGraphics().drawPixmap(Assets.stopButton, 1700, 100);
+        game.getGraphics().drawPixmap(Assets.stopButton, 1700, 100); //todo: cambia con una x
         List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
         if (touchEvents.size() > 0) {
             for(Input.TouchEvent te: touchEvents) {

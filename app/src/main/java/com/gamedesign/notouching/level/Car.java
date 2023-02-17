@@ -42,6 +42,7 @@ public class Car {
 
     public void initCar(Game game, float[] targetCoordinates, Level level, float motorSpeed, Pixmap chassisPixmap, Joint... bombTargets) {
         this.bombEjectedIndex = 0;
+        this.isPlaying = false;
         this.targetCoordinates = targetCoordinates;
         this.level = level;
         this.game = game;
@@ -86,7 +87,6 @@ public class Car {
         } else {
             targetCoordinate = this.targetCoordinates[bombEjectedIndex];
         }
-        GameObject secondPier = level.gameObjects.get(level.PIER_INDEX + 1);
 
         if ((chassis.getBody().getWorldCenter().getX() * SCALING_FACTOR - targetCoordinate) < -50) {
             frontWheelJoint.setMotorSpeed(motorSpeed);

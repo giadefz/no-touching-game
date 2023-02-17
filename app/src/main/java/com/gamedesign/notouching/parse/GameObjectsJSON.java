@@ -1,18 +1,10 @@
 package com.gamedesign.notouching.parse;
 
-import android.content.Context;
-
 import com.gamedesign.notouching.component.Component;
-import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.framework.Game;
-import com.gamedesign.notouching.framework.Pool;
-import com.google.gson.Gson;
+import com.gamedesign.notouching.util.GameObjectPool;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,7 +12,7 @@ import java.util.stream.Collectors;
 public class GameObjectsJSON {
 
     public List<GameObjectJSON> gameObjects;
-    private Pool<GameObject> gameObjectPool = new Pool<>(GameObject::new, 50);
+
 
     public GameObjectsJSON() {
     }
@@ -41,7 +33,7 @@ public class GameObjectsJSON {
     }
 
     public GameObject getGameObject(String gameObjectName, Game game) {
-        GameObject gameObject = gameObjectPool.newObject();
+        GameObject gameObject = GameObjectPool.newGameObject();
         gameObject.name = gameObjectName;
         gameObject.game = game;
         Set<Component> components = this.gameObjects.stream()

@@ -14,6 +14,7 @@ import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.framework.TouchConsumer;
 import com.gamedesign.notouching.util.Assets;
+import com.gamedesign.notouching.util.RopePool;
 import com.gamedesign.notouching.util.ScreenInfo;
 import com.gamedesign.notouching.world.WorldHandler;
 import com.google.fpl.liquidfun.Joint;
@@ -28,7 +29,6 @@ public class LevelTouchConsumer extends TouchConsumer {
     private final float firstPierXCoordinate;
     private final float pierYCoordinate;
     private final float pierHalfHeight;
-    private final Pool<Rope> ropePool = new Pool<>(Rope::new, 20);
 
     public LevelTouchConsumer(Level level, float secondPierXCoordinate, float firstPierXCoordinate, float pierYCoordinate, float pierHalfHeight, int pierIndex) {
         super(event -> event.y = event.y + Y_DISTANCE_FROM_FINGER);
@@ -86,7 +86,7 @@ public class LevelTouchConsumer extends TouchConsumer {
         jointDef.setCollideConnected(true);
         Joint joint = WorldHandler.createJoint(jointDef);
         Assets.tileHit[level.random.nextInt(4)].play(3f);
-        Rope rope = ropePool.newObject();
+        Rope rope = RopePool.newRope();
         rope.joint = joint;
         rope.localCoordinatesX = localCoordinatesFromWorldCoordinates.getX();
         rope.localCoordinatesY = localCoordinatesFromWorldCoordinates.getY();
