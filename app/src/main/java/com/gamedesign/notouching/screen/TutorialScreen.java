@@ -21,10 +21,10 @@ public class TutorialScreen extends Screen implements BoundChecker{
     public TutorialScreen(Game game, MainMenuScreen mainMenuScreen) {
         super(game);
         this.mainMenuScreen = mainMenuScreen;
-        pixmaps[0] = Assets.background;
-        pixmaps[1] = Assets.lvl2background; //todo: metti le immagini degli screen del gioco con le scritte con le istruzioni
-        pixmaps[2] = Assets.lvl1background;
-        pixmaps[3] = Assets.lvl3background;
+        pixmaps[0] = Assets.tutorial1;
+        pixmaps[1] = Assets.tutorial2;
+        pixmaps[2] = Assets.tutorial3;
+        pixmaps[3] = Assets.tutorial4;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class TutorialScreen extends Screen implements BoundChecker{
         game.getGraphics().drawPixmap(pixmaps[chosenImage], 0, 0);
         game.getGraphics().drawPixmap(Assets.nextLevelButton, 1500, 500);
         game.getGraphics().drawPixmap(Assets.retryButton, 300, 500);
-        game.getGraphics().drawPixmap(Assets.stopButton, 1700, 100); //todo: sostituisci con un bottone x per uscire
+        game.getGraphics().drawPixmap(Assets.stopButton, 1700, 100);
         List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
         if (touchEvents.size() > 0) {
             for(Input.TouchEvent te: touchEvents) {

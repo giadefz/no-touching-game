@@ -49,6 +49,10 @@ public class LoadingScreen extends Screen {
         Assets.tileHit[1] = game.getAudio().newSound("tileHit2.ogg");
         Assets.tileHit[2] = game.getAudio().newSound("tileHit3.ogg");
         Assets.tileHit[3] = game.getAudio().newSound("tileHit4.ogg");
+        Assets.tutorial1 = graphics.newPixmap("tutorial1.png", Graphics.PixmapFormat.RGB565);
+        Assets.tutorial2 = graphics.newPixmap("tutorial2.png", Graphics.PixmapFormat.RGB565);
+        Assets.tutorial3 = graphics.newPixmap("tutorial3.png", Graphics.PixmapFormat.RGB565);
+        Assets.tutorial4 = graphics.newPixmap("tutorial4.png", Graphics.PixmapFormat.RGB565);
 
 
         try (Reader reader = new InputStreamReader(game.getFileIO().readAsset("gameobjects.json"))) {

@@ -35,6 +35,10 @@ public class Assets {
     public static Pixmap chassis;
     public static Pixmap lvl2background;
     public static Pixmap lvl3background;
+    public static Pixmap tutorial1;
+    public static Pixmap tutorial2;
+    public static Pixmap tutorial3;
+    public static Pixmap tutorial4;
 
     public static Pixmap getPixmapByName(String pixmapName) {
         try {
