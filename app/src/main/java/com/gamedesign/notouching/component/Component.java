@@ -33,8 +33,6 @@ public abstract class Component {
         fieldSetterMap.put(float.class, FieldSetters.FLOAT.getSetter());
         fieldSetterMap.put(boolean.class, FieldSetters.BOOLEAN.getSetter());
         fieldSetterMap.put(String.class, FieldSetters.STRING.getSetter());
-
-
     }
 
     public static Class<? extends Component> classForComponentType(String componentName) throws ClassNotFoundException {

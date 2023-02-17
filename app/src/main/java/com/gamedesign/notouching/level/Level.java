@@ -17,7 +17,9 @@ import com.gamedesign.notouching.level.difficultysettings.LevelDifficultySetting
 import com.gamedesign.notouching.level.difficultysettings.LevelDifficultySettingsFactory;
 import com.gamedesign.notouching.level.states.LevelState;
 import com.gamedesign.notouching.util.Assets;
+import com.gamedesign.notouching.util.GameObjectPool;
 import com.gamedesign.notouching.util.GameObjects;
+import com.gamedesign.notouching.util.RopePool;
 import com.gamedesign.notouching.util.TileBuilder;
 import com.gamedesign.notouching.world.WorldHandler;
 import com.google.fpl.liquidfun.Joint;
@@ -249,6 +251,8 @@ public class Level {
         this.gameObjects.clear();
         this.ropesBetweenTiles.clear();
         this.addedRopes.clear();
+        RopePool.freeGameObjects(this.addedRopes);
+        GameObjectPool.freeGameObjects(this.gameObjects);
     }
 
 }

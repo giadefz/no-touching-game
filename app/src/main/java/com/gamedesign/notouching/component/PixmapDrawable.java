@@ -54,7 +54,7 @@ public class PixmapDrawable extends Drawable {
         box.setAsBox(width / 2, height / 2);
         FixtureDef fixturedef = new FixtureDef();
         fixturedef.setShape(box);
-        fixturedef.setDensity(density);     // default 0
+        fixturedef.setDensity(density);
         body.createFixture(fixturedef);
         src.set(0, 0, srcRight, srcBottom);
         pixmap = Assets.getPixmapByName(pixmapName);
