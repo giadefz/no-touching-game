@@ -1,5 +1,6 @@
 package com.gamedesign.notouching.component;
 
+import com.gamedesign.notouching.framework.Pool;
 import com.gamedesign.notouching.parse.FieldSetter;
 import com.gamedesign.notouching.parse.FieldSetters;
 import com.gamedesign.notouching.parse.GameObjectsJSON;
@@ -24,33 +25,31 @@ public abstract class Component {
     public static Map<Class<?>, FieldSetter> fieldSetterMap = new HashMap<>();
 
 
+
     static {
         fieldSetterMap.put(int.class, FieldSetters.INT.getSetter());
         fieldSetterMap.put(float.class, FieldSetters.FLOAT.getSetter());
         fieldSetterMap.put(boolean.class, FieldSetters.BOOLEAN.getSetter());
         fieldSetterMap.put(String.class, FieldSetters.STRING.getSetter());
+
+
     }
 
-    public static Class<?> classForComponentType(String componentName) throws ClassNotFoundException {
+    public static Class<? extends Component> classForComponentType(String componentName) throws ClassNotFoundException {
         String packageName = Component.class.getPackage().getName() + ".";
-        return Class.forName(packageName + componentName);
+        return (Class<? extends Component>) Class.forName(packageName + componentName);
     }
 
     public static Component fromComponentJSON(GameObjectsJSON.ComponentJSON componentJSON, GameObject owner) {
         try {
-            Class<?> componentClass = classForComponentType(componentJSON.component);
-            Constructor<?> constructor = componentClass.getConstructor();
-            Component component = (Component) constructor.newInstance();
+            Class<? extends Component> componentClass = classForComponentType(componentJSON.component);
+            Component component = ComponentPools.getNewInstance(componentClass);
             component.owner = owner;
             component.fillFieldsFromArgs(componentJSON.args, componentClass);
             component.postConstructOperations();
             return component;
         } catch (ClassNotFoundException e) {
             throw new ParseGameObjectJSONException("No class found for component type: " + componentJSON.component);
-        } catch (NoSuchMethodException e) {
-            throw new ParseGameObjectJSONException("No empty constructor for component type: " + componentJSON.component);
-        } catch (InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            throw new ParseGameObjectJSONException("Error instantiating for component type: " + componentJSON.component);
         }
     }
 

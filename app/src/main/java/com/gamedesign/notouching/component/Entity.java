@@ -16,6 +16,10 @@ public abstract class Entity {
     private Body body;
     public Game game;
 
+
+    public Entity() {
+    }
+
     public Entity(Game game) {
         this.game = game;
     }

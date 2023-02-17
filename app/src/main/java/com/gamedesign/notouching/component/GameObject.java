@@ -4,7 +4,10 @@ import com.gamedesign.notouching.framework.Game;
 
 public class GameObject extends Entity {
 
-    public final String name;
+    public String name;
+
+    public GameObject() {
+    }
 
     public GameObject(String name, Game game) {
         super(game);

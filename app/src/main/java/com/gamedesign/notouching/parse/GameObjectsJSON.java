@@ -6,6 +6,7 @@ import com.gamedesign.notouching.component.Component;
 import com.gamedesign.notouching.component.ComponentType;
 import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.framework.Game;
+import com.gamedesign.notouching.framework.Pool;
 import com.google.gson.Gson;
 
 import java.io.FileReader;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class GameObjectsJSON {
 
     public List<GameObjectJSON> gameObjects;
+    private Pool<GameObject> gameObjectPool = new Pool<>(GameObject::new, 50);
 
     public GameObjectsJSON() {
     }
@@ -39,7 +41,9 @@ public class GameObjectsJSON {
     }
 
     public GameObject getGameObject(String gameObjectName, Game game) {
-        GameObject gameObject = new GameObject(gameObjectName, game);
+        GameObject gameObject = gameObjectPool.newObject();
+        gameObject.name = gameObjectName;
+        gameObject.game = game;
         Set<Component> components = this.gameObjects.stream()
                 .filter(g -> g.gameObjectName.equals(gameObjectName))
                 .findFirst()
