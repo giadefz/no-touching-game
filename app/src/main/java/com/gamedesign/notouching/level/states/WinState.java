@@ -15,6 +15,8 @@ public class WinState extends LevelState {
     public static final String WON_STRING = "HAI VINTO!!";
     public static final String SAVED = "LA PARTITA È STATA SALVATA";
     public static final String POINTS = "PUNTI LIVELLO: ";
+    public static final String TOTAL_POINTS = "PUNTI TOTALI: ";
+    public static final String HIGHSCORE = "NUOVO HIGHSCORE!";
     public int points;
     public boolean highScore;
 
@@ -26,7 +28,7 @@ public class WinState extends LevelState {
         super.initializeState(level);
         this.points = calculatePoints();
         SaveFile save = SaveFileHandler.save(level.game, level.levelNumber, level.totalPoints + points, level.seed);
-        if(save.highScore == level.totalPoints + points){
+        if(save != null && save.highScore == level.totalPoints + points){
             highScore = true;
         }
     }
@@ -40,9 +42,9 @@ public class WinState extends LevelState {
         level.game.getGraphics().drawText(POINTS + points, 679, 250);
         level.game.getGraphics().drawText(SAVED, 579, 350);
         int totalPoints = points + level.totalPoints;
-        level.game.getGraphics().drawText("PUNTI TOTALI: " + totalPoints, 679, 750, Color.YELLOW);
+        level.game.getGraphics().drawText(TOTAL_POINTS + totalPoints, 679, 750, Color.YELLOW);
         if(highScore) {
-            level.game.getGraphics().drawText("NUOVO HIGHSCORE!", 679, 850, Color.RED);
+            level.game.getGraphics().drawText(HIGHSCORE, 679, 850, Color.RED);
         }
     }
 
