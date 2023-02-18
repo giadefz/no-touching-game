@@ -44,12 +44,6 @@ public class MainMenuScreen extends Screen implements BoundChecker {
                     if(Settings.soundEnabled)
                         Assets.click.play(1);
                     return;
-                }else if(inBounds(event, 804, 963, 320, 55) ) {
-                    game.setScreen(new TutorialScreen(game, this));
-                    Assets.click.play(1);
-                    if(Settings.soundEnabled)
-                        Assets.click.play(1);
-                    return;
                 }
             }
         }
