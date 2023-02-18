@@ -35,7 +35,7 @@ public class TutorialScreen extends Screen implements BoundChecker{
         game.getGraphics().drawPixmap(pixmaps[chosenImage], 0, 0);
         game.getGraphics().drawPixmap(Assets.nextLevelButton, 1500, 500);
         game.getGraphics().drawPixmap(Assets.retryButton, 300, 500);
-        game.getGraphics().drawPixmap(Assets.stopButton, 1700, 100); //todo: cambia con una x
+        game.getGraphics().drawPixmap(Assets.quitButton, 1700, 100);
         List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
         if (touchEvents.size() > 0) {
             for(Input.TouchEvent te: touchEvents) {

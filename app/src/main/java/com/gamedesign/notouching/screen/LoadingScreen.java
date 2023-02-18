@@ -56,7 +56,7 @@ public class LoadingScreen extends Screen {
         Assets.tutorial2 = graphics.newPixmap("tutorial2.png", Graphics.PixmapFormat.RGB565);
         Assets.tutorial3 = graphics.newPixmap("tutorial3.png", Graphics.PixmapFormat.RGB565);
         Assets.tutorial4 = graphics.newPixmap("tutorial4.png", Graphics.PixmapFormat.RGB565);
-
+        Assets.quitButton = graphics.newPixmap("quitButton.png", Graphics.PixmapFormat.RGB565);
 
         try (Reader reader = new InputStreamReader(game.getFileIO().readAsset("gameobjects.json"))) {
             Assets.gameObjectsJSON = GsonMapper.fromJson(reader, GameObjectsJSON.class);
