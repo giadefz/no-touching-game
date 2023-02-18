@@ -42,6 +42,7 @@ public class Assets {
     public static Pixmap tutorial2;
     public static Pixmap tutorial3;
     public static Pixmap tutorial4;
+    public static Pixmap quitButton;
 
     public static Pixmap getPixmapByName(String pixmapName) {
         try {
