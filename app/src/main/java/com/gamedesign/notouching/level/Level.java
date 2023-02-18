@@ -251,7 +251,7 @@ public class Level {
         this.gameObjects.clear();
         this.ropesBetweenTiles.clear();
         this.addedRopes.clear();
-        RopePool.freeGameObjects(this.addedRopes);
+        RopePool.freeRopes(this.addedRopes);
         GameObjectPool.freeGameObjects(this.gameObjects);
     }
 

@@ -61,7 +61,6 @@ public class GameScreen extends Screen {
             touchEvents.forEach(UItouchConsumer::handleTouchEvent);
         }
         if (touchEvents.size() > 0 && level.ropeBudget > 0 && level.state instanceof TicktockState) {
-            touchEvents.forEach(UItouchConsumer::handleTouchEvent);
             touchEvents.forEach(levelTouchConsumer::handleTouchEvent);
         }
         Graphics g = this.game.getGraphics();
@@ -98,7 +97,7 @@ public class GameScreen extends Screen {
         for (Collision event : collisions) {
             if (event.a.name.equals(GameObjects.CHASSIS) && event.b.name.equals(GameObjects.PIER) ||
                     event.b.name.equals(GameObjects.CHASSIS) && event.a.name.equals(GameObjects.PIER)) {
-                level.car.destroy();
+                Level.car.destroy();
             }
         }
     }

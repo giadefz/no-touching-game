@@ -20,8 +20,8 @@ public class RopePool {
         ropePool.free(gameObject);
     }
 
-    public static void freeGameObjects(List<Rope> gameObjects){
-        gameObjects.forEach(RopePool::freeRope);
+    public static void freeRopes(List<Rope> ropes){
+        ropes.forEach(RopePool::freeRope);
     }
 
 
