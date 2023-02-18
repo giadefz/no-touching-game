@@ -50,6 +50,15 @@ public class UITouchConsumer extends TouchConsumer {
             }
         }
         if (inBounds(event, X_COORD_BUTTON, Y_COORD_BUTTON, 125, 125)) {
+            if (level.state instanceof PauseState) {
+                if (gameScreen.musicOn) {
+                    gameScreen.stopMusic();
+                    PAUSE.musicOn = false;
+                } else {
+                    gameScreen.startMusic();
+                    PAUSE.musicOn = true;
+                }
+            }
             if (level.state instanceof WinState) {
                 level.destroy();
                 level.seed = System.currentTimeMillis();

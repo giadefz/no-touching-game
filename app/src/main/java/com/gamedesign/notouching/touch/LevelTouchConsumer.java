@@ -1,5 +1,6 @@
 package com.gamedesign.notouching.touch;
 
+import static com.gamedesign.notouching.level.states.LevelStates.PAUSE;
 import static com.gamedesign.notouching.util.ScreenInfo.HALF_SCREEN;
 import static com.gamedesign.notouching.util.ScreenInfo.Y_DISTANCE_FROM_FINGER;
 
@@ -85,7 +86,9 @@ public class LevelTouchConsumer extends TouchConsumer {
         jointDef.setMaxLength((((float) Math.sqrt(xDiff * xDiff + yDiff * yDiff)) / ScreenInfo.SCALING_FACTOR) + 0.2f);
         jointDef.setCollideConnected(true);
         Joint joint = WorldHandler.createJoint(jointDef);
-        Assets.tileHit[level.random.nextInt(4)].play(3f);
+        if(PAUSE.musicOn){
+            Assets.tileHit[level.random.nextInt(4)].play(3f);
+        }
         Rope rope = RopePool.newRope();
         rope.joint = joint;
         rope.localCoordinatesX = localCoordinatesFromWorldCoordinates.getX();

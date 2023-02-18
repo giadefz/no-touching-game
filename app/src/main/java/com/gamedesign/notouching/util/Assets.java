@@ -16,6 +16,7 @@ public class Assets {
     public static Pixmap tile3;
     public static Sound click;
     public static Sound explosion;
+    public static Music ost;
     public static Music engine;
     public static Sound[] tileHit = new Sound[4];
     public static Pixmap background;
@@ -33,6 +34,8 @@ public class Assets {
     public static Pixmap wheel;
     public static Pixmap terroristChassis;
     public static Pixmap chassis;
+    public static Pixmap stopMusicButton;
+    public static Pixmap startMusicButton;
     public static Pixmap lvl2background;
     public static Pixmap lvl3background;
     public static Pixmap tutorial1;

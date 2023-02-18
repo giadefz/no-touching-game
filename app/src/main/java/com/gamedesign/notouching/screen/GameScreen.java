@@ -37,6 +37,7 @@ public class GameScreen extends Screen {
     public int totalPoints;
 
     public boolean running;
+    public boolean musicOn;
 
     public GameScreen(Game game) {
         super(game);
@@ -50,6 +51,7 @@ public class GameScreen extends Screen {
         Log.println(Log.INFO, "SEED", String.valueOf(level.seed));
         this.levelTouchConsumer = new LevelTouchConsumer(level, SECOND_PIER_X_COORDINATE, FIRST_PIER_X_COORDINATE, PIER_Y_COORDINATE, PIER_HALF_HEIGHT, level.PIER_INDEX);
         this.UItouchConsumer = new UITouchConsumer(level, this, game);
+        this.startMusic();
     }
 
     @Override
@@ -78,6 +80,18 @@ public class GameScreen extends Screen {
         }
         level.updateLevel(deltaTime);
 
+    }
+
+    public void startMusic(){
+        Assets.ost.setLooping(true);
+        Assets.ost.setVolume(1f);
+        Assets.ost.play();
+        musicOn = true;
+    }
+
+    public void stopMusic(){
+        Assets.ost.stop();
+        musicOn = false;
     }
 
     private void handleCollisions(Collection<Collision> collisions) {

@@ -24,6 +24,7 @@ public class LoadingScreen extends Screen {
 
         Assets.click = game.getAudio().newSound("click.ogg");
         Assets.explosion = game.getAudio().newSound("explosion.ogg");
+        Assets.ost = game.getAudio().newMusic("ost.ogg");
         Assets.background = graphics.newPixmap("menuBackground.png", Graphics.PixmapFormat.RGB565);
         Assets.mainMenuPlayButton = graphics.newPixmap("mainMenu.png", Graphics.PixmapFormat.ARGB4444);
         Assets.buttons = graphics.newPixmap("buttons.png", Graphics.PixmapFormat.ARGB4444);
@@ -41,6 +42,8 @@ public class LoadingScreen extends Screen {
         Assets.pier2 = graphics.newPixmap("pier2.png", Graphics.PixmapFormat.RGB565);
         Assets.wheel = graphics.newPixmap("wheel.png", Graphics.PixmapFormat.RGB565);
         Assets.chassis = graphics.newPixmap("chassis.png", Graphics.PixmapFormat.RGB565);
+        Assets.stopMusicButton = graphics.newPixmap("stopmusic.png", Graphics.PixmapFormat.RGB565);
+        Assets.startMusicButton = graphics.newPixmap("startmusic.png", Graphics.PixmapFormat.RGB565);
         Assets.terroristChassis = graphics.newPixmap("terroristChassis.png", Graphics.PixmapFormat.RGB565);
         Assets.lvl2background = graphics.newPixmap("levelBackground2.png", Graphics.PixmapFormat.RGB565);
         Assets.lvl3background = graphics.newPixmap("levelBackground3.png", Graphics.PixmapFormat.RGB565);

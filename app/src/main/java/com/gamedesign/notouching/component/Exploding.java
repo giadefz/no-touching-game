@@ -1,5 +1,7 @@
 package com.gamedesign.notouching.component;
 
+import static com.gamedesign.notouching.level.states.LevelStates.PAUSE;
+
 import com.gamedesign.notouching.util.Assets;
 import com.gamedesign.notouching.world.WorldHandler;
 import com.google.fpl.liquidfun.Joint;
@@ -26,7 +28,9 @@ public class Exploding extends Component {
     }
 
     private synchronized void explode(){
-        Assets.explosion.play(2);
+        if(PAUSE.musicOn){
+            Assets.explosion.play(2);
+        }
         WorldHandler.destroyJoint(target);
         WorldHandler.destroyBody(this.owner.getBody());
         target.delete();
