@@ -19,7 +19,8 @@ public class TicktockState extends LevelState {
 
     private int explodedBombIndex = 0;
     private int totalBombs = 0;
-    private GameObject[] toRemove = new GameObject[2];
+    private final GameObject[] toRemove = new GameObject[2];
+    public float timePassedSinceEntering;
 
     public TicktockState() {
     }
@@ -27,7 +28,8 @@ public class TicktockState extends LevelState {
     @Override
     public void initializeState(Level level) {
         super.initializeState(level);
-        totalBombs = level.car.targetCoordinates.length;
+        timePassedSinceEntering = 0;
+        totalBombs = Level.car.targetCoordinates.length;
         explodedBombIndex = 0;
         SaveFileHandler.resetSave(level.game);
         Arrays.fill(toRemove, null);
@@ -41,6 +43,7 @@ public class TicktockState extends LevelState {
         drawLevelNumber();
         ticktockBomb(deltaTime);
         drawStopButton();
+        timePassedSinceEntering += deltaTime;
     }
 
     @Override

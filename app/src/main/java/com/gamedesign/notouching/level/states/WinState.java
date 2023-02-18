@@ -53,7 +53,7 @@ public class WinState extends LevelState {
     }
 
     private int calculatePoints(){
-        int timeContribution = (int) level.timeBombStopped + 1;
+        int timeContribution = (int) (60 - level.timeBombStopped) + 1;
         return ((level.ropeBudget + 1000) * timeContribution / 1000) * level.difficultySettings.getPointsMultiplier();
     }
 

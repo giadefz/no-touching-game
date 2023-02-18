@@ -83,7 +83,7 @@ public class GameScreen extends Screen {
 
     public void startMusic(){
         Assets.ost.setLooping(true);
-        Assets.ost.setVolume(1f);
+        Assets.ost.setVolume(0.7f);
         Assets.ost.play();
         musicOn = true;
     }
@@ -95,8 +95,8 @@ public class GameScreen extends Screen {
 
     private void handleCollisions(Collection<Collision> collisions) {
         for (Collision event : collisions) {
-            if (event.a.name.equals(GameObjects.CHASSIS) && event.b.name.equals(GameObjects.PIER) ||
-                    event.b.name.equals(GameObjects.CHASSIS) && event.a.name.equals(GameObjects.PIER)) {
+            if ( (event.a.name.equals(GameObjects.CHASSIS) || event.a.name.equals(GameObjects.WHEEL)) && event.b.name.equals(GameObjects.PIER) ||
+                    (event.b.name.equals(GameObjects.CHASSIS) || event.b.name.equals(GameObjects.WHEEL)) && event.a.name.equals(GameObjects.PIER) ) {
                 Level.car.destroy();
             }
         }

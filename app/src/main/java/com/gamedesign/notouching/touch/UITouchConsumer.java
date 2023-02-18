@@ -2,6 +2,7 @@ package com.gamedesign.notouching.touch;
 
 import static com.gamedesign.notouching.level.states.LevelStates.LOSS;
 import static com.gamedesign.notouching.level.states.LevelStates.PAUSE;
+import static com.gamedesign.notouching.level.states.LevelStates.TICK_TOCK;
 import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_BUTTON;
 import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_PAUSE_BUTTON;
 import static com.gamedesign.notouching.util.ScreenInfo.X_COORD_START_BUTTON;
@@ -79,8 +80,8 @@ public class UITouchConsumer extends TouchConsumer {
                 for (GameObject go : level.gameObjects) {
                     Exploding component = go.getComponent(ComponentType.Exploding);
                     if (component != null) {
-                        level.timeBombStopped = component.timeStopped;
                         component.setExplodedToTrue();
+                        level.timeBombStopped = TICK_TOCK.timePassedSinceEntering;
                     }
                 }
             }
