@@ -1,5 +1,7 @@
 package com.gamedesign.notouching.component;
 
+import android.util.SparseArray;
+
 import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.world.WorldHandler;
 import com.google.fpl.liquidfun.Body;
@@ -12,7 +14,7 @@ import java.util.Set;
 
 public abstract class Entity {
 
-    private final Map<ComponentType, Component> components = new HashMap<>();
+    private final SparseArray<Component> componentSparseArray = new SparseArray<>();
     private Body body;
     public Game game;
 
@@ -26,11 +28,11 @@ public abstract class Entity {
 
     public void addComponent(Component component){
         component.owner = this;
-        components.put(component.type(), component);
+        componentSparseArray.put(component.type().hashCode(), component);
     }
 
     public <T extends Component> T getComponent(ComponentType type){
-        return (T) components.get(type);
+        return (T) componentSparseArray.get(type.hashCode());
     }
 
     public void addComponents(Set<Component> components) {
