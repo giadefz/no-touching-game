@@ -34,7 +34,7 @@ public class Car {
     private Joint[] bombTargets;
     private final Vec2 vec2 = new Vec2();
     private int bombEjectedIndex = 0;
-    private boolean isPlaying = false;
+    public boolean isPlaying = false;
 
 
     public Car() {

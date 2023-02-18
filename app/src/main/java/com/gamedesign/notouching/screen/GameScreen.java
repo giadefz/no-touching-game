@@ -51,7 +51,7 @@ public class GameScreen extends Screen {
         Log.println(Log.INFO, "SEED", String.valueOf(level.seed));
         this.levelTouchConsumer = new LevelTouchConsumer(level, SECOND_PIER_X_COORDINATE, FIRST_PIER_X_COORDINATE, PIER_Y_COORDINATE, PIER_HALF_HEIGHT, level.PIER_INDEX);
         this.UItouchConsumer = new UITouchConsumer(level, this, game);
-        this.startMusic();
+        startMusic();
     }
 
     @Override
@@ -98,6 +98,7 @@ public class GameScreen extends Screen {
             if ( (event.a.name.equals(GameObjects.CHASSIS) || event.a.name.equals(GameObjects.WHEEL)) && event.b.name.equals(GameObjects.PIER) ||
                     (event.b.name.equals(GameObjects.CHASSIS) || event.b.name.equals(GameObjects.WHEEL)) && event.a.name.equals(GameObjects.PIER) ) {
                 Level.car.destroy();
+                break;
             }
         }
     }
@@ -110,15 +111,27 @@ public class GameScreen extends Screen {
     @Override
     public void pause() {
         running = false;
+        if(Assets.engine.isPlaying())
+            Assets.engine.pause();
+        if(musicOn)
+            Assets.ost.pause();
     }
 
     @Override
     public void resume() {
         running = true;
+        if(Level.car.isPlaying)
+            Assets.engine.play();
+        if(musicOn)
+            Assets.ost.play();
     }
 
     @Override
     public void dispose() {
         WorldHandler.delete();
+        if(Assets.engine.isPlaying())
+            Assets.engine.stop();
+        if(musicOn)
+            Assets.ost.stop();
     }
 }
