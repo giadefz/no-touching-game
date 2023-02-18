@@ -14,7 +14,7 @@ public class HardSettings extends MediumSettings {
 
     @Override
     public int getMaxTileLength() {
-        return 6;
+        return 9;
     }
 
     @Override

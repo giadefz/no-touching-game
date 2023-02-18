@@ -8,6 +8,7 @@ public class LevelDifficultySettingsFactory {
     private static final MediumSettings MEDIUM = new MediumSettings();
     private static final HardSettings HARD = new HardSettings();
     private static final ImpossibleSettings IMPOSSIBLE = new ImpossibleSettings();
+    private static final SuperImpossibleSettings SUPER_IMPOSSIBLE = new SuperImpossibleSettings();
 
     public static LevelDifficultySettings getDifficultySettings(Level level){
         if(level.levelNumber < 3){
@@ -19,9 +20,12 @@ public class LevelDifficultySettingsFactory {
         } else if (level.levelNumber < 9){
             HARD.level = level;
             return HARD;
-        } else {
+        } else if (level.levelNumber < 13){
             IMPOSSIBLE.level = level;
             return IMPOSSIBLE;
+        } else {
+            SUPER_IMPOSSIBLE.level = level;
+            return SUPER_IMPOSSIBLE;
         }
     }
 

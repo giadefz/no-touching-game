@@ -9,8 +9,8 @@ public class ImpossibleSettings extends HardSettings {
 
     @Override
     public void initCar(Car car, int tilesNumber) {
-        int firstBombIndex = level.random.nextInt(tilesNumber - 1) + 1;
-        int secondBombIndex = level.random.nextInt(level.TILES_NUMBER - firstBombIndex) + firstBombIndex;
+        int firstBombIndex = level.random.nextInt(tilesNumber - 2) + 1;
+        int secondBombIndex = level.random.nextInt(level.TILES_NUMBER - (firstBombIndex + 1)) + (firstBombIndex + 1);
 
         float [] xCoordinatesOfTileLeftEdge = {
                 (this.getXCoordinatesOfTileRightEdge(firstBombIndex) * SCALING_FACTOR),
