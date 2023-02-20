@@ -1,6 +1,8 @@
 package com.gamedesign.notouching.level;
 
 import static com.gamedesign.notouching.level.states.LevelStates.START;
+import static com.gamedesign.notouching.screen.GameScreen.FIRST_PIER_X_COORDINATE;
+import static com.gamedesign.notouching.screen.GameScreen.PIER_Y_COORDINATE;
 
 import android.graphics.Color;
 
@@ -83,7 +85,7 @@ public class Level {
         this.random = new Random(seed);
         this.backGround = Assets.getBackgroundByIndex(random.nextInt(3));
         this.newRopeCoordinates.setX(0); this.newRopeCoordinates.setY(0);
-        this.startingPointCoordinates.setX(0); this.startingPointCoordinates.setY(0);
+        this.startingPointCoordinates.setX(FIRST_PIER_X_COORDINATE); this.startingPointCoordinates.setY(PIER_Y_COORDINATE);
         this.levelNumber++;
         this.difficultySettings = LevelDifficultySettingsFactory.getDifficultySettings(this);
         this.ropeBudget = difficultySettings.getRopeBudget();

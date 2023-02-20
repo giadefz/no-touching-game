@@ -14,7 +14,7 @@ import java.util.Set;
 
 public abstract class Entity {
 
-    private final SparseArray<Component> componentSparseArray = new SparseArray<>();
+    protected final SparseArray<Component> componentSparseArray = new SparseArray<>();
     private Body body;
     public Game game;
 
