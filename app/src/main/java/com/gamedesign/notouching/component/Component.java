@@ -6,6 +6,7 @@ import com.gamedesign.notouching.parse.FieldSetters;
 import com.gamedesign.notouching.parse.GameObjectsJSON;
 import com.gamedesign.notouching.parse.ParseGameObjectJSONException;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -25,8 +26,6 @@ public abstract class Component {
 
     private static final Map<Class<?>, FieldSetter> fieldSetterMap = new HashMap<>();
     private static final Map<Class<? extends Component>, List<Field>> fieldsMap = new ConcurrentHashMap<>();
-
-
 
     static {
         fieldSetterMap.put(int.class, FieldSetters.INT.getSetter());

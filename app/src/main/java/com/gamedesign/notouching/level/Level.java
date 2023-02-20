@@ -136,7 +136,7 @@ public class Level {
                 .orElse(null);
     }
 
-    public synchronized void updateLevel(float deltaTime) {
+    public void updateLevel(float deltaTime) {
         state.updateLevel(deltaTime);
     }
 

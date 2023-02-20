@@ -1,9 +1,5 @@
 package com.gamedesign.notouching.framework;
 
-import com.gamedesign.notouching.framework.Input;
-
-import java.util.function.Function;
-
 public abstract class TouchConsumer {
 
     private EventModifier eventModifier;

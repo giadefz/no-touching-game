@@ -12,10 +12,10 @@ public class ComponentPools {
     public static Map<Class<? extends Component>, Pool<Component>> componentPools = new HashMap<>();
 
     static {
-        componentPools.put(PixmapDrawable.class, new Pool<>(PixmapDrawable::new, 30));
-        componentPools.put(CirclePixmapDrawable.class, new Pool<>(CirclePixmapDrawable::new, 30));
-        componentPools.put(Position.class, new Pool<>(Position::new, 30));
-        componentPools.put(Exploding.class, new Pool<>(Exploding::new, 30));
+        componentPools.put(PixmapDrawable.class, new Pool<>(PixmapDrawable::new, 50));
+        componentPools.put(CirclePixmapDrawable.class, new Pool<>(CirclePixmapDrawable::new, 50));
+        componentPools.put(Position.class, new Pool<>(Position::new, 50));
+        componentPools.put(Exploding.class, new Pool<>(Exploding::new, 50));
     }
 
     private ComponentPools(){

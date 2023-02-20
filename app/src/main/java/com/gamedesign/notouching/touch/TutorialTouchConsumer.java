@@ -7,7 +7,7 @@ import com.gamedesign.notouching.screen.TutorialScreen;
 
 public class TutorialTouchConsumer extends TouchConsumer implements BoundChecker {
 
-    private TutorialScreen screen;
+    private final TutorialScreen screen;
 
     public TutorialTouchConsumer(TutorialScreen screen) {
         this.screen = screen;
