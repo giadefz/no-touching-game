@@ -1,5 +1,7 @@
 package com.gamedesign.notouching.component;
 
+import android.util.Log;
+
 import com.gamedesign.notouching.framework.Pool;
 import com.gamedesign.notouching.parse.ParseGameObjectJSONException;
 
@@ -27,6 +29,7 @@ public class ComponentPools {
     public static Component getNewInstance(Class<? extends Component> componentClass){
         Pool<?> pool = componentPools.get(componentClass);
         if(pool == null){
+            Log.i("POOLS", "No pool present for component: " + componentClass);
             try {
                 Constructor<? extends Component> constructor = componentClass.getConstructor();
                 return constructor.newInstance();

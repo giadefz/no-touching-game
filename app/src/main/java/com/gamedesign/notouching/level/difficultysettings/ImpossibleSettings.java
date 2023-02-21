@@ -9,16 +9,10 @@ public class ImpossibleSettings extends HardSettings {
 
     @Override
     public void initCar(Car car, int tilesNumber) {
-        int firstBombIndex = level.random.nextInt(tilesNumber - 2) + 1;
-        int secondBombIndex = level.random.nextInt(level.TILES_NUMBER - (firstBombIndex + 1)) + (firstBombIndex + 1);
-
-        float [] xCoordinatesOfTileLeftEdge = {
-                (this.getXCoordinatesOfTileRightEdge(firstBombIndex) * SCALING_FACTOR),
-                (this.getXCoordinatesOfTileRightEdge(secondBombIndex) * SCALING_FACTOR)
-        };
-
-        car.initCar(level.game, xCoordinatesOfTileLeftEdge, level, 8f, Assets.terroristChassis, level.ropesBetweenTiles.get(firstBombIndex-1), level.ropesBetweenTiles.get(secondBombIndex-1));
+        initCarWithTwoBombs(car, tilesNumber);
     }
+
+
 
     @Override
     public float getTimeUntilIgnition() {
