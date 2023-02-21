@@ -18,6 +18,7 @@ public class GameObject extends Entity {
         for(int i = 0; i < this.componentSparseArray.size(); i++) {
             int key = componentSparseArray.keyAt(i);
             Component component = componentSparseArray.get(key);
+            componentSparseArray.remove(key);
             ComponentPools.freeComponent(component);
         }
     }

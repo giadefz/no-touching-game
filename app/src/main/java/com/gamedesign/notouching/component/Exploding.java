@@ -10,7 +10,7 @@ public class Exploding extends Component {
 
     public float timeUntilIgnition;
     public Joint target;
-    private boolean exploded;
+    public boolean exploded;
     public float timeStopped;
 
     @Override
@@ -47,5 +47,11 @@ public class Exploding extends Component {
     public void setExplodedToTrue() {
         this.timeStopped = timeUntilIgnition;
         this.timeUntilIgnition = 0;
+    }
+
+    @Override
+    public void postConstructOperations() {
+        this.exploded = false; //se non lo si resetta, l'oggetto preso dal pool potrebbe già averlo settato a true, causando malfunzionamenti
+        this.timeStopped = 0;
     }
 }

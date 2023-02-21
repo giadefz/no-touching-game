@@ -11,9 +11,11 @@ import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.level.Level;
 import com.gamedesign.notouching.level.save.SaveFileHandler;
 import com.gamedesign.notouching.util.Assets;
+import com.gamedesign.notouching.util.GameObjectPool;
 
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Objects;
 
 public class TicktockState extends LevelState {
 
@@ -72,7 +74,12 @@ public class TicktockState extends LevelState {
             }
         }
         if (toRemove.length > 0) {
-            Arrays.stream(toRemove).forEach(go -> level.gameObjects.remove(go));
+            for(GameObject gameObject : toRemove){
+                if(gameObject != null){
+                    level.gameObjects.remove(gameObject);
+                    GameObjectPool.freeGameObject(gameObject);
+                }
+            }
         }
         if(explodedBombIndex == totalBombs){
             nextState();

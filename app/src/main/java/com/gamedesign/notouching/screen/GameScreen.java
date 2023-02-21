@@ -37,7 +37,7 @@ public class GameScreen extends Screen {
     public int totalPoints;
 
     public boolean running;
-    public boolean musicOn;
+    public static boolean musicOn;
 
     public GameScreen(Game game) {
         super(game);
@@ -120,7 +120,7 @@ public class GameScreen extends Screen {
     @Override
     public void resume() {
         running = true;
-        if(Level.car.isPlaying())
+        if(musicOn && Level.car.isPlaying())
             Assets.engine.play();
         if(musicOn)
             Assets.ost.play();

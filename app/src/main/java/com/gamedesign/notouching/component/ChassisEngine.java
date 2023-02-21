@@ -3,6 +3,7 @@ package com.gamedesign.notouching.component;
 import static com.gamedesign.notouching.util.ScreenInfo.SCALING_FACTOR;
 
 import com.gamedesign.notouching.level.Level;
+import com.gamedesign.notouching.screen.GameScreen;
 import com.gamedesign.notouching.util.Assets;
 import com.gamedesign.notouching.util.GameObjects;
 import com.google.fpl.liquidfun.Joint;
@@ -26,16 +27,16 @@ public class ChassisEngine extends Component {
 
     public void move(float motorSpeed, Level level){
         Entity chassis = this.owner;
-        if(!isPlaying){
+        if(!isPlaying && GameScreen.musicOn){
             Assets.engine.setLooping(true);
             Assets.engine.setVolume(0.5f);
             Assets.engine.play();
             isPlaying = true;
         }
         float targetCoordinate;
-        if (this.targetCoordinates.length == bombEjectedIndex) {
+        if (this.targetCoordinates.length == bombEjectedIndex) { //se ho piazzato tutte le bombe, vado "per sempre" a destra
             targetCoordinate = 3000f;
-        } else {
+        } else { //altrimenti, inserisco come coordinata quella del prossimo obiettivo
             targetCoordinate = this.targetCoordinates[bombEjectedIndex];
         }
         if ((chassis.getBody().getWorldCenter().getX() * SCALING_FACTOR - targetCoordinate) < -50) {
