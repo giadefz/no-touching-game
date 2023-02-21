@@ -16,6 +16,7 @@ public class ComponentPools {
         componentPools.put(CirclePixmapDrawable.class, new Pool<>(CirclePixmapDrawable::new, 50));
         componentPools.put(Position.class, new Pool<>(Position::new, 50));
         componentPools.put(Exploding.class, new Pool<>(Exploding::new, 50));
+        componentPools.put(ChassisEngine.class, new Pool<>(ChassisEngine::new, 50));
     }
 
     private ComponentPools(){

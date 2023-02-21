@@ -5,6 +5,7 @@ public enum ComponentType {
 
     Drawable,
     Position,
-    Exploding
+    Exploding,
+    AI
 
 }

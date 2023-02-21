@@ -17,7 +17,7 @@ public class ImpossibleSettings extends HardSettings {
                 (this.getXCoordinatesOfTileRightEdge(secondBombIndex) * SCALING_FACTOR)
         };
 
-        car.initCar(level.game, xCoordinatesOfTileLeftEdge, level, 5f, Assets.terroristChassis, level.ropesBetweenTiles.get(firstBombIndex-1), level.ropesBetweenTiles.get(secondBombIndex-1));
+        car.initCar(level.game, xCoordinatesOfTileLeftEdge, level, 8f, Assets.terroristChassis, level.ropesBetweenTiles.get(firstBombIndex-1), level.ropesBetweenTiles.get(secondBombIndex-1));
     }
 
     @Override

@@ -29,7 +29,7 @@ public class TicktockState extends LevelState {
     public void initializeState(Level level) {
         super.initializeState(level);
         timePassedSinceEntering = 0;
-        totalBombs = Level.car.targetCoordinates.length;
+        totalBombs = Level.car.getTotalBombs();
         explodedBombIndex = 0;
         SaveFileHandler.resetSave(level.game);
         Arrays.fill(toRemove, null);

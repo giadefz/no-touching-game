@@ -120,7 +120,7 @@ public class GameScreen extends Screen {
     @Override
     public void resume() {
         running = true;
-        if(Level.car.isPlaying)
+        if(Level.car.isPlaying())
             Assets.engine.play();
         if(musicOn)
             Assets.ost.play();

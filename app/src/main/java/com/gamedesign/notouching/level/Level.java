@@ -253,6 +253,7 @@ public class Level {
         this.gameObjects.clear();
         this.ropesBetweenTiles.clear();
         this.addedRopes.clear();
+        car.freeObjects();
         RopePool.freeRopes(this.addedRopes);
         GameObjectPool.freeGameObjects(this.gameObjects);
     }

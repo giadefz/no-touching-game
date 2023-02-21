@@ -1,21 +1,19 @@
 package com.gamedesign.notouching.level;
 
-import static com.gamedesign.notouching.util.ScreenInfo.SCALING_FACTOR;
-
+import com.gamedesign.notouching.component.ChassisEngine;
+import com.gamedesign.notouching.component.ComponentPools;
 import com.gamedesign.notouching.component.ComponentType;
-import com.gamedesign.notouching.component.Exploding;
 import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.component.PixmapDrawable;
 import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.framework.Pixmap;
 import com.gamedesign.notouching.util.Assets;
+import com.gamedesign.notouching.util.GameObjectPool;
 import com.gamedesign.notouching.util.GameObjects;
 import com.gamedesign.notouching.world.WorldHandler;
 import com.google.fpl.liquidfun.Joint;
-import com.google.fpl.liquidfun.PrismaticJoint;
 import com.google.fpl.liquidfun.RevoluteJoint;
 import com.google.fpl.liquidfun.RevoluteJointDef;
-import com.google.fpl.liquidfun.Vec2;
 
 public class Car {
 
@@ -23,34 +21,21 @@ public class Car {
     public GameObject chassis;
     public GameObject frontWheel;
     public GameObject backWheel;
-    public RevoluteJoint frontWheelJoint;
-    public RevoluteJoint backWheelJoint;
-    public PrismaticJoint frontAxlePrismaticJoint;
-    public PrismaticJoint rearAxlePrismaticJoint;
     public Game game;
-    public float[] targetCoordinates;
     private Level level;
     private float motorSpeed;
-    private Joint[] bombTargets;
-    private final Vec2 vec2 = new Vec2();
-    private int bombEjectedIndex = 0;
-    public boolean isPlaying = false;
 
 
     public Car() {
     }
 
     public void initCar(Game game, float[] targetCoordinates, Level level, float motorSpeed, Pixmap chassisPixmap, Joint... bombTargets) {
-        this.bombEjectedIndex = 0;
-        this.isPlaying = false;
-        this.targetCoordinates = targetCoordinates;
         this.level = level;
         this.game = game;
         this.motorSpeed = motorSpeed;
         this.chassis = Assets.gameObjectsJSON.getGameObject(GameObjects.CHASSIS, game);
         this.backWheel = Assets.gameObjectsJSON.getGameObject(GameObjects.WHEEL, game);
         this.frontWheel = Assets.gameObjectsJSON.getGameObject(GameObjects.WHEEL, game);
-        this.bombTargets = bombTargets;
         PixmapDrawable chassisDrawable = chassis.getComponent(ComponentType.Drawable);
         chassisDrawable.pixmap = chassisPixmap;
         RevoluteJointDef firstWheelJointDef = new RevoluteJointDef();
@@ -61,7 +46,7 @@ public class Car {
         firstWheelJointDef.setCollideConnected(true);
         firstWheelJointDef.setEnableMotor(true);
         firstWheelJointDef.setMaxMotorTorque(100f);
-        frontWheelJoint = WorldHandler.createJoint(firstWheelJointDef);
+        RevoluteJoint frontWheelJoint = WorldHandler.createJoint(firstWheelJointDef);
 
         RevoluteJointDef backWheelJointDef = new RevoluteJointDef();
         backWheelJointDef.setBodyA(chassis.getBody());
@@ -71,58 +56,24 @@ public class Car {
         backWheelJointDef.setCollideConnected(true);
         backWheelJointDef.setEnableMotor(true);
         backWheelJointDef.setMaxMotorTorque(100f);
-        backWheelJoint = WorldHandler.createJoint(backWheelJointDef);
+        RevoluteJoint backWheelJoint = WorldHandler.createJoint(backWheelJointDef);
+        ChassisEngine chassisEngine = (ChassisEngine) ComponentPools.getNewInstance(ChassisEngine.class);
+        chassisEngine.targetCoordinates = targetCoordinates;
+        chassisEngine.backWheelJoint = backWheelJoint;
+        chassisEngine.frontWheelJoint = frontWheelJoint;
+        chassisEngine.bombTargets = bombTargets;
+        chassis.addComponent(chassisEngine);
     }
 
     public void move() {
-        if(!isPlaying){
-            Assets.engine.setLooping(true);
-            Assets.engine.setVolume(0.5f);
-            Assets.engine.play();
-            isPlaying = true;
-        }
-        float targetCoordinate;
-        if (this.targetCoordinates.length == bombEjectedIndex) {
-            targetCoordinate = 3000f;
-        } else {
-            targetCoordinate = this.targetCoordinates[bombEjectedIndex];
-        }
-
-        if ((chassis.getBody().getWorldCenter().getX() * SCALING_FACTOR - targetCoordinate) < -50) {
-            frontWheelJoint.setMotorSpeed(motorSpeed);
-            backWheelJoint.setMotorSpeed(motorSpeed);
-        } else if ((chassis.getBody().getWorldCenter().getX() * SCALING_FACTOR - targetCoordinate) > 50) {
-            frontWheelJoint.setMotorSpeed(-motorSpeed);
-            backWheelJoint.setMotorSpeed(-motorSpeed);
-        } else {
-            frontWheelJoint.setMotorSpeed(motorSpeed);
-            backWheelJoint.setMotorSpeed(0);
-            vec2.setY(0);
-            vec2.setX(0);
-            ejectBomb(bombEjectedIndex);
-        }
-
-
-    }
-
-    private void ejectBomb(int bombIndex) {
-        GameObject bomb = Assets.gameObjectsJSON.getGameObject(GameObjects.BOMB, game);
-        PixmapDrawable bombDrawable = bomb.getComponent(ComponentType.Drawable);
-        Exploding component = bomb.getComponent(ComponentType.Exploding);
-        component.timeUntilIgnition = level.timeUntilBombIgnition;
-        component.setTarget(bombTargets[bombIndex]);
-        PixmapDrawable chassisDrawable = chassis.getComponent(ComponentType.Drawable);
-        vec2.setX(-(chassisDrawable.width / 2 + bombDrawable.width));
-        vec2.setY(0);
-        Vec2 chassisCoordinates = chassis.getBody().getWorldPoint(vec2);
-        bomb.setPosition(chassisCoordinates.getX(), chassisCoordinates.getY() + 4f);
-        level.addGameObject(bomb);
-        bombEjectedIndex++;
+        ChassisEngine engine = chassis.getComponent(ComponentType.AI);
+        engine.move(motorSpeed, level);
     }
 
     public void destroy() {
-        if (bombEjectedIndex != this.targetCoordinates.length) {
-            ejectBomb(bombEjectedIndex);
+        ChassisEngine engine = chassis.getComponent(ComponentType.AI);
+        if (engine.bombEjectedIndex != engine.targetCoordinates.length) {
+            engine.ejectBomb(level);
         }
         chassis.getBody().setActive(false);
         frontWheel.getBody().setActive(false);
@@ -134,8 +85,31 @@ public class Car {
         Assets.engine.stop();
     }
 
+    public void freeObjects(){
+        GameObjectPool.freeGameObject(chassis);
+        GameObjectPool.freeGameObject(frontWheel);
+        GameObjectPool.freeGameObject(backWheel);
+    }
+
+    public boolean isPlaying(){
+        ChassisEngine component = chassis.getComponent(ComponentType.AI);
+        if(component != null)
+            return component.isPlaying;
+        else return false;
+    }
+
     public boolean isLost() {
         return chassis.getBody().getPosition().getY() >= 40;
+    }
+    
+    public int getTotalBombs(){
+        ChassisEngine component = chassis.getComponent(ComponentType.AI);
+        if(component != null){
+            return component.targetCoordinates.length;
+        }
+        else {
+            return 0;
+        }
     }
 
 }
