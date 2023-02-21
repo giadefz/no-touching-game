@@ -19,7 +19,7 @@ public class AndroidInput implements Input {
         if(Integer.parseInt(VERSION.SDK) < 5) 
             touchHandler = new SingleTouchHandler(view, scaleX, scaleY);
         else
-            touchHandler = new MultiTouchHandler(view, scaleX, scaleY);        
+            touchHandler = new MultiTouchHandler(view, scaleX, scaleY);
     }
 
     @Override

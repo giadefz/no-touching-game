@@ -18,9 +18,11 @@ public class GameObjectPool {
 
     public static void freeGameObject(GameObject gameObject){
         gameObjectPool.free(gameObject);
+        gameObject.freeComponents();
     }
 
     public static void freeGameObjects(List<GameObject> gameObjects){
         gameObjects.forEach(GameObjectPool::freeGameObject);
+
     }
 }
