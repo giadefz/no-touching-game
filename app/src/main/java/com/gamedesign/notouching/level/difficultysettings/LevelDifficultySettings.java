@@ -11,5 +11,5 @@ public interface LevelDifficultySettings {
 
     int getPointsMultiplier();
 
-    void initCar(Car car, int tilesNumber);
+    void initCar();
 }

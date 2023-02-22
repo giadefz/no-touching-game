@@ -30,11 +30,11 @@ public class HardSettings extends MediumSettings {
     }
 
     @Override
-    public void initCar(Car car, int tilesNumber) {
+    public void initCar() {
         if(level.random.nextInt(11) == 10){ // 1 in 50 chance to spawn two bombs
-            initCarWithTwoBombs(car, level.TILES_NUMBER);
+            initCarWithTwoBombs();
         } else {
-            initCarWithOneBomb(car, level.TILES_NUMBER);
+            initCarWithOneBomb();
         }
     }
 }

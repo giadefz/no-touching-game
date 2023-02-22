@@ -96,7 +96,7 @@ public class Level {
         this.state = START;
         setUpTiles();
         setUpPiers();
-        difficultySettings.initCar(car, TILES_NUMBER);
+        difficultySettings.initCar(); //deve essere chiamato dopo che viene inizializzato nel livello TILES_NUMBER
         this.addCar();
     }
 

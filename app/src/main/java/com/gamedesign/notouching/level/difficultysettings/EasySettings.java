@@ -41,15 +41,15 @@ public class EasySettings implements LevelDifficultySettings {
     }
 
     @Override
-    public void initCar(Car car, int tilesNumber) {
-        initCarWithOneBomb(car, tilesNumber);
+    public void initCar() {
+        initCarWithOneBomb();
     }
 
-    protected void initCarWithOneBomb(Car car, int tilesNumber) {
-        int firstBombIndex = level.random.nextInt(tilesNumber - 1) + 1;
+    protected void initCarWithOneBomb() {
+        int firstBombIndex = level.random.nextInt(level.TILES_NUMBER - 1) + 1;
 
         float [] xCoordinatesOfTileLeftEdge = {(this.getXCoordinatesOfTileRightEdge(firstBombIndex) * SCALING_FACTOR)};
-        car.initCar(level.game, xCoordinatesOfTileLeftEdge, level, 7f, Assets.terroristChassis, level.ropesBetweenTiles.get(firstBombIndex-1));
+        Level.car.initCar(level.game, xCoordinatesOfTileLeftEdge, level, 7f, Assets.terroristChassis, level.ropesBetweenTiles.get(firstBombIndex-1));
     }
 
     protected float getXCoordinatesOfTileRightEdge(int tileNumber){

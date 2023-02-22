@@ -8,8 +8,8 @@ import com.gamedesign.notouching.util.Assets;
 public class ImpossibleSettings extends HardSettings {
 
     @Override
-    public void initCar(Car car, int tilesNumber) {
-        initCarWithTwoBombs(car, tilesNumber);
+    public void initCar() {
+        initCarWithTwoBombs();
     }
 
 
