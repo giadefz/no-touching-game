@@ -72,6 +72,7 @@ public class Car {
 
     public void destroy() {
         ChassisEngine engine = chassis.getComponent(ComponentType.AI);
+        engine.isPlaying = false;
         if (engine.bombEjectedIndex != engine.targetCoordinates.length) {
             engine.ejectBomb(level);
         }

@@ -68,7 +68,6 @@ public class GameScreen extends Screen {
         if (running) {
             WorldHandler.step();
             handleCollisions(WorldHandler.getCollisions());
-            level.moveCar();
         }
         if (deltaTime < WorldHandler.step) { //limit to 60FPS
             try {

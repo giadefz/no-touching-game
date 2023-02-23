@@ -10,6 +10,7 @@ public class StartLevelState extends LevelState {
     @Override
     public void updateLevel(float deltaTime) {
         commonUpdates();
+        level.moveCar();
     }
 
     @Override
