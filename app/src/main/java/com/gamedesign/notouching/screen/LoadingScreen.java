@@ -3,6 +3,7 @@ package com.gamedesign.notouching.screen;
 
 import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.framework.Graphics;
+import com.gamedesign.notouching.framework.Pixmap;
 import com.gamedesign.notouching.framework.Screen;
 import com.gamedesign.notouching.parse.GameObjectsJSON;
 import com.gamedesign.notouching.util.Assets;
@@ -57,6 +58,11 @@ public class LoadingScreen extends Screen {
         Assets.tutorial3 = graphics.newPixmap("tutorial3.png", Graphics.PixmapFormat.RGB565);
         Assets.tutorial4 = graphics.newPixmap("tutorial4.png", Graphics.PixmapFormat.RGB565);
         Assets.quitButton = graphics.newPixmap("quitButton.png", Graphics.PixmapFormat.RGB565);
+        Assets.tutorialPixmaps = new Pixmap[4];
+        Assets.tutorialPixmaps[0] = Assets.tutorial1;
+        Assets.tutorialPixmaps[1] = Assets.tutorial2;
+        Assets.tutorialPixmaps[2] = Assets.tutorial3;
+        Assets.tutorialPixmaps[3] = Assets.tutorial4;
 
         try (Reader reader = new InputStreamReader(game.getFileIO().readAsset("gameobjects.json"))) {
             Assets.gameObjectsJSON = GsonMapper.fromJson(reader, GameObjectsJSON.class);
