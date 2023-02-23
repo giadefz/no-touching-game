@@ -28,11 +28,8 @@ public abstract class Drawable extends Component {
     public abstract void draw(float x, float y, float angle);
 
     protected boolean inBounds(Input.TouchEvent event, float x, float y, float width, float height) {
-        if(event.x > x && event.x < x + width &&
-                event.y > y && event.y < y + height)
-            return true;
-        else
-            return false;
+        return event.x > x && event.x < x + width &&
+                event.y > y && event.y < y + height;
     }
 
     public Vec2 getLocalCoordinatesFromWorldCoordinates(float x, float y){

@@ -15,8 +15,8 @@ import com.gamedesign.notouching.component.GameObject;
 import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.framework.TouchConsumer;
-import com.gamedesign.notouching.level.states.CheckWinState;
 import com.gamedesign.notouching.level.Level;
+import com.gamedesign.notouching.level.states.CheckWinState;
 import com.gamedesign.notouching.level.states.LossState;
 import com.gamedesign.notouching.level.states.PauseState;
 import com.gamedesign.notouching.level.states.TicktockState;
@@ -25,7 +25,7 @@ import com.gamedesign.notouching.screen.GameScreen;
 
 public class UITouchConsumer extends TouchConsumer {
 
-    private Level level;
+    private final Level level;
     private final GameScreen gameScreen;
     private final Game game;
 
@@ -52,7 +52,7 @@ public class UITouchConsumer extends TouchConsumer {
         }
         if (inBounds(event, X_COORD_BUTTON, Y_COORD_BUTTON, 125, 125)) {
             if (level.state instanceof PauseState) {
-                if (gameScreen.musicOn) {
+                if (GameScreen.musicOn) {
                     gameScreen.stopMusic();
                     PAUSE.musicOn = false;
                 } else {
@@ -100,11 +100,8 @@ public class UITouchConsumer extends TouchConsumer {
     }
 
     private boolean inBounds(Input.TouchEvent event, int x, int y, int width, int height) {
-        if (event.x > x && event.x < x + width - 1 &&
-                event.y > y && event.y < y + height - 1)
-            return true;
-        else
-            return false;
+        return event.x > x && event.x < x + width - 1 &&
+                event.y > y && event.y < y + height - 1;
     }
 
 }

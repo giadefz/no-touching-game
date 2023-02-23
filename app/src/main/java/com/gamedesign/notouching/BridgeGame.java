@@ -1,7 +1,5 @@
 package com.gamedesign.notouching;
 
-import android.app.Activity;
-
 import com.gamedesign.notouching.framework.Screen;
 import com.gamedesign.notouching.framework.impl.AndroidGame;
 import com.gamedesign.notouching.screen.LoadingScreen;

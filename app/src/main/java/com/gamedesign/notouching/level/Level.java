@@ -150,7 +150,7 @@ public class Level {
         firstTile = this.addGameObject(firstTile);
         int i = 1;
         while (distanceToCover > 0){
-            randWidth = MAX_TILE_LENGTH != MIN_TILE_LENGTH ? random.nextInt(MAX_TILE_LENGTH - MIN_TILE_LENGTH) + MIN_TILE_LENGTH : MAX_TILE_LENGTH;;
+            randWidth = MAX_TILE_LENGTH != MIN_TILE_LENGTH ? random.nextInt(MAX_TILE_LENGTH - MIN_TILE_LENGTH) + MIN_TILE_LENGTH : MAX_TILE_LENGTH;
             PixmapDrawable firstTileComponent = firstTile.getComponent(ComponentType.Drawable);
             if(randWidth > distanceToCover){
                 randWidth = distanceToCover;

@@ -31,7 +31,7 @@ public abstract class TouchConsumer {
     protected  abstract void handleTouchDragged(Input.TouchEvent event);
 
     @FunctionalInterface
-    public static interface EventModifier {
+    public interface EventModifier {
 
         void apply(Input.TouchEvent event);
 

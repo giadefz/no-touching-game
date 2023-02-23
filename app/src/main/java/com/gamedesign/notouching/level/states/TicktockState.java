@@ -56,7 +56,7 @@ public class TicktockState extends LevelState {
 
 
     private void drawBudget() {
-        level.game.getGraphics().drawText("Budget: " + String.valueOf(level.ropeBudget), 50, 40);
+        level.game.getGraphics().drawText("Budget: " + level.ropeBudget, 50, 40);
     }
 
     private void ticktockBomb(float deltaTime) {

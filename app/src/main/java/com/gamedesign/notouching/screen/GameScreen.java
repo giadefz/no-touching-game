@@ -1,29 +1,26 @@
 package com.gamedesign.notouching.screen;
 
-import static com.gamedesign.notouching.util.Assets.tileHit;
-
 import android.graphics.Color;
 import android.util.Log;
 
-import com.gamedesign.notouching.level.Level;
 import com.gamedesign.notouching.framework.Game;
 import com.gamedesign.notouching.framework.Graphics;
 import com.gamedesign.notouching.framework.Input;
 import com.gamedesign.notouching.framework.Screen;
 import com.gamedesign.notouching.framework.TouchConsumer;
+import com.gamedesign.notouching.level.Level;
 import com.gamedesign.notouching.level.save.SaveFile;
 import com.gamedesign.notouching.level.save.SaveFileHandler;
 import com.gamedesign.notouching.level.states.TicktockState;
+import com.gamedesign.notouching.touch.LevelTouchConsumer;
 import com.gamedesign.notouching.touch.UITouchConsumer;
 import com.gamedesign.notouching.util.Assets;
 import com.gamedesign.notouching.util.Collision;
 import com.gamedesign.notouching.util.GameObjects;
-import com.gamedesign.notouching.touch.LevelTouchConsumer;
 import com.gamedesign.notouching.world.WorldHandler;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
 
 public class GameScreen extends Screen {
 
